@@ -1,14 +1,66 @@
-<div class="container" data-ng-controller="HeaderController">
-	<div class="navbar-header">
-		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a href="/#!/" class="navbar-brand">stdio</a>
-		<a href="/#!/about" class="navbar-brand">about</a>
+<div class="top-bar" data-ng-controller="HeaderController">
+	<div class="row top-first-row">
+		<div class="col-xs-3">
+			<img class="top-logo" src="modules/core/img/logo.png">
+		</div>
+		<div class="col-xs-3">
+			<img class="top-banner" src="modules/core/img/banner.png">
+			<marquee class="top-scroll" behavior="scroll" direction="left">Koalas never say die, but they sure say fak a lot</marquee>
+		</div>
+		<div class="col-xs-6">
+			<div class="top-links-buffer"> </div>
+			<div class="top-links-row">
+
+				<a href="/#!/" class="top-bar-link">About Us</a>
+
+				<span data-ng-hide="authentication.user">
+					<span ui-route="/signup" ng-class="{active: $uiRoute}">
+						<a class="top-bar-link" href="/#!/signup">Sign Up</a>
+					</span>
+					<span ui-route="/signin" ng-class="{active: $uiRoute}">
+						<a class="top-bar-link" href="/#!/signin">Sign In</a>
+					</span>
+				</span>
+
+				<span data-ng-show="authentication.user">
+					<span class="dropdown">
+						<a href="#" class="dropdown-toggle top-bar-link" data-toggle="dropdown">
+							<span data-ng-bind="authentication.user.username"></span>
+						</a>
+						<span class="dropdown-menu">
+							<li>
+								<a href="/#!/settings/profile">Edit Profile</a>
+							</li>
+							<li>
+								<a href="/#!/settings/accounts">Manage Social Accounts</a>
+							</li>
+							<li data-ng-show="authentication.user.provider === 'local'">
+								<a href="/#!/settings/password">Change Password</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="/auth/signout">Signout</a>
+							</li>
+						</span>
+					</span>
+				</span>
+			</div>
+
+		</div>
+
+	<!--
+		<img class="top-logo" src="modules/core/img/logo.png">
+		<img class="top-banner" src="modules/core/img/banner.png">
+		<marquee class="top-scroll" behavior="scroll" direction="left">Your slide-in text goes here</marquee>
+		<a href="/#!/" class="top-bar-link">stdio</a>
+		<a href="/#!/about" class="top-bar-link">about</a>
+	-->
+
 	</div>
+
+	<div class="top-bottom-row"> </div>
+	<div class="top-gradient"> </div>
+
 	<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
 		<ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
 			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
@@ -24,36 +76,6 @@
 				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
 			</li>
 		</ul>
-		<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-			<li ui-route="/signup" ng-class="{active: $uiRoute}">
-				<a href="/#!/signup">Sign Up</a>
-			</li>
-			<li class="divider-vertical"></li>
-			<li ui-route="/signin" ng-class="{active: $uiRoute}">
-				<a href="/#!/signin">Sign In</a>
-			</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<span data-ng-bind="authentication.user.username"></span> <b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="/#!/settings/profile">Edit Profile</a>
-					</li>
-					<li>
-						<a href="/#!/settings/accounts">Manage Social Accounts</a>
-					</li>
-					<li data-ng-show="authentication.user.provider === 'local'">
-						<a href="/#!/settings/password">Change Password</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="/auth/signout">Signout</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
+
 	</nav>
 </div>

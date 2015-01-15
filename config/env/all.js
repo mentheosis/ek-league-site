@@ -2,8 +2,8 @@
 
 module.exports = {
 	app: {
-		title: 'stdio',
-		description: 'radical experiments in ownership',
+		title: 'eKombat',
+		description: 'eKombat',
 		keywords: 'mongodb, express, angularjs, node.js, mongoose, passport'
 	},
 	//port: process.env.PORT || 80,

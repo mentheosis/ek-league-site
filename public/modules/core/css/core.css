@@ -13,3 +13,119 @@
 .ng-valid.ng-dirty {
 	border-color: #78FA89;
 }
+
+/* unvisited link */
+a:link {
+	color: #FF7000;
+}
+
+/* visited link */
+a:visited {
+	color: #FF7000;
+}
+
+/* mouse over link */
+a:hover {
+	color: #FF2000;
+}
+
+/* selected link */
+a:active {
+	color: #0000FF;
+}
+
+
+.top-bar {
+	background: black;
+	border: solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: black;
+	background-clip: border-box;
+	min-width: 1000px;
+	height: 200px;
+}
+
+.top-first-row {
+	margin-top:10px;
+	border:solid;
+	border-width: 1px 0 0 0;
+	border-color: #777777;
+	min-width: 1350px;
+}
+
+.top-logo {
+	margin-left: 5px;
+	margin-top: 5px;
+	width:239px;
+	height:160px;
+}
+
+.top-banner {
+	position:relative;
+	border: solid;
+	border-width: 2px;
+	border-color: #777777;
+	margin-left: 15px;
+	margin-top:20px;
+	height: 119px;
+	width: 600px;
+	z-index: 2;
+}
+
+.top-scroll {
+	color:white;
+	margin-left:13px;
+	width: 604px;
+	border: solid;
+	border-width: 1px;
+	border-color: #555555;
+	margin-top:2px;
+}
+
+.top-links-buffer {
+	position:relative;
+	border: solid;
+	right: 0;
+	width: 100%;
+	border-width: 2px 0 0 0;
+	border-color: #333333;
+	margin-top: 35px;
+	z-index: 1;
+}
+
+.top-links-row {
+	position:absolute;
+	right:5%;
+	margin-top: 100px;
+	text-align: right;
+}
+
+.top-bar-link {
+	color:orange;
+	font-size:1.5em;
+	margin-right: 7px;
+	margin-left: 7px;
+}
+
+.top-bottom-row {
+	position:relative;
+	margin-top: 15px;
+	z-index: 1;
+	border: solid;
+	border-width: 1px 0 0 0;
+	border-color:white;
+	width: 100%;
+	min-width:100px;
+}
+
+.top-gradient {
+	position:relative;
+	left: 0;
+	height:40px;
+	width: 100%;
+	min-width:100px;
+	background: -webkit-linear-gradient(black, #222222, #111111); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(black, #222222, #111111); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(black, #222222, #111111); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(black, #222222, #111111); /* Standard syntax */
+}

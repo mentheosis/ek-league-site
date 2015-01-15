@@ -9,6 +9,5 @@ app/tests/coverage/
 .bower-*/
 .idea/
 config/sslcert/*.pem
-config/env/development.js
 access.log
 bower_components
