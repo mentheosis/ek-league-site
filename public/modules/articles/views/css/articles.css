@@ -1,0 +1,199 @@
+hr {
+    margin:0;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    width: 75%;
+    align: center;
+}
+
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+/*colors for user setting choices*/
+
+.Red {
+  color: #cc3333;
+}
+.Orange{
+  color: #cc9933;
+}
+.Green{
+  color: #33b77b;
+}
+.Blue{
+  color: #337ab7;
+}
+.Purple{
+  color: #9a59b7;
+}
+
+
+.myButton {
+	-moz-box-shadow:inset 0 1px 3px 0 #91b8b3;
+	-webkit-box-shadow:inset 0 1px 3px 0 #91b8b3;
+	box-shadow:inset 0 1px 3px 0 #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:5px 11px;
+	text-decoration:none;
+	text-shadow:0 -1px 0 #2b665e;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
+	background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
+	background-color:#6c7c7c;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.article-container {
+  margin:0 0 0 0;
+  padding:5px 5px 5px 2px;
+  border-top:1px solid lightgrey;
+}
+
+.article-ui {
+  color:#aaa;
+  cursor:pointer;
+}
+
+.article-ui-clicked {
+  /*remove color here to apply user selected color*/
+  color:#555;
+  cursor:pointer;
+}
+
+.post-title {
+  display:inline-block;
+  font-size:20px;
+  padding: -5px 10px -5px 0;
+  margin: -5px 0 -5px 25px;
+}
+
+.post-title-entry {
+  display:inline-block;
+  font-size:20px;
+  padding: 0 0 5px 0;
+  margin: 0 0 0 25px;
+  width:75%;
+  /*color: #337ab7;*/
+  border:none;
+  border-bottom: 1px solid #ccc;
+  /*outline:none;*/
+}
+.post-entry {
+  display:inline-block;
+  padding: 0 0 5px 0;
+  margin: 20px 0 0 25px;
+  width:75%;
+  height:6em;
+  color: #666;
+  border:none;
+  border-bottom: 1px solid #ccc;
+  /*outline:none;*/
+}
+
+.post-header {
+  color:grey;
+  font-size: small;
+  font-style: italic;
+  padding: 0 0 -5px 0;
+  margin: 0 0 -5px 0;
+  /*border:2px solid orange;*/
+}
+
+.post {
+  display: inline-block;
+  vertical-align: top;
+  padding: 2px 2px 2px 2px;
+  margin: 2px 2px 2px 25px;
+}
+
+.post-preview {
+  font-size: 1em;
+  /*border:2px solid purple;*/
+}
+
+.post-full {
+  white-space: pre-wrap;       /* CSS 3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  /*border:2px solid purple;*/
+}
+
+.renderButton {
+  color: #ddd;
+  top: 5px;
+}
+
+.renderButtonGlow {
+  color: #555;
+  top: 5px;
+}
+
+.animate-errorPopup {
+	position: absolute;
+  left:-58px;
+  top: 7px;
+	font-family: Arial, Helvetica, sans-serif;
+	z-index: 9999;
+	pointer-events: none;
+  opacity:0.8;
+  width: 55px;
+  font-size:10px;
+  text-indent: 5px;
+  text-align: center;
+  padding: 0, 0, 5px, 10px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid black;
+  background: #f99;
+/*background: -moz-linear-gradient(#fff, #999);
+  background: -webkit-linear-gradient(#fff, #999);
+  background: -o-linear-gradient(#fff, #999);
+*/
+}
+
+.animate-errorPopup.ng-hide-add.ng-hide-add-active,
+.animate-errorPopup.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  -moz-transition: all linear 0.5s;
+  -o-transition: all linear 0.5s;
+}
+
+.animate-errorPopup.ng-hide{
+  opacity: 0;
+}
+
+.dev-mode{
+  border:2px solid black
+}

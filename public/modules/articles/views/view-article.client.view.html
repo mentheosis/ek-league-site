@@ -1,0 +1,81 @@
+<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+	<div class="page-header">
+
+		<div>
+				<span style="color:#999" data-ng-bind="article.kismet"></span>
+				<a style="cursor:pointer" ng-click="kismet(article)">
+					<i style="color:#999" class="glyphicon glyphicon-chevron-left"></i>
+				</a>
+
+				<span class="post-header" ng-class="{'dev-mode':devMode}">
+					Posted on
+					<span data-ng-bind="article.created | date:'mediumDate'"></span>
+					by
+					<span data-ng-bind="article.user.username"></span>
+				</span>
+		</div>
+
+
+		<h1 style="display:inline; color:#337ab7" data-ng-bind="article.title"></h1>
+
+		<span data-ng-show="authentication.user._id == article.user._id">
+			<a href="/#!/articles/{{article._id}}/edit">
+				<i style="color:#999" class="glyphicon glyphicon-edit"></i>
+			</a>
+			<a data-ng-click="remove();">
+				<i style="color:#999" class="glyphicon glyphicon-trash"></i>
+			</a>
+		</span>
+
+	</div>
+
+	<div class="post" ng-class="{'dev-mode':devMode}">
+		<span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content"></span>
+	<div>
+
+<br><h2 style="color:#999">comments:</h2>
+
+	<a style="cursor:pointer" ng-click="showcomment()">
+		<i style="color:#999" class="glyphicon glyphicon-align-justify"></i>
+	</a> <-click to add a comment!
+
+  <form ng-show="showComment">
+		<textarea name="comment" data-ng-model="content" class="form-control" cols="10" rows="5" placeholder="Write something!"></textarea>
+  	<input type="submit" ng-click="createComment()" value="Save" class="myButton"/>
+	</form>
+
+	<div ng-repeat="comment in comments" class="article-container">
+		<div>
+			<span class="post-header" ng-class="{'dev-mode':devMode}">
+				Posted on
+				<span data-ng-bind="comment.created | date:'mediumDate'"></span>
+				by
+				<span data-ng-bind="comment.user.username"></span>
+			</span>
+		</div>
+
+		<div class="post" ng-class="{'dev-mode':devMode}">
+			<span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="comment.content"></span>
+		<div>
+	</div>
+
+<!--
+	<form ng-show="showComment" name="articleForm" class="form-horizontal" data-ng-submit="createComment(article)" novalidate>
+		<fieldset>
+			<div class="form-group">
+				<label class="control-label" for="content">Comment</label>
+				<div class="controls">
+					<textarea name="content" data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-default">Subbmit</input>
+			</div>
+			<div data-ng-show="error" class="text-danger">
+				<strong data-ng-bind="error"></strong>
+			</div>
+		</fieldset>
+	</form>
+-->
+
+</section>

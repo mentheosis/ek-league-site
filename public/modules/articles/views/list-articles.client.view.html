@@ -1,0 +1,141 @@
+<section data-ng-controller="ArticlesController" data-ng-init="find()">
+	<div>
+		<h1>{{WelcomeToTheSpot}}</h1>
+	</div>
+
+<div class="container" style="padding:5px" ng-class="{'dev-mode':devMode}">
+	<!-- <button class="myButton" type="button">New Post</button> -->
+	<div style="font-size:1.5em">
+		<span title="Create a post!">
+			<a ng-click="switchCreateVisible()">
+				<span ng-class='userSelectedColor'>
+					<i ng-class="{'article-ui':!createVisible, 'article-ui-clicked':createVisible}" class="glyphicon glyphicon-align-justify"></i>
+				</span>
+			</a>
+		</span>
+
+		<span title="Switch sort order.">
+			<a ng-click="sortAndUpdate('reverse')">
+				<span ng-class='userSelectedColor'>
+					<i ng-class="{'article-ui':sortDesc, 'article-ui-clicked':!sortDesc}" class="glyphicon glyphicon-sort-by-attributes"></i>
+				</span>
+			</a>
+		</span>
+
+		<span title="Sort by kismet">
+			<a ng-click="sortAndUpdate('kismet')">
+				<span ng-class='userSelectedColor'>
+					<i ng-class="{'article-ui':sortBy!='kismet', 'article-ui-clicked':sortBy=='kismet'}" class="glyphicon glyphicon-star"></i>
+				</span>
+			</a>
+		</span>
+
+		<span title="Sort by date.">
+			<a ng-click="sortAndUpdate('created')">
+				<span ng-class='userSelectedColor'>
+					<i ng-class="{'article-ui':sortBy!='created', 'article-ui-clicked':sortBy=='created'}" class="glyphicon glyphicon-calendar"></i>
+				</span>
+			</a>
+		</span>
+
+<!-- hiding some random extra controls
+		<span title="Play with colors!">
+			<a ng-click="switchColorsVisible()">
+				<span ng-class='userSelectedColor'>
+					<i ng-class="{'article-ui':!colorsVisible, 'article-ui-clicked':colorsVisible}" class="glyphicon glyphicon-tint"></i>
+				</span>
+			</a>
+		</span>
+		<span title="Reduced UI mode.">
+			<a ng-click="switchSimpleUI()">
+				<span ng-class='userSelectedColor'>
+					<i ng-class="{'article-ui':!simpleUI, 'article-ui-clicked':simpleUI}" class="glyphicon glyphicon-eye-open"></i>
+				</span>
+			</a>
+		</span>
+-->
+
+	</div>
+
+	<span ng-show="false"> | <input type="checkbox" ng-model="devMode">dev mode </span>
+
+	<div ng-show="colorsVisible">
+		<form action="">
+			<input type="radio" ng-model="userSelectedColor" value="Red">red
+			<input type="radio" ng-model="userSelectedColor" value="Orange">orange
+			<input type="radio" ng-model="userSelectedColor" value="Green">green
+			<input type="radio" ng-model="userSelectedColor" value="Blue">blue
+			<input type="radio" ng-model="userSelectedColor" value="Purple">purple
+		</form>
+	</div>
+
+	<div ng-show="createVisible" class="article-container" >
+		<form name="articleForm" data-ng-submit="create()" novalidate>
+			<fieldset>
+
+					<input name="title" type="text" data-ng-model="title" id="title" class="post-title-entry" ng-class="userSelectedColor" placeholder="Choose a title" required>
+					<textarea placeholder="Type here!" name="content" data-ng-model="content" id="content" class="post-entry"></textarea>
+
+				<input type="submit" style="display:block" value="Post it!" class="myButton post">
+				<span data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</span>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+<div class="container" ng-class="{'dev-mode':devMode}">
+	<div data-ng-repeat="article in articles" class="article-container" ng-class="{'dev-mode':devMode}">
+
+		<span  style="position:relative">
+			<div ng-show="showError" class="animate-errorPopup">
+				<span style="padding: 5px 5px 5px 5px">{{thisError}}</span>
+			</div>
+		</span>
+		<span style="color:#999" data-ng-bind="article.kismet"></span>
+		<a style="cursor:pointer" ng-click="kismet(article, this)">
+			<i style="color:#bbb" class="glyphicon glyphicon-star"></i>
+		</a>
+
+<!--and hiding delete for dev use lol
+		<a ng-click="remove(article)">
+			<i class="glyphicon glyphicon-trash"></i>
+		</a>
+-->
+		<span class="post-header" ng-class="{'dev-mode':devMode}">
+			Posted on
+			<span data-ng-bind="article.created | date:'mediumDate'"></span>
+			by
+			<span data-ng-bind="article.user.username"></span>
+		</span>
+
+	<div ng-class="{'dev-mode':devMode}">
+		<a data-ng-href="#!/articles/{{article._id}}">
+			<span data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></span>
+		</a>
+	</div>
+
+<!--
+		<span data-ng-bind="article._id"></span> -
+		<span data-ng-bind="article.parent"></span>
+-->
+		<!--class="list-group-item-text"-->
+		<span title="Render all" style ="position:relative;" ng-class="{'dev-mode':devMode}">
+			<a ng-show="!simpleUI" style="cursor:pointer; position:absolute" ng-click="switchShowFull(this)">
+				<i class="glyphicon glyphicon-flash" ng-class="{'renderButton':!showFull,'renderButtonGlow':showFull}"></i>
+			</a><!--show {{showFull ? 'less' : 'more'}} -->
+		</span>
+
+		<div class="post" ng-class="{'dev-mode':devMode}">
+			<span ng-show="!showFull"><span class="post-preview" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content.substring(0,300)"></span><span ng-show="article.content.length > 300" ng-click="switchShowFull(this)" style="cursor:pointer" >[...]</span></span>
+			<span ng-show="showFull" class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content"></span>
+		</div>
+	</div>
+<!--
+	<div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
+		No articles yet, why don't you <a href="/#!/articles/create">create one</a>?
+	</div>
+-->
+</div>
+</section>
