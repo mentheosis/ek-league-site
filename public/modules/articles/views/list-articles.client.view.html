@@ -1,111 +1,83 @@
 <section style="background:black" data-ng-controller="ArticlesController" data-ng-init="find()">
 
-<div class="row" style="min-width:1350px">
+	<a ng-show="authentication.user && authentication.user.roles.indexOf('admin') != -1" href="" class="admin-mode" ng-click="switchAdminMode()">
+		Admin Mode
+	</a>
+	<span class='admin-controls' data-ng-show="adminMode">
+		<!--
+		<a href="" title="Edit the banner scroll" class='admin-control' ng-click="switchEditBanner()">
+			<i class="glyphicon glyphicon-sound-stereo"></i>
+		</a>
+		-->
+		<a href="" title="Create a news post" class='admin-control' ng-click="switchCreateVisible()">
+				<i class="glyphicon glyphicon-pencil"></i>
+		</a>
+	</span>
 
+<div class="row" style="min-width:1300px">
 <div class="col-xs-9 news-container">
 
-<!--
-	<div class="container" ng-class="{'dev-mode':devMode}">
-		<div style="font-size:1.5em">
-			<span title="Create a post!">
-				<a ng-click="switchCreateVisible()">
-					<span ng-class='userSelectedColor'>
-						<i ng-class="{'article-ui':!createVisible, 'article-ui-clicked':createVisible}" class="glyphicon glyphicon-align-justify"></i>
-					</span>
-				</a>
-			</span>
-
-			<span title="Switch sort order.">
-				<a ng-click="sortAndUpdate('reverse')">
-					<span ng-class='userSelectedColor'>
-						<i ng-class="{'article-ui':sortDesc, 'article-ui-clicked':!sortDesc}" class="glyphicon glyphicon-sort-by-attributes"></i>
-					</span>
-				</a>
-			</span>
-
-			<span title="Sort by kismet">
-				<a ng-click="sortAndUpdate('kismet')">
-					<span ng-class='userSelectedColor'>
-						<i ng-class="{'article-ui':sortBy!='kismet', 'article-ui-clicked':sortBy=='kismet'}" class="glyphicon glyphicon-star"></i>
-					</span>
-				</a>
-			</span>
-
-			<span title="Sort by date.">
-				<a ng-click="sortAndUpdate('created')">
-					<span ng-class='userSelectedColor'>
-						<i ng-class="{'article-ui':sortBy!='created', 'article-ui-clicked':sortBy=='created'}" class="glyphicon glyphicon-calendar"></i>
-					</span>
-				</a>
-			</span>
-
+	<div ng-show="createVisible" class="news-post row article-container">
+		<div style="width:480px; display:inline-block">
+			<div class="news-image" style="height:270px"></div>
 		</div>
-
-		<span ng-show="false"> | <input type="checkbox" ng-model="devMode">dev mode </span>
-
-		<div ng-show="colorsVisible">
-			<form action="">
-				<input type="radio" ng-model="userSelectedColor" value="Red">red
-				<input type="radio" ng-model="userSelectedColor" value="Orange">orange
-				<input type="radio" ng-model="userSelectedColor" value="Green">green
-				<input type="radio" ng-model="userSelectedColor" value="Blue">blue
-				<input type="radio" ng-model="userSelectedColor" value="Purple">purple
-			</form>
-		</div>
-
-		<div ng-show="createVisible" class="article-container" >
+		<div class="col-xs-12" style="display:inline-block">
 			<form name="articleForm" data-ng-submit="create()" novalidate>
 				<fieldset>
 
-						<input name="title" type="text" data-ng-model="title" id="title" class="post-title-entry" ng-class="userSelectedColor" placeholder="Choose a title" required>
-						<textarea placeholder="Type here!" name="content" data-ng-model="content" id="content" class="post-entry"></textarea>
+					<input name="title" type="text" data-ng-model="title" id="title" class="post-title" ng-class="userSelectedColor" placeholder="Choose a title" required>
+					<div class="image-entry-container">
+						<textarea placeholder="Image URL Here" name="imageurl" data-ng-model="imageurl" id="imageurl" class="image-entry"></textarea>
+					</div>
 
-					<input type="submit" style="display:block" value="Post it!" class="myButton post">
+					<div class="post" style="width:100%; height: 200px" ng-class="{'dev-mode':devMode}">
+							<textarea placeholder="Type here!" name="content" data-ng-model="content" id="content" class="post-full"></textarea>
+					</div>
+					<input type="submit" style="display:block; color:black" value="Post it!" class="myButton post">
 					<span data-ng-show="error" class="text-danger">
-						<strong data-ng-bind="error"></strong>
+					<strong data-ng-bind="error"></strong>
 					</span>
+
 				</fieldset>
 			</form>
 		</div>
 	</div>
--->
 
-		<div data-ng-repeat="article in articles" class="article-container" ng-class="{'dev-mode':devMode}">
+	<div data-ng-repeat="article in articles" class="article-container" ng-class="{'dev-mode':devMode}">
 
-			<div class="news-post row">
+		<div class="news-post row article-container">
 
-				<div class="col-xs-6" style="max-width:500px">
-					<img class="news-image" src="modules/articles/img/news1.png">
+			<div style="width:480px; display:inline-block">
+				<img class="news-image" ng-src="{{article.imageurl}}">
+			</div>
+			<div class="col-xs-12" style="display:inline-block">
+
+				<span style="margin-left: 15px" data-ng-show="adminMode">
+					<a title="Edit" class="admin-control" href="/#!/articles/{{article._id}}/edit">
+						<i class="glyphicon glyphicon-edit"></i>
+					</a>
+					<a title="Delete" class="admin-control" href="" style="cursor:pointer" data-ng-click="remove(article);">
+						<i class="glyphicon glyphicon-trash"></i>
+					</a>
+				</span>
+
+				<span data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></span>
+
+				<div class="post" ng-class="{'dev-mode':devMode}">
+					<span ng-show="!showFull"><span class="post-preview" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content.substring(0,850)"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [...]</span></span>
+					<span ng-show="showFull"><span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [<<<]</span></span>
 				</div>
-				<div class="col-xs-6">
-
-					<div ng-class="{'dev-mode':devMode}">
-						<a data-ng-href="#!/articles/{{article._id}}">
-							<span data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></span>
-						</a>
-					</div>
-
-			<!--
-					<span data-ng-bind="article._id"></span> -
-					<span data-ng-bind="article.parent"></span>
-			-->
-					<!--class="list-group-item-text"-->
-
-					<div class="post" ng-class="{'dev-mode':devMode}">
-						<span ng-show="!showFull"><span class="post-preview" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content.substring(0,850)"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [...]</span></span>
-						<span ng-show="showFull"><span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [<<<]</span></span>
-					</div>
-				</div>
-
 			</div>
 
 		</div>
+
+	</div>
 </div>
 
-<div class="col-xs-3">
-	<div class="side-link"><a href="#">League</a></div>
-	<div class="side-link"><a href="#">Ladder</a></div>
-	<div class="side-link"><a href="#">Tournament</a></div>
+<div class="col-xs-2">
+	<div class="side-link"><a href="#!/competitions">Competitions</a></div>
+	<div class="side-link"><a href="#!/teams">Teams</a></div>
+	<div class="side-link"><a href="#">Scrim Finder</a></div>
 </div>
 
 </div>

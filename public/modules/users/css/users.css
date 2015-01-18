@@ -12,3 +12,11 @@
 	right: 10px;
 	position: absolute;
 }
+
+h3 {
+	color: #FF7000 !important;
+}
+
+label {
+	color: #FF7000 !important;
+}

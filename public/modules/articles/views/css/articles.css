@@ -21,6 +21,24 @@ a:hover, a:visited, a:link, a:active {
   color: #9a59b7;
 }
 
+.admin-mode {
+  position:absolute;
+  top: 200px;
+  right: 20px;
+  align: right;
+}
+
+.admin-controls {
+  position:absolute;
+  top: 200px;
+  right: 110px;
+  align: right;
+}
+
+.admin-control {
+  margin: 0 5px 0 5px;
+}
+
 .article-container {
   margin:0 0 0 0;
   padding:5px 5px 5px 2px;
@@ -30,17 +48,47 @@ a:hover, a:visited, a:link, a:active {
   border:solid;
   border-width:5px 5px 0 0;
   border-color:#555555;
-  margin-top: -10px;
+  margin-top: -20px;
   min-width:1000px;
 }
 
 .news-post {
   margin-top: 15px;
-  padding-bottom: 15px;
+  padding-bottom: 25px;
   border: solid;
-  border-width: 0 0 1px 0;
+  border-width: 0 0 3px 0;
   border-color:#555555;
-  min-width:1000px;
+  align:center;
+  display:flex;
+}
+
+.image-entry-container {
+  position: absolute;
+  left: -450px;
+  width: 440px;
+  height: 225px;
+  background:black;
+  color: white;
+  border: none;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .image-entry-container {
+    position: absolute;
+    left: -290px;
+    width: 440px;
+    height: 225px;
+    background:black;
+    color: white;
+  }
+}
+
+.image-entry {
+  width:100%;
+  height:100%;
+  background:black;
+  color: white;
+  border: none;
 }
 
 .news-image {
@@ -71,6 +119,32 @@ a:hover, a:visited, a:link, a:active {
   border-width: 0 0 1px 0;
   border-color: #555555;
   width:100%;
+  margin: 0 0 0 15px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .post-title {
+    display:block;
+    font-size:20px;
+    font-weight:900;
+    color: #999999;
+    border:solid;
+    border-width: 0 0 1px 0;
+    border-color: #555555;
+    width:75%;
+    margin: -10px 0 0 165px;
+  }
+}
+
+input.post-title {
+  background:none;
+}
+
+textarea.post-full {
+  width: 100%;
+  height: 100%;
+  background: black;
+  border:none;
 }
 
 .post-title-entry {
@@ -109,6 +183,16 @@ a:hover, a:visited, a:link, a:active {
   display: inline-block;
   vertical-align: top;
   color: #FF6600;
+  margin: 0 0 0 15px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .post {
+    display: inline-block;
+    vertical-align: top;
+    color: #FF6600;
+    margin: 0 0 0 165px;
+  }
 }
 
 .post-preview {
@@ -135,11 +219,25 @@ a:hover, a:visited, a:link, a:active {
   top: 5px;
 }
 
-.side-link{
-  color: #FF6600;
-  font-size:45px;
-  font-weight:9900;
+.side-link > a{
+  color:black !important;
+  font-size:30px;
+  font-weight: 900;
+  text-shadow:  1px 0 0 #FF7000,
+                -1px 0 0 #FF7000,
+                0 1px 0 #FF7000,
+                0 -1px 0 #FF7000,
+                1px 1px 0 #FF7000,
+                -1px -1px 0 #FF7000,
+                -1px 1px 0 #FF7000,
+                1px -1px 0 #FF7000;
 }
+
+.side-link > a:hover {
+  color: #FF7000 !important;
+  text-shadow:none;
+}
+
 
 .animate-errorPopup {
 	position: absolute;

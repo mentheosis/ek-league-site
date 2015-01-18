@@ -39,6 +39,16 @@ var UserSchema = new Schema({
 		required: 'Please fill in a username',
 		trim: true
 	},
+	firstname: {
+		type: String,
+		default: '',
+		trim: true
+	},
+	lastname: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	password: {
 		type: String,
 		default: '',
@@ -82,9 +92,10 @@ var UserSchema = new Schema({
 		type: String,
 		default: '0987654321',
 	},
-	kismet: {
-		type: Number,
-		default: 0
+	avatar: {
+		type: String,
+		default: '',
+		trim: true
 	}
 });
 

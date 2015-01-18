@@ -3,7 +3,6 @@
 angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', '$animate', '$timeout', 'Authentication', 'Articles', 'Comments',
 	function($scope, $stateParams, $location, $animate, $timeout, Authentication, Articles, Comments) {
 		$scope.authentication = Authentication;
-		$scope.userSelectedColor = 'Blue';
 		//if(authentication.user.color)
 		//	$scope.userSelectedColor = authentication.user.color;
 
@@ -33,6 +32,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			repeatScope.showFull = !repeatScope.showFull;
 		};
 
+		$scope.userSelectedColor = 'Blue';
 		$scope.colorsVisible = false;
 		$scope.switchColorsVisible = function(){
 			$scope.colorsVisible = !$scope.colorsVisible;
@@ -48,6 +48,17 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			$scope.simpleUI = !$scope.simpleUI;
 		};
 
+/*
+		$scope.editBanner = false;
+		$scope.switchEditBanner = function(){
+			$scope.adminMode = !$scope.adminMode;
+		};
+*/
+
+		$scope.adminMode = false;
+		$scope.switchAdminMode = function(){
+			$scope.adminMode = !$scope.adminMode;
+		};
 
 		$scope.create = function() {
 			var article = new Articles({
@@ -57,12 +68,14 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 			article.parent = 'top'; //by default the articles list only shows where parent = 'top'
 			article.user = this.user;
+			article.imageurl = this.imageurl;
 
 			article.$save(function(response) {
 				//$location.path('articles/' + response._id);
 
 				$scope.title = '';
 				$scope.content = '';
+				$scope.imageurl= '';
 				$scope.articles.unshift(article); //push it to the display
 				$scope.createVisible = !$scope.createVisible;
 			}, function(errorResponse) {

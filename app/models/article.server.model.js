@@ -29,10 +29,6 @@ var ArticleSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	children: {
-		type: Schema.ObjectId,
-		ref: 'Article',
-	},
 	parent: {
 		type: String,
 		default: '',
@@ -47,9 +43,10 @@ var ArticleSchema = new Schema({
 		default: 'an_article_address',
 		trim: true,
 	},
-	kismet: {
-		type: Number,
-		default: 0,
+	imageurl: {
+		type: String,
+		default: '',
+		trim: true
 	}
 });
 

@@ -17,32 +17,38 @@
 /* unvisited link */
 a:link {
 	color: #FF7000;
+	outline:0;
 }
 
 /* visited link */
 a:visited {
 	color: #FF7000;
+	outline:0;
 }
 
 /* mouse over link */
 a:hover {
-	color: #FF2000;
+	color: #FFFFFF;
 }
 
 /* selected link */
 a:active {
-	color: #0000FF;
+	color: #777777;
+	outline:0;
 }
-
 
 .top-bar {
 	background: black;
-	border: solid;
+	/*border: solid;
 	border-width: 1px 1px 1px 1px;
-	border-color: black;
+	border-color: black;*/
 	background-clip: border-box;
-	min-width: 1000px;
+	min-width: 1250px;
 	height: 200px;
+}
+
+.row {
+	margin-right:15px;
 }
 
 .top-first-row {
@@ -50,7 +56,11 @@ a:active {
 	border:solid;
 	border-width: 1px 0 0 0;
 	border-color: #777777;
-	min-width: 1350px;
+	width:100%;
+}
+
+.head-min-width {
+	min-width: 1250px;
 }
 
 .top-logo {
@@ -58,6 +68,34 @@ a:active {
 	margin-top: 5px;
 	width:239px;
 	height:160px;
+}
+
+.top-banner-line {
+	position:absolute;
+	top: 55px;
+	left: 400px;
+	width: calc(100% - 400px);
+	min-width:850px;
+	border: solid;
+	border-width: 2px 0 0 0;
+	border-color: #333333;
+	z-index: 1;
+	overflow-x:hidden;
+}
+
+@media only screen and (min-width: 1900px) {
+	.top-banner-line {
+		position:absolute;
+		top: 55px;
+		left: 800px;
+		width: calc(100% - 800px);
+		min-width:850px;
+		border: solid;
+		border-width: 2px 0 0 0;
+		border-color: #333333;
+		z-index: 1;
+		overflow-x:hidden;
+	}
 }
 
 .top-banner {
@@ -82,21 +120,10 @@ a:active {
 	margin-top:2px;
 }
 
-.top-links-buffer {
-	position:relative;
-	border: solid;
-	right: 0;
-	width: 100%;
-	border-width: 2px 0 0 0;
-	border-color: #333333;
-	margin-top: 35px;
-	z-index: 1;
-}
-
 .top-links-row {
 	position:absolute;
-	right:5%;
-	margin-top: 100px;
+	right:0;
+	margin-top: 140px;
 	text-align: right;
 }
 
@@ -105,6 +132,16 @@ a:active {
 	font-size:1.5em;
 	margin-right: 7px;
 	margin-left: 7px;
+}
+
+.top-first-row-2 {
+	position:relative;
+	margin-top:10px;
+	border:solid;
+	border-width: 1px 0 0 0;
+	border-color: blue; /*#777777;*/
+	width:100%;
+	min-width: 1300px;
 }
 
 .top-bottom-row {
@@ -128,4 +165,31 @@ a:active {
 	background: -o-linear-gradient(black, #222222, #111111); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(black, #222222, #111111); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(black, #222222, #111111); /* Standard syntax */
+}
+
+.avatar {
+	position:absolute;
+	width:75px;
+	height:75px;
+	top: -80px;
+	right: 10px;
+	border: 1px solid #777777;
+}
+
+.ek-dropdown {
+	background:black;
+	border: 2px solid white;
+}
+
+.ek-dropdown a{
+	color: #FF7000 !important;
+	text-shadow:  1px 0 0 #000000,
+	-1px 0 0 #000000,
+	0 1px 0 #000000,
+	0 -1px 0 #000000,
+	1px 1px 0 #000000,
+	-1px -1px 0 #000000,
+	-1px 1px 0 #000000,
+	1px -1px 0 #000000;
+
 }
