@@ -30,11 +30,12 @@ var TeamSchema = new Schema({
     ref: 'User'
   },
   captains: {
-    type: [{
-      type: Schema.ObjectID,
-      ref: 'User'
-    }],
-    default: [],
+    type: [{type: Schema.ObjectId, ref: 'User' }],
+    default: []
+  },
+  joinpw: {
+    type: String,
+    default: ''
   },
   imageurl: {
     type: String,
@@ -43,4 +44,4 @@ var TeamSchema = new Schema({
   }
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Team', TeamSchema);
