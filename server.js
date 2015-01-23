@@ -5,7 +5,8 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
-	chalk = require('chalk');
+	chalk = require('chalk'),
+	scrimController = require('./app/controllers/scrims.server.controller');
 
 /**
  * Main application entry file.
@@ -27,7 +28,22 @@ var app = require('./config/express')(db);
 require('./config/passport')();
 
 // Start the app by listening on <port>
-app.listen(config.port);
+var server = app.listen(config.port);
+
+var socket = require('socket.io').listen(server);
+
+socket.on('connection', function(socketconn){
+	console.log('a user connected');
+	socketconn.on('disconnect', function(){
+		console.log('user disconnected');
+	});
+	socketconn.on('scrim-chat', function(msg){
+		scrimController.messageReceived(socket, msg);
+	});
+	socketconn.on('initialize chat', function(req){
+		scrimController.InitializeMessageDisplay(socket, socketconn, req);
+	});
+});
 
 // Expose app
 exports = module.exports = app;

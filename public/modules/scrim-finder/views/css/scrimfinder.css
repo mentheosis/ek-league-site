@@ -1,0 +1,111 @@
+
+.scrim-title{
+  color: #FF9000;
+  font-size: 3em;
+  text-align: center;
+}
+
+.scrim-headline{
+  color: #FF9000;
+  text-align: center;
+  margin: -10px 0 15px 0;
+}
+
+.scrim-container {
+  border: 1px solid white;
+  margin: 0 -15px 15px 15px;
+  background: #111111;
+}
+
+.scrim-bit {
+  display:inline-block;
+  background:none;
+  border: solid;
+  border-width: 0 0 1px 1px;
+  border-color:white;
+  color: #FF9000;
+  width: calc(100% - 80px);
+  margin: 1px 0 1px 0;
+}
+
+.scrim-input {
+  background:none;
+  border:none;
+  margin: 0 0 0 2px;
+  color:white;
+}
+
+.scrim-desc-container {
+  width:100%;
+  margin: 10px 0 0 0;
+}
+
+.scrim-desc {
+  width:100%;
+}
+
+.scrim-img {
+  float:left;
+  width:75px;
+  height:75px;
+  border: 1px solid white;
+  margin: 1px 2px 0 1px;
+  color:#FF7000;
+}
+
+.chat-window{
+  background: #111111;
+  margin-right:-45px;
+  border: solid;
+  border-width: 1px 0 0 1px;
+  border-color: white;
+}
+
+.chat-message-container {
+  height:300px;
+  overflow-y:scroll;
+}
+
+@media only screen and (min-height: 1900px) {
+  .chat-message-container {
+    height:700px;
+  }
+}
+
+@media only screen and (min-height: 1000px) {
+  .chat-message-container {
+    height:500px;
+  }
+}
+
+
+.chat-bar-container {
+  border: solid;
+  border-width: 1px 0 1px 0;
+  border-color: white;
+}
+
+.chat-bar{
+  width:100%;
+  background: black;
+  color: white;
+}
+
+input:focus{
+  outline:none;
+  border-color:white;
+  box-shadow:none;
+}
+
+.chat-user{
+  display:inline-block;
+  margin: 0 0 0 2px;
+  font-weight: 500;
+  color: #FF9000;
+}
+
+.chat-msg{
+  display:inline-block;
+  margin: 0 0 0 5px;
+  color: white;
+}

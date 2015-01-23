@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'ekleague';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ui.utils', 'luegg.directives'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
@@ -51,6 +51,11 @@ ApplicationConfiguration.registerModule('articles', ['ngAnimate']);
 
 // Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('core');
+'use strict';
+
+// Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('scrim-finder');
+
 'use strict';
 
 // Use Applicaion configuration module to register a new module
@@ -593,6 +598,130 @@ angular.module('core').service('Menus', [
 		this.addMenu('topbar');
 	}
 ]);
+'use strict';
+
+// Setting up route
+angular.module('scrim-finder').config(['$stateProvider', '$urlRouterProvider',
+function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider.
+  state('scrim', {
+    url: '/scrim',
+    templateUrl: 'modules/scrim-finder/views/scrim.client.view.html'
+  });
+
+}
+]);
+
+'use strict';
+
+angular.module('scrim-finder').controller('ScrimController', ['$scope', 'Authentication', 'Scrims', 'SocketIO',
+function($scope, Authentication, Scrims, SocketIO) {
+
+  // This provides Authentication context.
+  $scope.authentication = Authentication;
+  $scope.chatMessages = [];
+
+  $scope.createVisible = false;
+  $scope.switchCreateVisible = function(){
+    $scope.createVisible = !$scope.createVisible;
+  };
+
+  $scope.createScrim = function() {
+    var scrim = new Scrims({
+      team: this.team,
+      map: this.map,
+      format: this.format,
+      notes: this.notes,
+      imageurl: Authentication.user.avatar
+    });
+
+    scrim.$save(function(response) {
+      //$location.path('articles/' + response._id);
+      $scope.switchCreateVisible();
+      
+      $scope.team = '';
+      $scope.map = '';
+      $scope.format = '';
+      $scope.notes = '';
+      $scope.scrims.unshift(scrim); //push it to the display
+      //$scope.createVisible = !$scope.createVisible;
+    }, function(errorResponse) {
+      $scope.error = errorResponse.data.message;
+    });
+  };
+
+  $scope.sendChat = function(msg) {
+    SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
+    //$scope.chatMessages.push(msg);
+    $scope.chatMsg="";
+  };
+
+  $scope.initialize = function(){
+    SocketIO.emit('initialize chat');
+    $scope.scrims = Scrims.query();
+  };
+
+  SocketIO.on('chat message', function(msg){
+    $scope.chatMessages.push(msg)
+  });
+
+  SocketIO.on('initialize chat', function(res){
+    $scope.chatMessages = res;
+  });
+
+}
+]);
+
+'use strict';
+
+//Comments service used for communicating with the articles REST endpoints
+angular.module('scrim-finder')
+.factory('Scrims', //the name of the resource Class
+['$resource',
+function($resource) {
+  return $resource('scrims/:postId',
+{
+  postId: '@_id',
+});
+}
+]);
+
+angular.module('scrim-finder')
+  .factory('SocketIO', ['$rootScope', function ($rootScope) {
+  var socket = io(); //references script file loaded in layout html.
+
+  return{
+
+    on: function (eventName, callback) {
+      function wrapper() {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      }
+
+      socket.on(eventName, wrapper);
+
+      return function () {
+        socket.removeListener(eventName, wrapper);
+      };
+    },
+
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if(callback) {
+            callback.apply(socket, args);
+          }
+        });
+      });
+    }
+
+  };
+}]);
+
 'use strict';
 
 // Config HTTP Error Handling
