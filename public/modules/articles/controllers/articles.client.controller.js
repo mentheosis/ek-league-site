@@ -55,11 +55,6 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		};
 */
 
-		$scope.adminMode = false;
-		$scope.switchAdminMode = function(){
-			$scope.adminMode = !$scope.adminMode;
-		};
-
 		$scope.create = function() {
 			var article = new Articles({
 				title: this.title,

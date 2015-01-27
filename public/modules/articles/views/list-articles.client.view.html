@@ -1,27 +1,16 @@
 <section style="background:black" data-ng-controller="ArticlesController" data-ng-init="find()">
 
-	<a ng-show="authentication.user && authentication.user.roles.indexOf('admin') != -1" href="" class="admin-mode" ng-click="switchAdminMode()">
-		Admin Mode
-	</a>
 	<span class='admin-controls' data-ng-show="adminMode">
-		<!--
-		<a href="" title="Edit the banner scroll" class='admin-control' ng-click="switchEditBanner()">
-			<i class="glyphicon glyphicon-sound-stereo"></i>
-		</a>
-		-->
 		<a href="" title="Create a news post" class='admin-control' ng-click="switchCreateVisible()">
-				<i class="glyphicon glyphicon-pencil"></i>
+				<i class="glyphicon glyphicon-pencil"></i> New Post
 		</a>
 	</span>
-
-<div class="row" style="min-width:1300px">
-<div class="col-xs-9 news-container">
 
 	<div ng-show="createVisible" class="news-post row article-container">
 		<div style="width:480px; display:inline-block">
 			<div class="news-image" style="height:270px"></div>
 		</div>
-		<div class="col-xs-12" style="display:inline-block">
+		<div class="col-xs-12 post-container" style="display:inline-block">
 			<form name="articleForm" data-ng-submit="create()" novalidate>
 				<fieldset>
 
@@ -50,7 +39,7 @@
 			<div style="width:480px; display:inline-block">
 				<img class="news-image" ng-src="{{article.imageurl}}">
 			</div>
-			<div class="col-xs-12" style="display:inline-block">
+			<div class="col-xs-12 post-container">
 
 				<span style="margin-left: 15px" data-ng-show="adminMode">
 					<a title="Edit" class="admin-control" href="/#!/articles/{{article._id}}/edit">
@@ -72,13 +61,5 @@
 		</div>
 
 	</div>
-</div>
 
-<div class="col-xs-2">
-	<div class="side-link"><a href="#!/competitions">Competitions</a></div>
-	<div class="side-link"><a href="#!/teams">Teams</a></div>
-	<div class="side-link"><a href="#!/scrim">Scrim Finder</a></div>
-</div>
-
-</div>
 </section>

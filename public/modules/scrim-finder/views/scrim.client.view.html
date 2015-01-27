@@ -1,8 +1,5 @@
 <section style="background:black" data-ng-controller="ScrimController" ng-init="initialize()">
 
-  <div class="row" style="min-width:1300px">
-    <div class="col-xs-9 news-container" style="min-height:200px;">
-
       <div class = "scrim-title">
         Scrim Finder
       </div>
@@ -24,7 +21,7 @@
                 <br>
                 <div class = "scrim-desc-container">
                   <textarea class="scrim-desc scrim-bit scrim-input" placeholder="Contact info, notes..." data-ng-model="notes"></textarea>
-                <div>
+                </div>
                 <div style="display:flex">
                   <div style="display: inline-block; width: 75px">
                     <input ng-click="createScrim()" type="submit" style="width:75px; color:black" value="Post!">
@@ -73,15 +70,6 @@
           </div>
 
         </div>
-
       </div>
 
-    </div>
-    <div class="col-xs-2">
-      <div class="side-link"><a href="#!/">News</a></div>
-      <div class="side-link"><a href="#!/competitions">Competitions</a></div>
-      <div class="side-link"><a href="#!/teams">Teams</a></div>
-    </div>
-
-  </div>
 </section>

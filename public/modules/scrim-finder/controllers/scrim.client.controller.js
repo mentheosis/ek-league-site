@@ -24,7 +24,7 @@ function($scope, Authentication, Scrims, SocketIO) {
     scrim.$save(function(response) {
       //$location.path('articles/' + response._id);
       $scope.switchCreateVisible();
-      
+
       $scope.team = '';
       $scope.map = '';
       $scope.format = '';
@@ -37,9 +37,12 @@ function($scope, Authentication, Scrims, SocketIO) {
   };
 
   $scope.sendChat = function(msg) {
-    SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
-    //$scope.chatMessages.push(msg);
-    $scope.chatMsg="";
+    if($scope.chatMsg !== '')
+    {
+      SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
+      //$scope.chatMessages.push(msg);
+      $scope.chatMsg='';
+    }
   };
 
   $scope.initialize = function(){
@@ -48,7 +51,7 @@ function($scope, Authentication, Scrims, SocketIO) {
   };
 
   SocketIO.on('chat message', function(msg){
-    $scope.chatMessages.push(msg)
+    $scope.chatMessages.push(msg);
   });
 
   SocketIO.on('initialize chat', function(res){

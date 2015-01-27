@@ -21,18 +21,12 @@ a:hover, a:visited, a:link, a:active {
   color: #9a59b7;
 }
 
-.admin-mode {
-  position:absolute;
-  top: 200px;
-  right: 20px;
-  align: right;
-}
-
 .admin-controls {
   position:absolute;
-  top: 200px;
-  right: 110px;
+  top: 0;
+  right: 0;
   align: right;
+  z-index: 3;
 }
 
 .admin-control {
@@ -49,7 +43,8 @@ a:hover, a:visited, a:link, a:active {
   border-width:5px 5px 0 0;
   border-color:#555555;
   margin-top: -20px;
-  min-width:1000px;
+  min-width: 1000px;
+  min-height: 200px;
 }
 
 .news-post {
@@ -73,13 +68,8 @@ a:hover, a:visited, a:link, a:active {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    .image-entry-container {
-    position: absolute;
-    left: -290px;
-    width: 440px;
-    height: 225px;
-    background:black;
-    color: white;
+  .image-entry-container {
+    left: -430px;
   }
 }
 
@@ -110,6 +100,18 @@ a:hover, a:visited, a:link, a:active {
   cursor:pointer;
 }
 
+.post-container {
+  display:inline-block;
+  margin: -10px 0 0 -10px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .post-container {
+    width: calc(100% - 175px);
+    margin: -10px 0 0 175px;
+  }
+}
+
 .post-title {
   display:block;
   font-size:20px;
@@ -120,20 +122,6 @@ a:hover, a:visited, a:link, a:active {
   border-color: #555555;
   width:100%;
   margin: 0 0 0 15px;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    .post-title {
-    display:block;
-    font-size:20px;
-    font-weight:900;
-    color: #999999;
-    border:solid;
-    border-width: 0 0 1px 0;
-    border-color: #555555;
-    width:75%;
-    margin: -10px 0 0 165px;
-  }
 }
 
 input.post-title {
@@ -184,15 +172,6 @@ textarea.post-full {
   vertical-align: top;
   color: #FF6600;
   margin: 0 0 0 15px;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    .post {
-    display: inline-block;
-    vertical-align: top;
-    color: #FF6600;
-    margin: 0 0 0 165px;
-  }
 }
 
 .post-preview {

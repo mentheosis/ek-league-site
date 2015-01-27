@@ -1,4 +1,4 @@
-<div class="top-bar" data-ng-controller="HeaderController">
+<div class="top-bar" data-ng-controller="HeaderController" ng-init="getBanner()">
 	<div class="top-first-row"> </div>
 	<div class="top-banner-line"> </div>
 	<div class="row head-min-width">
@@ -6,8 +6,15 @@
 			<a href="/#!/"><img class="top-logo" src="modules/core/img/logo.png"></a>
 		</div>
 		<div class="col-xs-3">
-			<img class="top-banner" src="modules/core/img/banner.png">
-			<marquee class="top-scroll" behavior="scroll" direction="left">Koalas never say die, but they sure say fak a lot</marquee>
+			<a href="/#!/"><img class="top-banner" src="modules/core/img/banner.png"></a>
+			<!--
+				<marquee class="top-scroll" behavior="scroll" direction="left">{{banner.value}}<span style="color:black">fuckingstupidbufferug</span></marquee>
+			-->
+			<span ng-hide="editBanner" ng-bind-html="bannerHtml"></span>
+			<input type="text" ng-show="editBanner" ng-model="newBanner" class="top-scroll" placeholder="type here...">
+			<span class="top-scroll-edit" ng-show="adminMode" title="Edit/Save" ng-click="switchEditBanner()">
+					<a href=""><i class="glyphicon glyphicon-edit"></i></a>
+			</span>
 		</div>
 		<div class="col-xs-6">
 			<div class="top-links-row">
@@ -45,6 +52,9 @@
 					</span>
 				</span>
 			</div>
+			<a ng-show="authentication.user && authentication.user.roles.indexOf('admin') != -1" href="" class="admin-mode" ng-click="switchAdminMode()">
+				Admin Mode
+			</a>
 
 		</div>
 

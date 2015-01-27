@@ -44,7 +44,7 @@ a:active {
 	border-color: black;*/
 	background-clip: border-box;
 	min-width: 1250px;
-	height: 200px;
+	height: 250px;
 }
 
 .row {
@@ -117,7 +117,14 @@ a:active {
 	border: solid;
 	border-width: 1px;
 	border-color: #555555;
-	margin-top:2px;
+	margin-top: 2px;
+	background: none;
+}
+
+.top-scroll-edit {
+	position:absolute;
+	margin-left: 625px;
+	margin-top: -21px;
 }
 
 .top-links-row {
@@ -125,6 +132,15 @@ a:active {
 	right:0;
 	margin-top: 140px;
 	text-align: right;
+}
+
+.admin-mode {
+	position:absolute;
+	top: 190px;
+	right: 20px;
+	align: right;
+	color: #FF9000;
+	z-index: 3;
 }
 
 .top-bar-link {
@@ -165,6 +181,7 @@ a:active {
 	background: -o-linear-gradient(black, #222222, #111111); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(black, #222222, #111111); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(black, #222222, #111111); /* Standard syntax */
+	z-index: 1;
 }
 
 .avatar {

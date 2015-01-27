@@ -157,11 +157,6 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		};
 */
 
-		$scope.adminMode = false;
-		$scope.switchAdminMode = function(){
-			$scope.adminMode = !$scope.adminMode;
-		};
-
 		$scope.create = function() {
 			var article = new Articles({
 				title: this.title,
@@ -407,11 +402,43 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus',
-	function($scope, Authentication, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', '$sce', '$rootScope', 'Authentication', 'Settings', 'Menus',
+	function($scope, $sce, $rootScope, Authentication, Settings, Menus) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
+
+		$rootScope.adminMode = false;
+		$scope.switchAdminMode = function(){
+			$rootScope.adminMode = !$rootScope.adminMode;
+		};
+
+		$scope.editBanner = false;
+		$scope.switchEditBanner = function(){
+			$scope.editBanner = !$scope.editBanner;
+
+			if($scope.newBanner && $scope.newBanner !== '')
+			{
+				Settings.update({settingName:'bannerScroll', settingValue:$scope.newBanner});
+
+				$scope.bannerHtml =
+					$sce.trustAsHtml('<marquee class="top-scroll" behavior="scroll" direction="left">'
+					+$scope.newBanner
+					+'</marquee>');
+				$scope.newBanner='';
+			}
+		};
+
+		$scope.getBanner = function() {
+			Settings.get({settingName:'bannerScroll'},
+				function(response){
+					$scope.bannerHtml =
+						$sce.trustAsHtml('<marquee class="top-scroll" behavior="scroll" direction="left">'
+						+response.value
+						+'</marquee>');
+				}
+			);
+		}
 
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;
@@ -423,6 +450,7 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		});
 	}
 ]);
+
 'use strict';
 
 
@@ -600,6 +628,29 @@ angular.module('core').service('Menus', [
 ]);
 'use strict';
 
+//Comments service used for communicating with the articles REST endpoints
+angular.module('core')
+.factory('Settings', //the name of the resource Class
+['$resource',
+function($resource) {
+  return $resource('settings',
+  {
+    settingId: '@_id',
+  },
+  {
+    update: {
+      method: 'PUT',
+      params: {
+        settingName: '@settingName',
+        settingValue: '@settingValue'
+      }
+    }
+  }
+  );}
+]);
+
+'use strict';
+
 // Setting up route
 angular.module('scrim-finder').config(['$stateProvider', '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
@@ -639,7 +690,7 @@ function($scope, Authentication, Scrims, SocketIO) {
     scrim.$save(function(response) {
       //$location.path('articles/' + response._id);
       $scope.switchCreateVisible();
-      
+
       $scope.team = '';
       $scope.map = '';
       $scope.format = '';
@@ -652,9 +703,12 @@ function($scope, Authentication, Scrims, SocketIO) {
   };
 
   $scope.sendChat = function(msg) {
-    SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
-    //$scope.chatMessages.push(msg);
-    $scope.chatMsg="";
+    if($scope.chatMsg !== '')
+    {
+      SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
+      //$scope.chatMessages.push(msg);
+      $scope.chatMsg='';
+    }
   };
 
   $scope.initialize = function(){
@@ -663,7 +717,7 @@ function($scope, Authentication, Scrims, SocketIO) {
   };
 
   SocketIO.on('chat message', function(msg){
-    $scope.chatMessages.push(msg)
+    $scope.chatMessages.push(msg);
   });
 
   SocketIO.on('initialize chat', function(res){
