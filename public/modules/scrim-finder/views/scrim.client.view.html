@@ -54,7 +54,7 @@
 
           <div class = "chat-window">
             <div scroll-glue class="chat-message-container">
-              <div style="display:flex" ng-repeat="msg in chatMessages">
+              <div style="display:flex" ng-repeat="msg in chatMessages track by $index">
                 <span class="chat-user">{{msg.user}}:</span>
                 <span class="chat-msg">{{msg.message}}</span>
               </div>

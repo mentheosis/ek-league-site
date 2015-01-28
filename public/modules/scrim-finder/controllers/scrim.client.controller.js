@@ -51,6 +51,8 @@ function($scope, Authentication, Scrims, SocketIO) {
   };
 
   SocketIO.on('chat message', function(msg){
+//    console.log("check " + JSON.stringify(msg));
+//    console.log(JSON.stringify($scope.chatMessages[0]));
     $scope.chatMessages.push(msg);
   });
 
