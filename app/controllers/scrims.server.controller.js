@@ -47,6 +47,7 @@ exports.InitializeMessageDisplay = function(socket, conn, req){
 };
 
 exports.messageReceived = function(socket, msg){
+  //console.log("message incoming:" + JSON.stringify(msg));
   PushMessage(msg);
   socket.emit('chat message', msg);
 };

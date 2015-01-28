@@ -15,8 +15,14 @@ angular.module('scrim-finder')
       socket.on(eventName, wrapper);
 
       return function () {
+        //console.log('clearing listener');
         socket.removeListener(eventName, wrapper);
       };
+
+    },
+
+    clear: function () {
+
     },
 
     emit: function (eventName, data, callback) {
