@@ -666,8 +666,8 @@ function($stateProvider, $urlRouterProvider) {
 
 'use strict';
 
-angular.module('scrim-finder').controller('ScrimController', ['$scope', 'Authentication', 'Scrims', 'SocketIO',
-function($scope, Authentication, Scrims, SocketIO) {
+angular.module('scrim-finder').controller('ScrimController', ['$scope', '$rootScope', 'Authentication', 'Scrims', 'SocketIO',
+function($scope, $rootScope, Authentication, Scrims, SocketIO) {
 
   // This provides Authentication context.
   $scope.authentication = Authentication;
@@ -716,9 +716,20 @@ function($scope, Authentication, Scrims, SocketIO) {
     $scope.scrims = Scrims.query();
   };
 
-  SocketIO.on('chat message', function(msg){
-//    console.log("check " + JSON.stringify(msg));
-//    console.log(JSON.stringify($scope.chatMessages[0]));
+  /*
+    if you leave the scrim page and return, the scrim controller
+    is destroyed and recreated, but the original event listener
+    for chat messages still exists, so now you've got two. They
+    keep multiplying as you leave and return to the scrim page.
+    This rootScope bit is a hacky solution to call the removeListener
+    if this is not the first time coming to the scrim page.
+  */
+  if($rootScope.clearScrimChatListener)
+  {
+    $rootScope.clearScrimChatListener();
+  }
+  $rootScope.clearScrimChatListener = SocketIO.on('chat message', function(msg){
+    //console.log('chat message:  ' + JSON.stringify(msg));
     $scope.chatMessages.push(msg);
   });
 
@@ -760,8 +771,14 @@ angular.module('scrim-finder')
       socket.on(eventName, wrapper);
 
       return function () {
+        //console.log('clearing listener');
         socket.removeListener(eventName, wrapper);
       };
+
+    },
+
+    clear: function () {
+
     },
 
     emit: function (eventName, data, callback) {
