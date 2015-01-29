@@ -5,6 +5,9 @@ angular.module('scrim-finder')
   return{
 
     on: function (eventName, callback) {
+
+      socket.on(eventName, wrapper);
+
       function wrapper() {
         var args = arguments;
         $rootScope.$apply(function () {
@@ -12,17 +15,9 @@ angular.module('scrim-finder')
         });
       }
 
-      socket.on(eventName, wrapper);
-
       return function () {
-        //console.log('clearing listener');
         socket.removeListener(eventName, wrapper);
       };
-
-    },
-
-    clear: function () {
-
     },
 
     emit: function (eventName, data, callback) {

@@ -20,12 +20,6 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		});
 
 		$stateProvider.
-		state('teams', {
-			url: '/teams',
-			templateUrl: 'modules/core/views/teams.client.view.html'
-		});
-
-		$stateProvider.
 		state('competitions', {
 			url: '/competitions',
 			templateUrl: 'modules/core/views/competitions.client.view.html'

@@ -59,6 +59,11 @@ ApplicationConfiguration.registerModule('scrim-finder');
 'use strict';
 
 // Use Applicaion configuration module to register a new module
+ApplicationConfiguration.registerModule('teams');
+
+'use strict';
+
+// Use Applicaion configuration module to register a new module
 ApplicationConfiguration.registerModule('users');
 'use strict';
 
@@ -386,12 +391,6 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		});
 
 		$stateProvider.
-		state('teams', {
-			url: '/teams',
-			templateUrl: 'modules/core/views/teams.client.view.html'
-		});
-
-		$stateProvider.
 		state('competitions', {
 			url: '/competitions',
 			templateUrl: 'modules/core/views/competitions.client.view.html'
@@ -712,6 +711,8 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO) {
   };
 
   $scope.initialize = function(){
+    console.log('initializing..');
+    console.log('scope: ' + $scope.$id)
     SocketIO.emit('initialize chat');
     $scope.scrims = Scrims.query();
   };
@@ -721,19 +722,27 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO) {
     is destroyed and recreated, but the original event listener
     for chat messages still exists, so now you've got two. They
     keep multiplying as you leave and return to the scrim page.
-    This rootScope bit is a hacky solution to call the removeListener
-    if this is not the first time coming to the scrim page.
-  */
-  if($rootScope.clearScrimChatListener)
-  {
-    $rootScope.clearScrimChatListener();
-  }
-  $rootScope.clearScrimChatListener = SocketIO.on('chat message', function(msg){
-    //console.log('chat message:  ' + JSON.stringify(msg));
-    $scope.chatMessages.push(msg);
+
+    Must cleanup listeners when the scope is destroyed! */
+  $scope.$on('$destroy', function() {
+    if(clearScrimChatListener) {
+      clearScrimChatListener();
+    }
+    if(clearInitlistener) {
+      clearInitlistener();
+    }
+    console.log('destroying scope '+$scope.$id);
   });
 
-  SocketIO.on('initialize chat', function(res){
+  var clearScrimChatListener = SocketIO.on('chat message', function(msg){
+    $scope.chatMessages.push(msg);
+    //console.log('chat message:  ' + JSON.stringify(msg));
+    //console.log('check: ' + JSON.stringify($scope.chatMessages));
+    //console.log('scope: ' + $scope.$id);
+  });
+
+  var clearInitlistener = SocketIO.on('initialize chat', function(res){
+    //console.log('init chat');
     $scope.chatMessages = res;
   });
 
@@ -761,6 +770,9 @@ angular.module('scrim-finder')
   return{
 
     on: function (eventName, callback) {
+
+      socket.on(eventName, wrapper);
+
       function wrapper() {
         var args = arguments;
         $rootScope.$apply(function () {
@@ -768,17 +780,9 @@ angular.module('scrim-finder')
         });
       }
 
-      socket.on(eventName, wrapper);
-
       return function () {
-        //console.log('clearing listener');
         socket.removeListener(eventName, wrapper);
       };
-
-    },
-
-    clear: function () {
-
     },
 
     emit: function (eventName, data, callback) {
@@ -794,6 +798,21 @@ angular.module('scrim-finder')
 
   };
 }]);
+
+'use strict';
+
+// Setting up route
+angular.module('teams').config(['$stateProvider', '$urlRouterProvider',
+function($stateProvider, $urlRouterProvider) {
+
+  $stateProvider.
+  state('teams', {
+    url: '/teams',
+    templateUrl: 'modules/teams/views/teams.client.view.html'
+  });
+
+}
+]);
 
 'use strict';
 
