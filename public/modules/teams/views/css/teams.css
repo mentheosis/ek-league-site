@@ -1,0 +1,40 @@
+.grid-container {
+	height:450px;
+	display:flex;
+}
+
+.panel {
+	height:110px;
+	width:85px;
+	display:inline-block;
+	margin:3px;
+}
+
+.team-container {
+
+}
+
+.team-image-container {
+	text-align: center;
+}
+
+.team-image {
+	height:60px;
+	width:60px;
+}
+
+.team-info-container {
+
+}
+
+.team-description {
+
+}
+
+.new-team-form {
+
+}
+
+.dev-mode {
+	border: 2px solid red;
+}
