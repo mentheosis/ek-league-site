@@ -14,6 +14,14 @@
 	border-color: #78FA89;
 }
 
+html  {
+	height: 100%;
+}
+
+body  {
+	height: calc(100% - 10px);
+}
+
 /* unvisited link */
 a:link {
 	color: #FF7000;
@@ -35,6 +43,66 @@ a:hover {
 a:active {
 	color: #777777;
 	outline:0;
+}
+
+.side-link > a{
+	color:black !important;
+	font-size:30px;
+	font-weight: 900;
+	text-shadow:  1px 0 0 #FF7000,
+	-1px 0 0 #FF7000,
+	0 1px 0 #FF7000,
+	0 -1px 0 #FF7000,
+	1px 1px 0 #FF7000,
+	-1px -1px 0 #FF7000,
+	-1px 1px 0 #FF7000,
+	1px -1px 0 #FF7000;
+}
+
+.side-link > a:hover {
+	color: #FF7000 !important;
+	text-shadow:none;
+}
+
+.about-bg {
+	height: 900px;
+	background: url("../img/about-bg-900.jpg");
+	background-repeat: no-repeat;
+	margin-right: -15px;
+	position: relative;
+}
+
+.about-text-block {
+	position: absolute;
+	color: #FF9000;
+	top: 5%;
+	left: 610px;
+	max-width: 600px;
+}
+
+.about-text-header {
+	font-size:2em;
+	font-weight: 900;
+	color: white;
+	text-align: center;
+	border: solid;
+	border-width: 0 0 2px 0;
+	border-color: #DD6000;
+	text-shadow:  1px 0 0 #DD6000,
+	-1px 0 0 #DD6000,
+	0 1px 0 #DD6000,
+	0 -1px 0 #DD6000,
+	1px 1px 0 #DD6000,
+	-1px -1px 0 #DD6000,
+	-1px 1px 0 #DD6000,
+	1px -1px 0 #DD6000;
+}
+
+.about-text {
+	color: #DD6000;
+	text-align: left;
+	margin-left: 75px;
+	/*width: 250px;*/
 }
 
 .top-bar {
@@ -182,6 +250,24 @@ a:active {
 	background: -moz-linear-gradient(black, #222222, #111111); /* For Firefox 3.6 to 15 */
 	background: linear-gradient(black, #222222, #111111); /* Standard syntax */
 	z-index: 1;
+}
+
+
+#outer-view-container {
+	height: calc(100% - 260px);
+	min-width: 1300px;
+	width: 100%;
+}
+
+.view-container {
+	border:solid;
+	border-width:5px 5px 0 0;
+	border-color:#555555;
+	margin-top: -20px;
+	min-width: 1000px;
+/*	min-height: 200px; */
+	min-height: calc(100% + 30px);
+	overflow-y: hidden;
 }
 
 .avatar {

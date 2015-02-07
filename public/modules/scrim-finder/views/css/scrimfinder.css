@@ -12,7 +12,7 @@
 }
 
 .scrim-container {
-  border: 1px solid white;
+  border: 1px solid #555555;
   margin: 0 -15px 15px 15px;
   background: #111111;
 }
@@ -20,24 +20,30 @@
 .scrim-bit {
   display:inline-block;
   background:none;
+  /*
   border: solid;
   border-width: 0 0 1px 1px;
   border-color:white;
   color: #FF9000;
+  */
+  color: #555555;
   width: calc(100% - 80px);
   margin: 1px 0 1px 0;
 }
 
 .scrim-input {
   background:none;
+  width: calc(100% - 5em);
   border:none;
   margin: 0 0 0 2px;
-  color:white;
+  color: #AAAAAA;
+  margin-left: 5px;
+  white-space: pre-wrap;
 }
 
 .scrim-desc-container {
   width:100%;
-  margin: 10px 0 0 0;
+  margin: 10px 1px 0 0;
 }
 
 .scrim-desc {
@@ -48,7 +54,7 @@
   float:left;
   width:75px;
   height:75px;
-  border: 1px solid white;
+  border: 1px solid #555555;
   margin: 1px 2px 0 1px;
   color:#FF7000;
 }
@@ -58,12 +64,12 @@
   margin-right:-45px;
   border: solid;
   border-width: 1px 0 0 1px;
-  border-color: white;
+  border-color: #555555;
 }
 
 .chat-message-container {
   height:300px;
-  overflow-y:scroll;
+  overflow-y:auto;
 }
 
 @media only screen and (min-height: 1900px) {
@@ -82,7 +88,7 @@
 .chat-bar-container {
   border: solid;
   border-width: 1px 0 1px 0;
-  border-color: white;
+  border-color: #555555;
 }
 
 .chat-bar{

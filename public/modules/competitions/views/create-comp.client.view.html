@@ -1,0 +1,20 @@
+<section style="background:black" ng-controller="CompController">
+
+  <div class="col-xs-4" style="display:inline-block">
+    <form name="compForm" novalidate>
+      <fieldset>
+
+        <input type="text" ng-model="compName" placeholder="Name" required>
+        <input type="text" ng-model="compBanner" placeholder="Banner" required>
+        <input type="text" ng-model="compDesc" placeholder="Description" rows="5" required>
+
+        <input type="submit" ng-click="createComp()" style="display:block; color:black" value="Post it!" class="myButton post">
+        <span data-ng-show="error" class="text-danger">
+          <strong data-ng-bind="error"></strong>
+        </span>
+
+      </fieldset>
+    </form>
+  </div>
+
+</section>

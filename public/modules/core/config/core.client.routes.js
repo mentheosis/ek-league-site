@@ -19,11 +19,5 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'modules/core/views/about.client.view.html'
 		});
 
-		$stateProvider.
-		state('competitions', {
-			url: '/competitions',
-			templateUrl: 'modules/core/views/competitions.client.view.html'
-		});
-
 	}
 ]);

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/mean-test',
+	db: 'mongodb://192.168.1.4/ek-test',
 	port: 3001,
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'

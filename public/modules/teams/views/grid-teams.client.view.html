@@ -1,20 +1,18 @@
 <section style="background:black" data-ng-controller="TeamsController" data-ng-init="find()">
-	<div class="grid-container" ng-class="{'dev-mode':devMode}">
+	<div class="grid-container">
 
-		<div class="panel" ng-click="showCreateForm()" ng-class="{'dev-mode':devMode}">
-			{{teams.length}}
+		<div class="team-panel" ng-click="showCreateForm()">
+			<img src="modules/teams/img/team-default.png">
+			<span class="team-name">New Team</span>
 		</div>
 
-		<div ng-show="newTeamView" class="new-team-form">
-			<div ng-include="'/modules/teams/views/create-team.client.view.html'"></div> 
+		<div ng-show="newTeamView">
+			<div ng-include="'/modules/teams/views/create-team.client.view.html'"></div>
 		</div>
-		
-		<div data-ng-repeat="team in teams" class="panel" ng-class="{'dev-mode':devMode}">
-			<div class="team-container">
 
+		<div data-ng-repeat="team in teams" class="team-panel">
 
-				<div class="team-info-container">
-
+<!--
 					<span style="margin-left: 15px" data-ng-show="adminMode">
 						<a title="Edit" class="admin-control" href="/#!/teams/{{team._id}}/edit">
 							<i class="glyphicon glyphicon-edit"></i>
@@ -23,22 +21,11 @@
 							<i class="glyphicon glyphicon-trash"></i>
 						</a>
 					</span>
+-->
+			<img src="modules/teams/img/team-default.png">
+			<span data-ng-bind="team.name" class="team-name"></span>
 
-					<div data-ng-bind="team.name" class="team-name" ng-class="userSelectedColor"></div>
+		</div>
 
-					<div class="team-description" ng-class="{'dev-mode':devMode}">
-
-						<span ng-show="!showFull"><span class="post-preview" ng-class="{'dev-mode':devMode}" data-ng-bind="team.description.substring(0,850)"></span><span ng-show="team.description.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [...]</span></span>
-						<span ng-show="showFull"><span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="team.description"></span><span ng-show="team.description.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [<<<]</span></span>
-
-					</div>
-
-				</div>
-
-				<div class="team-image-container">
-					<img class="team-image" ng-src="{{team.imageurl}}">
-				</div>
-			</div>
-		</div>		
 	</div>
 </section>
