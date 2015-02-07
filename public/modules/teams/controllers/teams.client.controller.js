@@ -23,27 +23,6 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 			$scope.createVisible = !$scope.createVisible;
 		};
 
-		$scope.showCreateForm = false;
-		$scope.showCreateForm = function(){
-			$scope.showCreateForm = 'true';
-		};
-
-		$scope.hideCreateForm = function(){
-			$scope.showCreateForm = 'false';
-		};
-
-		$scope.simpleUI = false;
-		$scope.switchSimpleUI = function(){
-			$scope.simpleUI = !$scope.simpleUI;
-		};
-
-/*
-		$scope.editBanner = false;
-		$scope.switchEditBanner = function(){
-			$scope.adminMode = !$scope.adminMode;
-		};
-*/
-
 		$scope.create = function() {
 			var team = new Teams({
 				name: this.name,

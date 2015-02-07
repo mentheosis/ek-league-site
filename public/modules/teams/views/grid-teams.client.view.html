@@ -1,12 +1,12 @@
 <section style="background:black" data-ng-controller="TeamsController" data-ng-init="find()">
 	<div class="grid-container">
 
-		<div class="team-panel" ng-click="showCreateForm()">
+		<div class="team-panel" style="cursor:pointer" ng-click="switchCreateVisible()">
 			<img src="modules/teams/img/team-default.png">
 			<span class="team-name">New Team</span>
 		</div>
 
-		<div ng-show="newTeamView">
+		<div ng-show="createVisible">
 			<div ng-include="'/modules/teams/views/create-team.client.view.html'"></div>
 		</div>
 
