@@ -66,7 +66,7 @@ a:active {
 
 .about-bg {
 	height: 900px;
-	background: url("../img/about-bg-900.jpg");
+	background: url("/modules/core/img/about-bg-900.jpg");
 	background-repeat: no-repeat;
 	margin-right: -15px;
 	position: relative;
