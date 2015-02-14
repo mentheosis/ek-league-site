@@ -13,18 +13,25 @@ module.exports = function(app) {
         comps.create);
 
   app.route('/competitions/:compId')
-  .get(comps.read);
+  .get(comps.read)
+  .post(users.requiresLogin,
+    auth.hasAuthorization(['admin']),
+    comps.update);
+
+  app.route('/rankings')
+  .post(users.requiresLogin,
+    auth.hasAuthorization(['admin']),
+    comps.addRanking);
+
+  app.route('/rankings/:compId')
+  .get(comps.listRankings);
+
   /*
   .put(users.requiresLogin,articles.hasAuthorization,articles.update)
   .delete(users.requiresLogin, articles.hasAuthorization, articles.delete)
-  .post(
-    users.requiresLogin,
-    //users.getAddress,
-    //cp_api.send_kismet,
-    articles.kismet);
   */
 
-  // Finish by binding the article middleware
+  // Finish by binding the middleware
   app.param('compId', comps.byId);
 
 };

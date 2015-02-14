@@ -20,7 +20,7 @@ angular.module('teams').config(['$stateProvider',
 		$stateProvider.
 		state('viewTeam', {
 			url: '/teams/:teamId',
-			templateUrl: 'modules/teams/views/view-team.client.view.html'
+			templateUrl: 'modules/teams/views/team-bio.client.view.html'
 		});
 
 		$stateProvider.

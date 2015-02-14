@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
   errorHandler = require('./errors.server.controller'),
   Competition = mongoose.model('Competition'),
   Ranking = mongoose.model('Ranking'),
-  Matchup = mongoose.model('Matchup');
+  Matchup = mongoose.model('Matchup'),
+  _ = require('lodash');
 
 exports.create = function(req, res) {
   var comp = new Competition(req.body);
@@ -22,13 +23,27 @@ exports.create = function(req, res) {
 
 exports.list = function(req, res) {
 
-  Competition.find(function(err, comps){
+  Competition.find().sort("-created").exec(function(err, comps){
     if (err) {
       return res.status(500).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
       res.json(comps);
+    }
+  });
+};
+
+exports.update = function(req, res) {
+  var comp = req.comp;
+  comp = _.extend(comp, req.body);
+  comp.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(comp);
     }
   });
 };
@@ -46,37 +61,28 @@ exports.read = function(req, res) {
   res.json(req.comp);
 };
 
-/*
-exports.update = function(req, res) {
-  var article = req.article;
 
-  //console.log('resetting parent');
-  //article.parent = '';//article.id;
-
-  article = _.extend(article, req.body);
-
-  article.save(function(err) {
+exports.listRankings = function(req, res) {
+  Ranking.find({competition:req.param('compId')}).sort(req.query.sortBy).populate('team','name').exec(function(err, teams){
     if (err) {
-      return res.status(400).send({
+      return res.status(500).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(teams);
     }
   });
 };
 
-exports.delete = function(req, res) {
-  var article = req.article;
-
-  article.remove(function(err) {
+exports.addRanking = function(req, res) {
+  var team = new Ranking(req.body);
+  team.save(function(err) {
     if (err) {
-      return res.status(400).send({
+      return res.status(500).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(team);
     }
   });
 };
-*/

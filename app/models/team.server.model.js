@@ -20,6 +20,11 @@ var TeamSchema = new Schema({
     trim: true,
     required: 'Name cannot be blank'
   },
+  lowername: {
+    type: String,
+    default: '',
+    trim: true,
+  },
   description: {
     type: String,
     default: '',
@@ -33,13 +38,17 @@ var TeamSchema = new Schema({
     type: [{type: Schema.ObjectId, ref: 'User' }],
     default: []
   },
+  members: {
+    type: [{type: Schema.ObjectId, ref: 'User' }],
+    default: []
+  },
   joinpw: {
     type: String,
     default: ''
   },
   imageurl: {
     type: String,
-    default: '',
+    default: '/modules/teams/img/team-default.png',
     trim: true
   }
 });

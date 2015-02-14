@@ -15,6 +15,7 @@ exports.create = function(req, res) {
 	var team = new Team(req.body);
 
 	team.user = req.user;
+	team.lowername = team.name.toLowerCase();
 
 	team.save(function(err) {
 		if (err) {
@@ -56,9 +57,60 @@ exports.update = function(req, res) {
 	});
 };
 
+exports.joinOrQuitTeam = function(req, res) {
+	if(req.query.newMember) joinTeam(req,res);
+	else if(req.query.removeMember) quitTeam(req,res);
+	else return res.status(500).send({
+		message: 'Improper join or quit request'
+	});
+};
+
+function joinTeam(req, res) {
+	var team = req.team;
+	if(req.team.members.indexOf(req.query.newMember) === -1)
+	{
+		team.members.push(mongoose.Types.ObjectId(req.query.newMember));
+
+		team.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.json(team);
+			}
+		});
+	}
+	else return res.status(500).send({
+		message: 'Improper join or quit request'
+	});
+};
+
+function quitTeam(req, res) {
+	var team = req.team;
+	var memberIndex = req.team.members.indexOf(req.query.removeMember);
+	if(memberIndex !== -1)
+	{
+		req.team.members.splice(memberIndex, 1);
+
+		team.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.json(team);
+			}
+		});
+	}
+	else return res.status(500).send({
+		message: 'Improper join or quit request'
+	});
+};
+
 
 /**
- * Delete an team
+ * Delete a team
  */
 exports.delete = function(req, res) {
 	var team = req.team;
@@ -95,10 +147,11 @@ exports.list = function(req, res) {
  * Team middleware
  */
 exports.teamByID = function(req, res, next, id) {
-	Team.findById(id).populate('user', 'username').exec(function(err, teams) {
+	Team.findById(id).populate('User','username avatar').exec(function(err, team) {
 		if (err) return next(err);
-		if (!teams) return next(new Error('Failed to load teams ' + id));
-		req.teams = teams;
+		if (!team) return next(new Error('Failed to load teams ' + id));
+		req.team = team;
+		//console.log(JSON.stringify(team))
 		next();
 	});
 };
@@ -107,7 +160,7 @@ exports.teamByID = function(req, res, next, id) {
  * Team authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.team.user.id !== req.user.id) {
+	if (req.team.founder.id !== req.user.id) {
 		return res.status(403).send({
 			message: 'User is not authorized'
 		});

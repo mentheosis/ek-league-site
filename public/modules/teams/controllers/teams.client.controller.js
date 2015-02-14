@@ -6,17 +6,28 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		//if(authentication.user.color)
 		//	$scope.userSelectedColor = authentication.user.color;
 
-		$scope.devMode=true;
-
-		$scope.switchShowFull = function(repeatScope){
-			repeatScope.showFull = !repeatScope.showFull;
+		$scope.joinTeam = function() {
+			if(Authentication.user && $scope.team && $scope.team.members.indexOf(Authentication.user._id) === -1)
+			{
+				//$scope.team.members.push(Authentication.user._id);
+				$scope.team.$save({newMember: Authentication.user._id},
+					function(team){
+						$scope.team = team;
+					});
+			}
 		};
 
-		$scope.userSelectedColor = 'Blue';
-		$scope.colorsVisible = false;
-		$scope.switchColorsVisible = function(){
-			$scope.colorsVisible = !$scope.colorsVisible;
+		$scope.quitTeam = function() {
+			if(Authentication.user && $scope.team && $scope.team.members.indexOf(Authentication.user._id) !== -1)
+			{
+				//$scope.team.members.push(Authentication.user._id);
+				$scope.team.$save({removeMember: Authentication.user._id},
+					function(team){
+						$scope.team = team;
+					});
+			}
 		};
+
 
 		$scope.createVisible = false;
 		$scope.switchCreateVisible = function(){
@@ -34,7 +45,7 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 
 			team.$save(function(response) {
 				//$location.path('teams/' + response._id);
-
+				$location.path('teams/' + response._id);
 				$scope.name = '';
 				$scope.description = '';
 				$scope.imageurl= '';
@@ -94,7 +105,6 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		$scope.find = function() {
 			//$scope.teams = Teams.query();
 			$scope.teams = Teams.list({sortBy:($scope.sortDesc?'-':'') + $scope.sortBy});
-			console.log("this.teams: "+ this.teams);
 		};
 
 		$scope.findOne = function() {

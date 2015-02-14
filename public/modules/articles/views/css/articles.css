@@ -29,8 +29,10 @@ a:hover, a:visited, a:link, a:active {
   z-index: 3;
 }
 
-.admin-control {
-  margin: 0 5px 0 5px;
+.news-container {
+  border:solid;
+  border-width:5px 5px 0 0;
+  border-color:#555555;
 }
 
 .article-container {

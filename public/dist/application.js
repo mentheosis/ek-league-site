@@ -387,9 +387,9 @@ function($stateProvider) {
   });
 
   $stateProvider.
-  state('create-comp', {
-    url: '/create-comp',
-    templateUrl: 'modules/competitions/views/create-comp.client.view.html'
+  state('manage-comps', {
+    url: '/manage-comps',
+    templateUrl: 'modules/competitions/views/manage-comps.client.view.html'
   });
 
   $stateProvider.
@@ -403,8 +403,8 @@ function($stateProvider) {
 
 'use strict';
 
-angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Competitions',
-function($scope, $stateParams, Authentication, Competitions) {
+angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Competitions', 'Rankings', 'Teams',
+function($scope, $stateParams, Authentication, Competitions, Rankings, Teams) {
   $scope.authentication = Authentication;
 
   $scope.createComp = function() {
@@ -417,26 +417,74 @@ function($scope, $stateParams, Authentication, Competitions) {
     comp.$save(function(response) {
       $scope.compName = '';
       $scope.compBanner = '';
-      $scope.compDesc= '';
+      $scope.compDesc = '';
+      $scope.listComps();
     }, function(errorResponse) {
       $scope.error = errorResponse.data.message;
     });
   };
 
+  $scope.gatherCompData = function(compId) {
+    if(compId) $scope.selectedComp = compId;
+    else $scope.selectedComp = $stateParams.compId;
+    $scope.getComp();
+    $scope.listRankings();
+  }
+
   $scope.listComps = function() {
     $scope.competitions = Competitions.query();
+    $scope.listTeams();
   };
 
   $scope.getComp = function() {
-    $scope.comp = Competitions.get({ compId: $stateParams.compId });
+    $scope.comp = Competitions.get({ compId: $scope.selectedComp });
   };
+
+  $scope.saveComp = function() {
+    if($scope.comp)
+    {
+      //$scope.comp.maps.push({map: 'a', imageurl: 'b'});
+      //console.log("update");
+      //$scope.comp.maps.push({map: $scope.mapName, imageurl: $scope.mapImage});
+      $scope.comp.$save({},function(){
+        $scope.listComps();
+      });
+    }
+  };
+
+  $scope.listTeams = function() {
+    //$scope.teams = Teams.query();
+    $scope.teams = Teams.list({sortBy:'lowername'});
+  };
+
+  $scope.listRankings = function() {
+    $scope.rankings = Rankings.list({compId: $scope.selectedComp, sortBy:'wins'})
+  };
+
+  $scope.addTeamToComp = function() {
+    if(this.selectedComp && this.selectedTeam)
+    {
+      var team = new Rankings({
+        competition: this.selectedComp,
+        team: this.selectedTeam._id,
+      });
+
+      team.$save(function(response) {
+        $scope.success = 'Team Added';
+        $scope.listRankings();
+      }, function(errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    }
+  };
+
+
 
 }
 ]);
 
 'use strict';
 
-//Comments service used for communicating with the articles REST endpoints
 angular.module('competitions')
   .factory('Competitions', //the name of the resource Class
   ['$resource',
@@ -446,6 +494,28 @@ angular.module('competitions')
       compId: '@_id',
     });
 }
+]);
+
+'use strict';
+
+angular.module('competitions')
+  .factory('Rankings', //the name of the resource Class
+  ['$resource',
+  function($resource) {
+    return $resource('rankings/:compId',
+    {
+      rankId: '@_id',
+    },
+    {
+      list: {
+        method: 'GET',
+        isArray: true,
+        params: {
+          sortBy: '@sortBy'
+        }
+      }
+    });
+  }
 ]);
 
 'use strict';
@@ -894,7 +964,7 @@ angular.module('teams').config(['$stateProvider',
 		$stateProvider.
 		state('viewTeam', {
 			url: '/teams/:teamId',
-			templateUrl: 'modules/teams/views/view-team.client.view.html'
+			templateUrl: 'modules/teams/views/team-bio.client.view.html'
 		});
 
 		$stateProvider.
@@ -913,17 +983,28 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		//if(authentication.user.color)
 		//	$scope.userSelectedColor = authentication.user.color;
 
-		$scope.devMode=true;
-
-		$scope.switchShowFull = function(repeatScope){
-			repeatScope.showFull = !repeatScope.showFull;
+		$scope.joinTeam = function() {
+			if(Authentication.user && $scope.team && $scope.team.members.indexOf(Authentication.user._id) === -1)
+			{
+				//$scope.team.members.push(Authentication.user._id);
+				$scope.team.$save({newMember: Authentication.user._id},
+					function(team){
+						$scope.team = team;
+					});
+			}
 		};
 
-		$scope.userSelectedColor = 'Blue';
-		$scope.colorsVisible = false;
-		$scope.switchColorsVisible = function(){
-			$scope.colorsVisible = !$scope.colorsVisible;
+		$scope.quitTeam = function() {
+			if(Authentication.user && $scope.team && $scope.team.members.indexOf(Authentication.user._id) !== -1)
+			{
+				//$scope.team.members.push(Authentication.user._id);
+				$scope.team.$save({removeMember: Authentication.user._id},
+					function(team){
+						$scope.team = team;
+					});
+			}
 		};
+
 
 		$scope.createVisible = false;
 		$scope.switchCreateVisible = function(){
@@ -941,7 +1022,7 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 
 			team.$save(function(response) {
 				//$location.path('teams/' + response._id);
-
+				$location.path('teams/' + response._id);
 				$scope.name = '';
 				$scope.description = '';
 				$scope.imageurl= '';
@@ -1001,7 +1082,6 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		$scope.find = function() {
 			//$scope.teams = Teams.query();
 			$scope.teams = Teams.list({sortBy:($scope.sortDesc?'-':'') + $scope.sortBy});
-			console.log("this.teams: "+ this.teams);
 		};
 
 		$scope.findOne = function() {

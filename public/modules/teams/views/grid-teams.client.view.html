@@ -1,15 +1,18 @@
 <section style="background:black" data-ng-controller="TeamsController" data-ng-init="find()">
+
+	<div class="register-team"><a href="#!/teams/create">Register New Team</a></div>
 	<div class="grid-container">
 
+<!--
 		<div class="team-panel" style="cursor:pointer" ng-click="switchCreateVisible()">
-			<img src="modules/teams/img/team-default.png">
+			<img src="/modules/teams/img/team-default.png">
 			<span class="team-name">New Team</span>
 		</div>
 
 		<div ng-show="createVisible">
 			<div ng-include="'/modules/teams/views/create-team.client.view.html'"></div>
 		</div>
-
+-->
 		<div data-ng-repeat="team in teams" class="team-panel">
 
 <!--
@@ -22,8 +25,8 @@
 						</a>
 					</span>
 -->
-			<img src="modules/teams/img/team-default.png">
-			<span data-ng-bind="team.name" class="team-name"></span>
+			<a href="#!/teams/{{team._id}}"><img class="team-img" ng-src="{{team.imageurl}}">
+			<span data-ng-bind="team.name" class="team-name"></span></a>
 
 		</div>
 

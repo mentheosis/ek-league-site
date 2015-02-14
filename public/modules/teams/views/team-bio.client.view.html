@@ -1,0 +1,67 @@
+<section ng-controller="TeamsController" data-ng-init="findOne()">
+
+<div class="row">
+
+  <div class="col-xs-5" style="position:relative">
+    <div class="team-links-container">
+      <div class="team-bio-panel">
+        <img class="team-img" ng-src="{{team.imageurl}}">
+      </div>
+      <br>
+      <div class="team-bio-name">
+        {{team.name}}
+      </div>
+      <div class="team-links" ng-hide="team.members.indexOf(authentication.user._id) !== -1">
+        <a href ng-click="joinTeam()" class="team-links"> JOIN TEAM </a>
+      </div>
+      <div class="team-links" ng-show="team.members.indexOf(authentication.user._id) !== -1">
+        <a href ng-click="quitTeam()" class="team-links"> QUIT TEAM </a>
+      </div>
+
+      <div class="team-links">
+        <a href class="team-links"> CONTACT </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-7">
+    <div class="team-bio-container">
+
+      <div class="team-bio-title">
+        BIO
+      </div>
+
+      <div class="team-bio">
+        {{team}}
+      </div>
+
+      <div class="team-bottom-container">
+
+        <div class="team-member-container">
+          <div ng-repeat="member in team.members">
+            {{member}}
+          </div>
+        </div>
+
+        <div class="team-info-container">
+          <div class="team-bio-title" style="margin: -3px 0 0 -3px">
+            TEAM INFO
+          </div>
+
+          <div class="team-info">
+            <div class="team-info-bit">HOMEPAGE:</div>
+            <div class="team-info-bit">YEAR FOUNDED:</div>
+            <div class="team-info-bit">FAVORITE COLORS:</div>
+            <div class="team-info-bit">RECRUITMENT STATUS:</div>
+            <div class="team-info-bit">SPONSORSHIPS:</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</section>

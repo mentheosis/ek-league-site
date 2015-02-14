@@ -1,25 +1,48 @@
-<section style="background:black" ng-controller="CompController" ng-init="getComp()">
+<section class="row comp-container" ng-controller="CompController" ng-init="gatherCompData($stateParams.compId)">
 
-  <div class="col-xs-2" style="display:inline-block">
+  <div class="col-xs-2 banner-outer">
     <div class="banner-container">
-      banner
+      <img class="comp-banner" ng-src="{{comp.bannerurl}}">
+      <div class="comp-links-container">
+        <div class="comp-links"><a href>JOIN COMPETITION</a></div>
+        <div class="comp-links"><a href>OFFICIAL RULES</a></div>
+        <div class="comp-links"><a href>SERVER SETTINGS</a></div>
+        <div class="comp-links"><a href>REPORT WIN</a></div>
+      </div>
     </div>
   </div>
 
-  <div class="col-xs-8" style="display:inline-block">
+  <div class="col-xs-8 matchup-outer">
     <div class="matchup-container">
       matchups
       <br>
-      {{comp}}
+      TBD
+
+    <div class="comp-section-title">This Week's Matches</div>
     </div>
+
     <div class="map-container">
-      maps
+      <div class="current-map">
+        <img class="current-map-img" ng-src="{{comp.maps[comp.currentWeek-1].imageurl}}">
+        <div class="comp-section-title">Week {{comp.currentWeek}}: <span style="color:white">{{comp.maps[comp.currentWeek-1].map}}</span></div>
+      </div>
+
+      <div class="map-list">
+        <div ng-repeat="week in comp.maps">
+          Week {{$index+1}}: {{week.map}}
+        </div>
+        <div class="comp-section-title">Map List</div>
+      </div>
     </div>
   </div>
 
-  <div class="col-xs-2" style="display:inline-block">
+  <div class="col-xs-2 ranking-outer">
     <div class="ranking-container">
-      rankings
+
+      <div ng-repeat="team in rankings">
+        {{$index+1}}. {{team.team.name}} - {{team.wins}} - {{team.losses}} - {{team.ties}}
+      </div>
+
     </div>
   </div>
 

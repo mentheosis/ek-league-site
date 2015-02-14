@@ -43,20 +43,20 @@
 	<![endif]-->
 </head>
 
-<body style="background:black" class="ng-cloak">
+<body style="background:black; padding: none; margin: none" class="ng-cloak">
 	<header data-ng-include="'/modules/core/views/header.client.view.html'"></header>
 
-	<div id="outer-view-container" class="row">
-		<div class="col-xs-9 news-container view-container">
+	<div id="outer-view-container" class="row" style="padding: none; margin: none">
+		<div class="col-xs-12 view-container">
 			<section>
 					{% block content %}{% endblock %}
 			</section>
 		</div>
-		<div class="col-xs-2">
-			<div class="side-link"><a href="#!/">News</a></div>
-			<div class="side-link"><a href="#!/competitions">Competitions</a></div>
-			<div class="side-link"><a href="#!/teams">Teams</a></div>
-			<div class="side-link"><a href="#!/scrim">Scrim Finder</a></div>
+		<div class="side-link-container">
+			<div class="side-link"><a href="#!/">NEWS</a></div>
+			<div class="side-link"><a href="#!/competitions">COMPETITIONS</a></div>
+			<div class="side-link"><a href="#!/teams">TEAMS</a></div>
+			<div class="side-link"><a href="#!/scrim">SCRIM FINDER</a></div>
 		</div>
 	</div>
 

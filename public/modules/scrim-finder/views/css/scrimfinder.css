@@ -1,13 +1,21 @@
 
-.scrim-title{
+
+.scrim-headline-container{
   color: #FF9000;
-  font-size: 3em;
   text-align: center;
+  border: solid;
+  border-color: #555555;
+  border-width: 1px;
+  /*background: #111111;*/
+  margin: 0 -15px 15px 15px;
+
+}
+
+.scrim-title{
+  font-size: 3em;
 }
 
 .scrim-headline{
-  color: #FF9000;
-  text-align: center;
   margin: -10px 0 15px 0;
 }
 
@@ -63,7 +71,7 @@
   background: #111111;
   margin-right:-45px;
   border: solid;
-  border-width: 1px 0 0 1px;
+  border-width: 1px 1px 0 1px;
   border-color: #555555;
 }
 
@@ -95,6 +103,7 @@
   width:100%;
   background: black;
   color: white;
+  border: none;
 }
 
 input:focus{

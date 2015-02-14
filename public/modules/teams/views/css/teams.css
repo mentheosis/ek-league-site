@@ -3,20 +3,137 @@
 	display: -webkit-flex; /* Safari */
 	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: wrap; /* firefox */
+}
+
+.register-team {
+	margin: 0 0 0 10px;
+}
+
+.team-bio-panel {
+	height:206px;
+	width:206px;
+	display:inline-block;
+	margin: 3px;
+	padding: 2px;
+	border: 1px solid #555555;
+	/*	cursor: pointer; */
 }
 
 .team-panel {
-	height:200px;
-	width:200px;
+	height:206px;
+	width:206px;
 	display:inline-block;
-	margin: 3px;
-	border: 1px solid #777777;
+	margin: 3px 3px 15px 3px;
+	padding: 2px;
+	border: 1px solid #555555;
 /*	cursor: pointer; */
 }
 
+.team-links-container {
+	position: absolute;
+	right:0;
+	color: #FF9000;
+	text-align: center;
+}
+
+.team-links {
+	margin: 15px;
+	font-size:1.1em;
+}
+
+.team-links a:link {
+	color: white;
+	outline:0;
+}
+.team-links a:visited {
+	color: white;
+	outline:0;
+}
+.team-links a:hover {
+	color: #FF7000;
+	outline:0;
+}
+.team-links a:active {
+	color: #FF7000;
+	outline:0;
+}
+
+.team-bio-name {
+	border: solid;
+	border-color: #555555;
+	border-width: 0 0 1px 0;
+	margin: 3px;
+	padding: 3px;
+	width: 206px;
+}
+
+.team-bio-container {
+	display:inline-block;
+	margin: 3px 0 0 -10px;
+	border: 3px solid #333333;
+	border-radius: 2px;
+	background: #0c0c0c;
+	width:100%;
+	word-wrap: break-word;
+	min-height: 400px;
+}
+
+.team-bio-title {
+	margin: 5px 0 0 5px;
+	letter-spacing: 0.4em;
+	font-family:Times New Roman;
+	font-size: 1.5em;
+}
+
+.team-bio {
+	color: #FF9000;
+	margin: 0 15px 0 15px;
+	padding: 0 0 25px 0;
+	min-height: 100px;
+	border: solid;
+	border-color: #333333;
+	border-width: 0 0 2px 0;
+}
+
+.team-bottom-container {
+	display: flex;
+}
+
+.team-member-container {
+	display: inline-block;
+	width: 175px;
+	margin: 0 0 0 15px;
+}
+
+.team-info-container {
+	border: solid;
+	border-color: #333333;
+	border-width: 0 0 0 2px;
+	display: inline-block;
+	width:100%;
+	padding: 0 0 0 15px;
+	margin: 15px 0 0 0;
+	min-height: 200px;
+}
+
+.team-info {
+	font-size:0.8em;
+	font-weight: 900;
+}
+
+.team-info-bit {
+	margin: 10px 0 0 0;
+}
+
+
 .team-image-container {
 	text-align: center;
+}
+
+.team-img {
+	width:200px;
+	height: 200px;
 }
 
 .team-name {

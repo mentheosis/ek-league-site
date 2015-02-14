@@ -11,9 +11,9 @@ function($stateProvider) {
   });
 
   $stateProvider.
-  state('create-comp', {
-    url: '/create-comp',
-    templateUrl: 'modules/competitions/views/create-comp.client.view.html'
+  state('manage-comps', {
+    url: '/manage-comps',
+    templateUrl: 'modules/competitions/views/manage-comps.client.view.html'
   });
 
   $stateProvider.

@@ -43,9 +43,9 @@ var RankingSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Team'
   },
-  wins: Number,
-  Losses: Number,
-  Ties: Number,
+  wins: {type: Number, default: 0},
+  losses: {type: Number, default: 0},
+  ties: {type: Number, default: 0},
   created: {
     type: Date,
     default: Date.now
