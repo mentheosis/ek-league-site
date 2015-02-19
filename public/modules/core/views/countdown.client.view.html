@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="countdownApp" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>EKombat</title>
+  <script type="text/javascript" src="/lib/angular/angular.js"></script>
+  <script>
+    (function(angular){
+        'use strict';
+
+        var app = angular.module('countdownApp',[]);
+
+        app.controller('CountdownControl',function($scope, $timeout){
+
+          $scope.targetDate = new Date(2015, 2, 7, 12);
+          $scope.now = new Date();
+
+          function dateDiff(now, later) {
+            var diffMs = later - now;
+
+            var secMs = 1000;
+            var minMs = secMs * 60;
+            var hourMs = minMs * 60;
+            var dayMs = hourMs * 24;
+
+            var diffDays = Math.floor(diffMs / dayMs);
+            var diffHours = Math.floor((diffMs % dayMs) / hourMs);
+            var diffMins = Math.floor((diffMs % hourMs) / minMs);
+            var diffSec = Math.floor((diffMs % minMs) / secMs);
+
+            return {
+              day: diffDays.toString(),
+              hour: diffHours.toString(),
+              min: diffMins.toString(),
+              sec: diffSec.toString()
+              }
+          }
+
+          $scope.counter = dateDiff($scope.now, $scope.targetDate);
+
+          $scope.onTimeout = function(){
+              $scope.now = new Date();
+              $scope.counter = dateDiff($scope.now, $scope.targetDate);
+              mytimeout = $timeout($scope.onTimeout,1000);
+          }
+          var mytimeout = $timeout($scope.onTimeout,1000);
+
+        });
+    })(window.angular);
+  </script>
+
+</head>
+<body ng-cloak ng-controller="CountdownControl" style="color:orange; background: url('http://i.imgur.com/MCFN861.png')">
+  <img style="width: 75%; height: 75%; display: block; margin: auto" src="http://i.imgur.com/xlMT6Gy.png">
+  <div style="text-align: center; font-weigt: 900" >
+    <span style="font-size: 2em; margin: 0 0.2em 0 0.5em">{{counter.day}}</span><span style="font-size: 1em">DAYS</span>
+    <span style="font-size: 2em; margin: 0 0.2em 0 0.5em">{{counter.hour}}</span><span style="font-size: 1em">HOURS</span>
+    <span style="font-size: 2em; margin: 0 0.2em 0 0.5em">{{counter.min}}</span><span style="font-size: 1em">MINUTES</span>
+    <span style="font-size: 2em; margin: 0 0.2em 0 0.5em">{{counter.sec}}</span><span style="font-size: 1em">SECONDS</span>
+  </div>
+
+</body>
+</html>

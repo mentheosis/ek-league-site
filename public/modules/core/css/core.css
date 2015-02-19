@@ -238,9 +238,9 @@ a:active {
 }
 
 
-#outer-view-container {
+.outer-view-container {
 	height: calc(100% - 260px);
-	min-width: 1300px;
+	min-width: 1000px;
 	width: 100%;
 	display: flex;
 }
@@ -260,19 +260,28 @@ a:active {
 
 .side-link-container {
 	width: 400px;
-	margin: 0 -10px 0 15px;
+	margin: 0 -10px 0 0;
 	text-align: right;
-	/*
-	background: #0c0c0c;
-	border: 1px solid #555555;
-	padding: 5px;
-	*/
+	font-size:40px;
+	font-weight: 900;
+}
+
+@media only screen and (max-width: 1400px) {
+	.side-link-container {
+		width: 350px;
+		font-size: 35px;
+	}
+}
+
+@media only screen and (max-width: 1300px) {
+	.side-link-container {
+		width: 300px;
+		font-size: 30px;
+	}
 }
 
 .side-link > a{
 	color: #FF7000 !important;
-	font-size:40px;
-	font-weight: 900;
 	/*
 	text-shadow:  1px 0 0 #FFFFFF,
 	-1px 0 0 #FFFFFF,
