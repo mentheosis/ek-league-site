@@ -56,6 +56,24 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 			});
 		};
 
+		$scope.delete = function(team) {
+			$scope.confirmDelete = false;
+			if (team) {
+				team.$remove();
+
+				for (var i in $scope.teams) {
+					if ($scope.teams[i] === team) {
+						$scope.teams.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.team.$remove(function() {
+					$location.path('teams');
+				});
+			}
+		};
+
+
 		$scope.update = function() {
 			var team = $scope.team;
 

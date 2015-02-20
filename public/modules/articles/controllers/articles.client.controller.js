@@ -105,6 +105,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		};
 
 		$scope.remove = function(article) {
+			$scope.confirmDelete = false;
 			if (article) {
 				article.$remove();
 

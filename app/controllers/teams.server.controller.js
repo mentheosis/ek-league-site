@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var team = new Team(req.body);
 
-	team.user = req.user;
+	team.founder = req.user;
 	team.lowername = team.name.toLowerCase();
 
 	team.save(function(err) {
@@ -160,10 +160,15 @@ exports.teamByID = function(req, res, next, id) {
  * Team authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.team.founder.id !== req.user.id) {
+	if(!req.team.founder && req.user.roles.indexOf('admin') !== -1) {
+		next();
+		return;
+	}
+	if (req.team.founder.id === req.user.id || req.user.roles.indexOf('admin') !== -1) {
+		next();
+		return;
+	}
 		return res.status(403).send({
 			message: 'User is not authorized'
 		});
-	}
-	next();
 };

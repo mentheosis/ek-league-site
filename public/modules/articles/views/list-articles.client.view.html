@@ -44,9 +44,25 @@
 					<a title="Edit" class="admin-control" href="/#!/articles/{{article._id}}/edit">
 						<i class="glyphicon glyphicon-edit"></i>
 					</a>
-					<a title="Delete" class="admin-control" href="" style="cursor:pointer" data-ng-click="remove(article);">
+					<a title="Delete" ng-click="confirmDelete = true" class="admin-control" href="" style="cursor:pointer" >
 						<i class="glyphicon glyphicon-trash"></i>
 					</a>
+						<div style="position: relative" ng-show="confirmDelete">
+								<div class="confirmDelete">
+								    <div>
+								      <a href ng-click="confirmDelete = false" title="Close" class="confirmDelete-close">X</a>
+
+								      <h3>Confirm Delete</h3>
+								      <br>
+								      <span ng-click="remove(article)" class="delete-button">
+								        Delete
+								      </span>
+								      <span ng-click="confirmDelete = false" class="delete-button">
+								        Cancel
+								      </span>
+								    </div>
+								</div>
+						</div>
 				</span>
 
 				<div data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></div>

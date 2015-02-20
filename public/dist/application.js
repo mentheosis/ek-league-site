@@ -217,6 +217,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 		};
 
 		$scope.remove = function(article) {
+			$scope.confirmDelete = false;
 			if (article) {
 				article.$remove();
 
@@ -478,6 +479,20 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams) {
     }
   };
 
+	$scope.delete = function(comp) {
+		$scope.confirmDelete = false;
+		if (comp) {
+			comp.$remove(function(){
+  			for (var i in $scope.competitions) {
+  				if ($scope.competitions[i]._id === $scope.comp._id) {
+  					$scope.competitions.splice(i, 1);
+  				}
+  			}
+        $scope.comp=null;
+        $scope.rankings=null;
+      });
+		}
+	};
 
 
 }
@@ -1070,6 +1085,24 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 				$scope.error = errorResponse.data.message;
 			});
 		};
+
+		$scope.delete = function(team) {
+			$scope.confirmDelete = false;
+			if (team) {
+				team.$remove();
+
+				for (var i in $scope.teams) {
+					if ($scope.teams[i] === team) {
+						$scope.teams.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.team.$remove(function() {
+					$location.path('teams');
+				});
+			}
+		};
+
 
 		$scope.update = function() {
 			var team = $scope.team;

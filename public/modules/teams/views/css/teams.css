@@ -1,8 +1,11 @@
 .grid-container {
 	min-height:450px;
-	display: -webkit-flex; /* Safari */
-	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
+	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
 	flex-wrap: wrap; /* firefox */
 }
 
@@ -97,6 +100,10 @@
 }
 
 .team-bottom-container {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
 }
 

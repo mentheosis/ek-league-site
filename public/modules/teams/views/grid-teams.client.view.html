@@ -13,18 +13,28 @@
 			<div ng-include="'/modules/teams/views/create-team.client.view.html'"></div>
 		</div>
 -->
-		<div data-ng-repeat="team in teams" class="team-panel">
-
-<!--
-					<span style="margin-left: 15px" data-ng-show="adminMode">
-						<a title="Edit" class="admin-control" href="/#!/teams/{{team._id}}/edit">
-							<i class="glyphicon glyphicon-edit"></i>
-						</a>
-						<a title="Delete" class="admin-control" href="" style="cursor:pointer" data-ng-click="remove(team);">
+		<div data-ng-repeat="team in teams" class="team-panel" style="position: relative">
+					<span style="margin-left: 15px; position:absolute; background:black; border-radius: 20px; padding: 6px 4px 5px 2px; bottom: 10px; right: 10px;" data-ng-show="adminMode">
+						<a title="Delete" class="admin-control" href="" style="cursor:pointer" data-ng-click="confirmDelete = true">
 							<i class="glyphicon glyphicon-trash"></i>
 						</a>
+						<div style="position: relative" ng-show="confirmDelete">
+								<div class="confirmDelete">
+								    <div>
+								      <a href ng-click="confirmDelete = false" title="Close" class="confirmDelete-close">X</a>
+
+								      <h3>Confirm Delete</h3>
+								      <br>
+								      <span ng-click="delete(team)" class="delete-button">
+								        Delete
+								      </span>
+								      <span ng-click="confirmDelete = false" class="delete-button">
+								        Cancel
+								      </span>
+								    </div>
+								</div>
+						</div>
 					</span>
--->
 			<a href="#!/teams/{{team._id}}"><img class="team-img" ng-src="{{team.imageurl}}">
 			<span data-ng-bind="team.name" class="team-name"></span></a>
 

@@ -75,6 +75,20 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams) {
     }
   };
 
+	$scope.delete = function(comp) {
+		$scope.confirmDelete = false;
+		if (comp) {
+			comp.$remove(function(){
+  			for (var i in $scope.competitions) {
+  				if ($scope.competitions[i]._id === $scope.comp._id) {
+  					$scope.competitions.splice(i, 1);
+  				}
+  			}
+        $scope.comp=null;
+        $scope.rankings=null;
+      });
+		}
+	};
 
 
 }

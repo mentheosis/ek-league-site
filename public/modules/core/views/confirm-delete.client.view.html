@@ -1,0 +1,14 @@
+<div class="confirmDelete">
+    <div>
+      <a href ng-click="confirmDelete = false" title="Close" class="confirmDelete-close">X</a>
+
+      <h3>Confirm Delete</h3>
+      <br>
+      <span ng-click="confirmDelete = false" class="delete-button">
+        Delete {{$id}}
+      </span>
+      <span ng-click="delete(team)" class="delete-button">
+        Cancel
+      </span>
+    </div>
+</div>

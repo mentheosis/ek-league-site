@@ -179,10 +179,11 @@ exports.articleByParent = function(req, res, next, id) {
  * Article authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.article.user.id !== req.user.id) {
-		return res.status(403).send({
-			message: 'User is not authorized'
-		});
+	if (req.user.roles.indexOf('admin') != -1) {
+		next();
+		return;
 	}
-	next();
+	return res.status(403).send({
+		message: 'User is not authorized'
+	});
 };

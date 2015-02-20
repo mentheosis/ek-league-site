@@ -48,6 +48,20 @@ exports.update = function(req, res) {
   });
 };
 
+exports.delete = function(req, res) {
+	var comp = req.comp;
+
+	comp.remove(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.json(comp);
+		}
+	});
+};
+
 exports.byId = function(req, res, next, id) {
   Competition.findById(id).exec(function(err, comp) {
     if (err) return next(err);
@@ -85,4 +99,14 @@ exports.addRanking = function(req, res) {
       res.json(team);
     }
   });
+};
+
+exports.hasAuthorization = function(req, res, next) {
+	if(req.user.roles.indexOf('admin') !== -1) {
+		next();
+		return;
+	}
+		return res.status(403).send({
+			message: 'User is not authorized'
+		});
 };

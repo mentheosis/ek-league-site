@@ -39,6 +39,31 @@
       <div ng-show="comp">
       <br><br>Name: <input ng-model="comp.name" style="width:100%" class="manage-comp-input">
       <br><br>Banner Img: <input ng-model="comp.bannerurl" style="width:100%" class="manage-comp-input">
+
+      <br><br>
+      <br><br><span style="margin-left: 15px" data-ng-show="adminMode">
+      					<a title="Delete" ng-click="confirmDelete = true" class="admin-control" href="" style="cursor:pointer" >
+      						<i class="glyphicon glyphicon-trash"></i>&nbsp Delete this competition
+      					</a>
+      						<div style="position: relative" ng-show="confirmDelete">
+      								<div class="confirmDelete">
+      								    <div>
+      								      <a href ng-click="confirmDelete = false" title="Close" class="confirmDelete-close">X</a>
+
+      								      <h3>Confirm Delete</h3>
+      								      <br>
+      								      <span ng-click="delete(comp)" class="delete-button">
+      								        Delete
+      								      </span>
+      								      <span ng-click="confirmDelete = false" class="delete-button">
+      								        Cancel
+      								      </span>
+      								    </div>
+      								</div>
+      						</div>
+      				</span>
+
+
       </div>
 
     <div class="comp-section-title">This Week's Matches</div>
@@ -53,15 +78,14 @@
       <a href ng-click="comp.maps.push({})">add a week</a>
     </div>
 
-    <div class="map-container">
-      <div class="current-map">
-        current map image
-      <div class="comp-section-title">Week {{comp.currentWeek}}: {{comp.maps[comp.currentWeek-1].map}}</div>
+    <div class="row" style="margin: 30px 0 0 0">
+      <div class="col-xs-8 current-map">
+        <img class="img-responsive current-map-img" ng-src="{{comp.maps[comp.currentWeek-1].imageurl}}">
+        <div class="comp-section-title">Week {{comp.currentWeek}}: <span style="color:white">{{comp.maps[comp.currentWeek-1].map}}</span></div>
       </div>
-
-      <div class="map-list">
+      <div class="col-xs-4 map-list">
         <div ng-repeat="week in comp.maps">
-          {{$index+1}}. {{week.map}}
+          Week {{$index+1}}: {{week.map}}
         </div>
         <div class="comp-section-title">Map List</div>
       </div>

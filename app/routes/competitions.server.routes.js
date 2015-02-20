@@ -16,7 +16,8 @@ module.exports = function(app) {
   .get(comps.read)
   .post(users.requiresLogin,
     auth.hasAuthorization(['admin']),
-    comps.update);
+    comps.update)
+  .delete(users.requiresLogin, comps.hasAuthorization, comps.delete);
 
   app.route('/rankings')
   .post(users.requiresLogin,
