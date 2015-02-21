@@ -70,6 +70,7 @@ exports.update = function(req, res) {
 };
 
 exports.joinOrQuitTeam = function(req, res) {
+	console.log('user :' + JSON.stringify(req.user));
 	if(req.query.newMember) joinTeam(req,res);
 	else if(req.query.removeMember) quitTeam(req,res);
 	else return res.status(500).send({
@@ -87,9 +88,9 @@ function joinTeam(req, res) {
 		});
 	}
 
-	if(req.team.members.indexOf(req.query.newMember) === -1)
+	if(req.team.members.indexOf(req.user._id) === -1)
 	{
-		team.members.push(mongoose.Types.ObjectId(req.query.newMember));
+		team.members.push(mongoose.Types.ObjectId(req.user._id));
 
 		team.save(function(err) {
 			if (err) {
@@ -108,7 +109,7 @@ function joinTeam(req, res) {
 
 function quitTeam(req, res) {
 	var team = req.team;
-	var memberIndex = req.team.members.indexOf(req.query.removeMember);
+	var memberIndex = req.team.members.indexOf(req.user._id);
 	if(memberIndex !== -1)
 	{
 		req.team.members.splice(memberIndex, 1);
@@ -231,7 +232,8 @@ exports.hasAuthorization = function(req, res, next) {
 		next();
 		return;
 	}
-	if (req.team.founder.id === req.user.id || req.user.roles.indexOf('admin') !== -1) {
+
+	if (req.team.founder.toString() === req.user._id.toString() || req.user.roles.indexOf('admin') !== -1) {
 		next();
 		return;
 	}

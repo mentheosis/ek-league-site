@@ -11,10 +11,10 @@
       <div class="team-bio-name">
         {{team.name}}
       </div>
-      <div class="team-links" ng-hide="team.members.indexOfId(authentication.user._id) !== -1">
+      <div class="team-links" ng-hide="team.members.indexOfUsername(authentication.user.username) !== -1">
         <a href ng-click="tryJoinTeam = true" class="team-links"> JOIN TEAM </a>
       </div>
-      <div class="team-links" ng-show="team.members.indexOfId(authentication.user._id) !== -1">
+      <div class="team-links" ng-show="team.members.indexOfUsername(authentication.user.username) !== -1">
         <a href ng-click="quitTeam()" class="team-links"> QUIT TEAM </a>
       </div>
 			<div style="position: relative" ng-show="tryJoinTeam">
@@ -49,7 +49,7 @@
     <div class="team-bio-container">
 
       <div class="team-bio-title">
-        BIO <i style="font-size:0.8em" ng-show="authentication.user._id = team.founder || authentication.user.roles.indexOf('admin') !== -1" ng-click="processBio()" class="glyphicon glyphicon-pencil" title="edit bio"></i>
+        BIO <i style="font-size:0.8em" ng-show="authentication.user._id === team.founder || (authentication.user && authentication.user.roles.indexOf('admin') !== -1)" ng-click="processBio()" class="glyphicon glyphicon-pencil" title="edit bio"></i>
       </div>
 
       <div class="team-bio">

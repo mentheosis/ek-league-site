@@ -1072,9 +1072,9 @@ angular.module('teams').config(['$stateProvider',
 
 'use strict';
 
-Array.prototype.indexOfId = function(id) {
+Array.prototype.indexOfUsername = function(username) {
     for (var i = 0; i < this.length; i++)
-        if (this[i]._id === id)
+        if (this[i].username === username)
             return i;
     return -1;
 }
@@ -1085,17 +1085,18 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		//if(authentication.user.color)
 		//	$scope.userSelectedColor = authentication.user.color;
 
-		$scope.indexOfId = function(id){
-			return this.indexOfId(id);
+		$scope.indexOfUsername = function(id){
+			return this.indexOfUsername(id);
 		}
 
+		$scope.joinpassword='';
 		$scope.joinTeam = function() {
 			$scope.errText = '';
-			if(Authentication.user && $scope.team && $scope.team.members.indexOfId(Authentication.user._id) === -1)
+			if(Authentication.user && $scope.team && $scope.team.members.indexOfUsername(Authentication.user.username) === -1)
 			{
 				$scope.team.password = $scope.joinpassword;
 				//$scope.team.members.push(Authentication.user._id);
-				$scope.team.$save({newMember: Authentication.user._id},
+				$scope.team.$save({newMember: Authentication.user.username},
 					function(team){
 						$scope.team = team;
 						$scope.tryJoinTeam=false;
@@ -1110,10 +1111,10 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		};
 
 		$scope.quitTeam = function() {
-			if(Authentication.user && $scope.team && $scope.team.members.indexOfId(Authentication.user._id) !== -1)
+			if(Authentication.user && $scope.team && $scope.team.members.indexOfUsername(Authentication.user.username) !== -1)
 			{
 				//$scope.team.members.push(Authentication.user._id);
-				$scope.team.$save({removeMember: Authentication.user._id},
+				$scope.team.$save({removeMember: Authentication.user.username},
 					function(team){
 						$scope.team = team;
 					});
@@ -1178,42 +1179,8 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 			});
 		};
 
-		$scope.sortBy = 'created';
+		$scope.sortBy = "created";
 		$scope.sortDesc = true;
-		$scope.sortAndUpdate = function(sorter){
-			if(sorter==='reverse')
-				$scope.sortDesc = !$scope.sortDesc;
-			else
-			{
-				$scope.sortBy = sorter;
-			}
-
-			$scope.find();
-		};
-
-		//$scope.now = Date.now();
-		//$scope.fuck = 'ug'; //$scope.teams[1].created;
-		//$scope.check = $scope.dateDiffInDays(now,$scope.teams[1].created);
-
-		$scope.dateDiffInDays = function (a, b) {
-			var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-			// Discard the time and time-zone information.
-			var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-			var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-			return (utc2 - utc1) / _MS_PER_DAY;
-			//return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-		};
-
-/*
-		$scope.sortTeams = function(){
-			teams.sort(function(a,b){
-				var ageA = Date.Now - a.created;
-				var ageB = Date.Now - b.created;
-
-				if(a.Created)
-			})
-		}
-*/
 		$scope.find = function() {
 			//$scope.teams = Teams.query();
 			$scope.teams = Teams.list({sortBy:($scope.sortDesc?'-':'') + $scope.sortBy});
