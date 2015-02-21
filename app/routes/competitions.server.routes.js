@@ -3,6 +3,7 @@
 var users = require('../../app/controllers/users.server.controller');
 var auth = require('../../app/controllers/users/users.authorization.server.controller');
 var comps = require('../../app/controllers/competitions.server.controller');
+var matchups = require('../../app/controllers/matchups.server.controller');
 
 module.exports = function(app) {
 
@@ -23,6 +24,12 @@ module.exports = function(app) {
   .post(users.requiresLogin,
     auth.hasAuthorization(['admin']),
     comps.addRanking);
+
+  app.route('/matchups/:compId')
+  .get(matchups.list)
+  .post(users.requiresLogin,
+    auth.hasAuthorization(['admin']),
+    comps.generateMatchups);
 
   app.route('/rankings/:compId')
   .get(comps.listRankings);
