@@ -404,8 +404,8 @@ function($stateProvider) {
 
 'use strict';
 
-angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Competitions', 'Rankings', 'Teams',
-function($scope, $stateParams, Authentication, Competitions, Rankings, Teams) {
+angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Competitions', 'Rankings', 'Teams', 'Matchups',
+function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Matchups) {
   $scope.authentication = Authentication;
 
   $scope.createComp = function() {
@@ -479,6 +479,23 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams) {
     }
   };
 
+  $scope.listMatchups = function() {
+    $scope.matchups = Matchups.list({compId: $scope.comp._id});
+  }
+
+  $scope.generateMatchups = function() {
+      var matchup = new Matchups({ });
+
+      if(!$scope.comp) { return $scope.error = 'Select a Competition First' }
+
+      matchup.$generate({compId: $scope.comp._id}, function(){ 
+        $scope.listMatchups();
+      }, function(err){
+        $scope.error = err;
+      });
+
+    }
+
 	$scope.delete = function(comp) {
 		$scope.confirmDelete = false;
 		if (comp) {
@@ -509,6 +526,31 @@ angular.module('competitions')
       compId: '@_id',
     });
 }
+]);
+
+'use strict';
+
+angular.module('competitions')
+  .factory('Matchups', //the name of the resource Class
+  ['$resource',
+  function($resource) {
+    return $resource('matchups/:compId',
+    {
+      matchupId: '@_id',
+    },
+    {
+      generate: {
+        method: 'POST',
+        //isArray: true,
+        //params: { sortBy: '@sortBy', },
+      },
+      list: {
+        method: 'GET',
+        isArray: true,
+        //params: { }
+      }
+    });
+  }
 ]);
 
 'use strict';
@@ -1030,25 +1072,45 @@ angular.module('teams').config(['$stateProvider',
 
 'use strict';
 
+Array.prototype.indexOfId = function(id) {
+    for (var i = 0; i < this.length; i++)
+        if (this[i]._id === id)
+            return i;
+    return -1;
+}
+
 angular.module('teams').controller('TeamsController', ['$scope', '$stateParams', '$location', '$animate', '$timeout', 'Authentication', 'Teams',
 	function($scope, $stateParams, $location, $animate, $timeout, Authentication, Teams) {
 		$scope.authentication = Authentication;
 		//if(authentication.user.color)
 		//	$scope.userSelectedColor = authentication.user.color;
 
+		$scope.indexOfId = function(id){
+			return this.indexOfId(id);
+		}
+
 		$scope.joinTeam = function() {
-			if(Authentication.user && $scope.team && $scope.team.members.indexOf(Authentication.user._id) === -1)
+			$scope.errText = '';
+			if(Authentication.user && $scope.team && $scope.team.members.indexOfId(Authentication.user._id) === -1)
 			{
+				$scope.team.password = $scope.joinpassword;
 				//$scope.team.members.push(Authentication.user._id);
 				$scope.team.$save({newMember: Authentication.user._id},
 					function(team){
 						$scope.team = team;
+						$scope.tryJoinTeam=false;
+						$scope.joinpassword='';
+					},
+					function(err){
+						$scope.errText = err.data.message;
+						$scope.joinpassword='';
+
 					});
 			}
 		};
 
 		$scope.quitTeam = function() {
-			if(Authentication.user && $scope.team && $scope.team.members.indexOf(Authentication.user._id) !== -1)
+			if(Authentication.user && $scope.team && $scope.team.members.indexOfId(Authentication.user._id) !== -1)
 			{
 				//$scope.team.members.push(Authentication.user._id);
 				$scope.team.$save({removeMember: Authentication.user._id},
@@ -1059,19 +1121,21 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		};
 
 
-		$scope.createVisible = false;
-		$scope.switchCreateVisible = function(){
-			$scope.createVisible = !$scope.createVisible;
+		$scope.editBio = false;
+		$scope.processBio = function(){
+			if($scope.editBio) {
+				$scope.team.$update();
+			}
+			$scope.editBio = !$scope.editBio;
 		};
 
 		$scope.create = function() {
 			var team = new Teams({
 				name: this.name,
-				description: this.description
 			});
 
-			team.user = this.user;
 			team.imageurl = this.imageurl;
+			team.joinpw = this.joinpw;
 
 			team.$save(function(response) {
 				//$location.path('teams/' + response._id);
