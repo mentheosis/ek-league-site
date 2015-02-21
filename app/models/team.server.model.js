@@ -4,7 +4,8 @@
 * Module dependencies.
 */
 var mongoose = require('mongoose'),
-Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+	crypto = require('crypto');
 
 /**
 * Article Schema
@@ -52,5 +53,24 @@ var TeamSchema = new Schema({
     trim: true
   }
 });
+
+/**
+ * Create instance method for hashing a password
+ */
+TeamSchema.methods.hashPassword = function(password) {
+	if (password) {
+		return crypto.pbkdf2Sync(password, 'fakesalt'.toString('base64'), 10000, 64).toString('base64');
+	} else {
+		return password;
+	}
+};
+
+/**
+ * Create instance method for authenticating user
+ */
+TeamSchema.methods.authenticate = function(password) {
+	return this.joinpw === this.hashPassword(password);
+};
+
 
 mongoose.model('Team', TeamSchema);

@@ -15,7 +15,9 @@ exports.create = function(req, res) {
 	var team = new Team(req.body);
 
 	team.founder = req.user;
+	team.members.push(req.user._id);
 	team.lowername = team.name.toLowerCase();
+	team.joinpw = team.hashPassword(team.joinpw);
 
 	team.save(function(err) {
 		if (err) {
@@ -23,6 +25,12 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+
+			console.log(JSON.stringify(team));
+
+			//don't return joinpw to client
+			team.joinpw = undefined;
+
 			res.json(team);
 		}
 	});
@@ -32,6 +40,10 @@ exports.create = function(req, res) {
  * Show the current team
  */
 exports.read = function(req, res) {
+
+	//don't return joinpw to client
+	req.team.joinpw = undefined;
+
 	res.json(req.team);
 };
 
@@ -39,12 +51,11 @@ exports.read = function(req, res) {
  * Update a team
  */
 exports.update = function(req, res) {
+
 	var team = req.team;
-
-	//console.log('resetting parent');
-	//team.parent = '';//team.id;
-
+	console.log('before ' + JSON.stringify(team));
 	team = _.extend(team, req.body);
+	console.log('after ' + JSON.stringify(team));
 
 	team.save(function(err) {
 		if (err) {
@@ -52,7 +63,8 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(team);
+			//don't return joinpw to client
+			populateTeamMembers(team,res);
 		}
 	});
 };
@@ -67,6 +79,14 @@ exports.joinOrQuitTeam = function(req, res) {
 
 function joinTeam(req, res) {
 	var team = req.team;
+
+	if(!team.authenticate(req.body.password))
+	{
+		return res.status(403).send({
+			message: 'Incorrect team password'
+		});
+	}
+
 	if(req.team.members.indexOf(req.query.newMember) === -1)
 	{
 		team.members.push(mongoose.Types.ObjectId(req.query.newMember));
@@ -77,7 +97,7 @@ function joinTeam(req, res) {
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				res.json(team);
+				populateTeamMembers(team,res);
 			}
 		});
 	}
@@ -99,7 +119,7 @@ function quitTeam(req, res) {
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
-				res.json(team);
+					populateTeamMembers(team,res)
 			}
 		});
 	}
@@ -108,6 +128,21 @@ function quitTeam(req, res) {
 	});
 };
 
+function populateTeamMembers(team, res) {
+	var opts = { path: 'members', model: 'User', select: 'username avatar' }
+
+  Team.populate(team, opts, function(err){
+		if (err || !team) {
+			return res.status(500).send({
+				message: 'failed to populate team members'
+			});
+		}
+		else {
+			team.joinpw = undefined;
+			res.json(team);
+		}
+	});
+}
 
 /**
  * Delete a team
@@ -121,7 +156,9 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(team);
+			res.status(200).send({
+				message: 'team deleted'
+			});
 		}
 	});
 };
@@ -132,7 +169,7 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
 	var sortBy = req.query.sortBy;
 
-	Team.find({}).sort(sortBy).populate('user', 'username').exec(function(err, teams) {
+	Team.find({},'-joinpw').sort(sortBy).exec(function(err, teams) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -147,14 +184,44 @@ exports.list = function(req, res) {
  * Team middleware
  */
 exports.teamByID = function(req, res, next, id) {
-	Team.findById(id).populate('User','username avatar').exec(function(err, team) {
-		if (err) return next(err);
-		if (!team) return next(new Error('Failed to load teams ' + id));
-		req.team = team;
-		//console.log(JSON.stringify(team))
-		next();
+
+	if(req.query.removeMember || req.query.newMember)
+	{
+		teamByIdJoinQuit(req, res ,next, id);
+	}
+	else
+	{
+		teamByIdPopulated(req, res, next, id);
+	}
+};
+
+function teamByIdPopulated(req, res, next, id) {
+	Team.findById(id).exec(function(err, team) {
+
+		var opts = { path: 'members', model: 'User', select: 'username avatar' }
+
+	  Team.populate(team, opts, function(){
+			if (err) return next(err);
+			if (!team) return next(new Error('Failed to load teams ' + id));
+
+			req.team = team;
+			//console.log(JSON.stringify(team))
+			next();
+		});
 	});
 };
+
+function teamByIdJoinQuit(req, res, next, id) {
+	Team.findById(id).exec(function(err, team) {
+			if (err) return next(err);
+			if (!team) return next(new Error('Failed to load teams ' + id));
+
+			req.team = team;
+			//console.log(JSON.stringify(team))
+			next();
+	});
+};
+
 
 /**
  * Team authorization middleware

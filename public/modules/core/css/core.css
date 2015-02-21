@@ -312,6 +312,14 @@ a:active {
 	border: 1px solid #777777;
 }
 
+.avatar-inline {
+	width:75px;
+	height:75px;
+	top: -80px;
+	right: 10px;
+}
+
+
 .ek-dropdown {
 	background:black;
 	border: 2px solid white;

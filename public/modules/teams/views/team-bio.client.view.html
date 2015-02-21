@@ -11,12 +11,33 @@
       <div class="team-bio-name">
         {{team.name}}
       </div>
-      <div class="team-links" ng-hide="team.members.indexOf(authentication.user._id) !== -1">
-        <a href ng-click="joinTeam()" class="team-links"> JOIN TEAM </a>
+      <div class="team-links" ng-hide="team.members.indexOfId(authentication.user._id) !== -1">
+        <a href ng-click="tryJoinTeam = true" class="team-links"> JOIN TEAM </a>
       </div>
-      <div class="team-links" ng-show="team.members.indexOf(authentication.user._id) !== -1">
+      <div class="team-links" ng-show="team.members.indexOfId(authentication.user._id) !== -1">
         <a href ng-click="quitTeam()" class="team-links"> QUIT TEAM </a>
       </div>
+			<div style="position: relative" ng-show="tryJoinTeam">
+					<div class="confirmDelete">
+					    <div style="width:400px">
+					      <a href ng-click="tryJoinTeam = false" title="Close" class="confirmDelete-close">X</a>
+
+					      <h3>Password to join?</h3>
+					      <br>
+                <input class="manage-comp-input" type="text" ng-model="joinpassword" placeholder="Password?" required>
+					      <span ng-click="joinTeam()" class="delete-button">
+					        Join
+					      </span>
+					      <span ng-click="tryJoinTeam = false" class="delete-button">
+					        Cancel
+					      </span>
+                <div ng-show="errText">
+                  {{errText}}
+                </div>
+					    </div>
+					</div>
+			</div>
+
 
       <div class="team-links">
         <a href class="team-links"> CONTACT </a>
@@ -28,18 +49,20 @@
     <div class="team-bio-container">
 
       <div class="team-bio-title">
-        BIO
+        BIO <i style="font-size:0.8em" ng-show="authentication.user._id = team.founder || authentication.user.roles.indexOf('admin') !== -1" ng-click="processBio()" class="glyphicon glyphicon-pencil" title="edit bio"></i>
       </div>
 
       <div class="team-bio">
-        {{team}}
+        <span ng-show="!editBio">{{team.description}}</span>
+        <textarea ng-show="editBio" class="edit-team-bio" placeholder="Write about your team" data-ng-model="team.description"></textarea>
       </div>
 
       <div class="team-bottom-container">
 
         <div class="team-member-container">
-          <div ng-repeat="member in team.members">
-            {{member}}
+          <div class="member-img-container" ng-repeat="member in team.members">
+            <img class="avatar-inline" title="{{member.username}}" ng-src="{{member.avatar}}">
+            <span ng-bind="member.username" class="team-name"></span>
           </div>
         </div>
 
