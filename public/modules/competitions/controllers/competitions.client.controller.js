@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Competitions', 'Rankings', 'Teams',
-function($scope, $stateParams, Authentication, Competitions, Rankings, Teams) {
+angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Competitions', 'Rankings', 'Teams', 'Matchups',
+function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Matchups) {
   $scope.authentication = Authentication;
 
   $scope.createComp = function() {
@@ -74,6 +74,23 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams) {
       });
     }
   };
+
+  $scope.listMatchups = function() {
+    $scope.matchups = Matchups.list({compId: $scope.comp._id});
+  }
+
+  $scope.generateMatchups = function() {
+      var matchup = new Matchups({ });
+
+      if(!$scope.comp) { return $scope.error = 'Select a Competition First' }
+
+      matchup.$generate({compId: $scope.comp._id}, function(){ 
+        $scope.listMatchups();
+      }, function(err){
+        $scope.error = err;
+      });
+
+    }
 
 	$scope.delete = function(comp) {
 		$scope.confirmDelete = false;

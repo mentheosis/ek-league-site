@@ -101,6 +101,121 @@ exports.addRanking = function(req, res) {
   });
 };
 
+exports.generateMatchups = function(req, res) {
+  console.log("a");
+  console.log(req.comp._id);
+  if(!req.comp._id) { 
+    return res.status(500).send({ message: 'Improper request', })
+  }
+
+  Competition.findById(req.comp._id).exec(function(err, comp) {
+    if (err) {
+      return res.status(500).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else if (!comp) {
+      return res.status(400).send({ 
+        message: 'No competition with id ' + req.query.compId
+      });
+    } else {
+
+      Matchup.find({competition: comp._id, week: comp.currentWeek}).remove(function(err) {
+        if(err) { return res.status(500).send({  message: errorHandler.getErrorMessage(err) }); }
+
+        Ranking.find({ competition: comp._id }).exec(function(err, teams){
+          if (err) {
+            return res.status(500).send({
+              message: errorHandler.getErrorMessage(err)
+            });
+          } else {
+            
+            SingleWeekGenerate(teams, comp._id, comp.currentWeek, function(err, matchupCount) {
+              if(err) { 
+                return res.status(400).send({ message: errorHandler.getErrorMessage(err) })
+              }
+              res.json(matchupCount);
+            });
+
+          }
+        });
+
+      });
+
+    }
+  });
+}
+
+function SingleWeekGenerate(teams, compId, weekNo, callback)
+{
+  var matchups = [];
+  var matchupCount = 0;
+
+  if(teams.length % 2 != 0)
+  {
+    //AddByesToTeamList()
+  }
+
+  for (var t = 0; t < teams.length/2; t++) {
+    var t_f = teams.length - 1 - t;
+    console.log(t);
+    console.log("vs");
+    console.log(t_f);
+
+    var matchup = new Matchup({
+      competition: compId,
+      week: weekNo,
+      home: teams[t]._id,
+      away: teams[t_f]._id,
+    });
+
+    matchup.save(function(err) {
+      if (err) {
+        return callback(err);
+      } else {
+        //TODO: wait until all matchups save and then callback(null, matchups)
+      }
+    });
+    matchupCount++;
+  }
+  callback(null, matchupCount);
+}
+
+
+
+
+
+/////////Competition Wide (Multi-Week) Matchup Generator
+/*
+function MultiWeekGenerate(teams, weekLength, callback)
+{
+  var matchupCount = 0;
+
+  for(int w=0;w<weekLength;w++) {
+
+    for (var t = 0; t < teams.length/2; t++) {
+
+      var matchup = new Matchup({
+        competition: competition._id,
+        week: w,
+        home: teams[t],
+        away: teams[teams.length-t],
+      });
+
+      matchup.save(function(err) {
+        if (err) {
+          return callback(err);
+          });
+        } else {
+          matchupCount++;
+        }
+      });
+    }
+
+  }
+
+}
+*/
+
 exports.hasAuthorization = function(req, res, next) {
 	if(req.user.roles.indexOf('admin') !== -1) {
 		next();

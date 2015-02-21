@@ -39,6 +39,9 @@ var MatchupSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Competition'
   },
+  week: {
+    type: Number,
+  },
   home: {
     type: Schema.ObjectId,
     ref: 'Team'
@@ -55,7 +58,6 @@ var MatchupSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Team'
   },
-  active: Boolean,
   MVP: {
     type: Schema.ObjectId,
     ref: 'User'

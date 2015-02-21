@@ -62,11 +62,16 @@
       								</div>
       						</div>
       				</span>
-
-
+                    <div>
+        <div ng-repeat="matchup in matchups">
+          {{matchup.home}} vs. {{matchup.away}}
+        </div>
+      </div>
       </div>
 
-    <div class="comp-section-title">This Week's Matches</div>
+      <div ng-click="generateMatchups()" class="comp-section-title" style="cursor:pointer">Generate Matches</div>
+
+
     </div>
 
     <div class="map-controls" ng-show="comp">
@@ -107,6 +112,8 @@
       </div>
     </div>
   </div>
+
+
 
   </section>
 </section>
