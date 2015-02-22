@@ -23,21 +23,17 @@ module.exports = function(app) {
   app.route('/rankings')
   .post(users.requiresLogin,
     auth.hasAuthorization(['admin']),
-    comps.addRanking);
+    comps.addRanking)
+  .delete(comps.deleteRanking);
+
+  app.route('/rankings/:compId')
+  .get(comps.listRankings);
 
   app.route('/matchups/:compId')
   .get(matchups.list)
   .post(users.requiresLogin,
     auth.hasAuthorization(['admin']),
     comps.generateMatchups);
-
-  app.route('/rankings/:compId')
-  .get(comps.listRankings);
-
-  /*
-  .put(users.requiresLogin,articles.hasAuthorization,articles.update)
-  .delete(users.requiresLogin, articles.hasAuthorization, articles.delete)
-  */
 
   // Finish by binding the middleware
   app.param('compId', comps.byId);

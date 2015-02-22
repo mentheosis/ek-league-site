@@ -32,18 +32,16 @@
   </div>
 
   <div class="col-xs-8 matchup-outer">
-    <div class="matchup-container">
-      Currently Managing: <span style="color:white">{{comp.name}}</span>
-      <br><a href ng-show="comp" ng-click="saveComp()">save changes</a>
-
+    <div class="manage-matchup-container">
       <div ng-show="comp">
-      <br><br>Name: <input ng-model="comp.name" style="width:100%" class="manage-comp-input">
-      <br><br>Banner Img: <input ng-model="comp.bannerurl" style="width:100%" class="manage-comp-input">
-
-      <br><br>
-      <br><br><span style="margin-left: 15px" data-ng-show="adminMode">
+      Name: <input ng-model="comp.name" class="manage-comp-input">
+      Banner: <input ng-model="comp.bannerurl" class="manage-comp-input">
+      <br>
+      <div style="margin: 1em 0 0 3em">
+      <a href ng-click="saveComp()"><i class="glyphicon glyphicon-check"></i>Save changes</a>
+            <span style="margin-left: 15px" data-ng-show="adminMode">
       					<a title="Delete" ng-click="confirmDelete = true" class="admin-control" href="" style="cursor:pointer" >
-      						<i class="glyphicon glyphicon-trash"></i>&nbsp Delete this competition
+      						<i class="glyphicon glyphicon-trash"></i>Delete this competition
       					</a>
       						<div style="position: relative" ng-show="confirmDelete">
       								<div class="confirmDelete">
@@ -62,16 +60,16 @@
       								</div>
       						</div>
       				</span>
-                    <div>
+        </div>
+        <br>
+        <br>
+        <a href ng-click="generateMatchups()"><i class="glyphicon glyphicon-tasks"></i>Generate matchups</a>
+        <br>
         <div ng-repeat="matchup in matchups">
-          {{matchup.home}} vs. {{matchup.away}}
+          {{matchup.home.name}} vs {{matchup.away.name}}
         </div>
       </div>
-      </div>
-
-      <div ng-click="generateMatchups()" class="comp-section-title" style="cursor:pointer">Generate Matches</div>
-
-
+      <div class="comp-section-title">This Week's Matches</div>
     </div>
 
     <div class="map-controls" ng-show="comp">
@@ -107,13 +105,10 @@
 
       <br><br>
       <div ng-repeat="team in rankings">
-        {{team.team.name}} - {{team.wins}} - {{team.losses}} - {{team.ties}}
-
+        <span title="remove" style="color:#FF7000" ng-click="removeTeam(team)">[X]</span>{{team.team.name}} - {{team.wins}} - {{team.losses}}
       </div>
     </div>
   </div>
-
-
 
   </section>
 </section>

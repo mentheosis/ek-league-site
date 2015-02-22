@@ -22,10 +22,12 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Ma
   };
 
   $scope.gatherCompData = function(compId) {
+    $scope.comp = undefined;
     if(compId) $scope.selectedComp = compId;
     else $scope.selectedComp = $stateParams.compId;
     $scope.getComp();
     $scope.listRankings();
+    $scope.listMatchups();
   }
 
   $scope.listComps = function() {
@@ -75,8 +77,17 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Ma
     }
   };
 
+  $scope.removeTeam = function(team){
+    team.$remove({rankId: team._id},function(success){
+        $scope.sucess = 'Team Removed';
+        $scope.listRankings();
+      },function(error) {
+        $scope.error = error.data.message;
+      })
+  }
+
   $scope.listMatchups = function() {
-    $scope.matchups = Matchups.list({compId: $scope.comp._id});
+    $scope.matchups = Matchups.list({compId: $scope.selectedComp});
   }
 
   $scope.generateMatchups = function() {
@@ -84,7 +95,7 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Ma
 
       if(!$scope.comp) { return $scope.error = 'Select a Competition First' }
 
-      matchup.$generate({compId: $scope.comp._id}, function(){ 
+      matchup.$generate({compId: $scope.comp._id}, function(){
         $scope.listMatchups();
       }, function(err){
         $scope.error = err;

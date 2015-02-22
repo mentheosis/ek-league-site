@@ -17,7 +17,7 @@ angular.module('competitions')
       list: {
         method: 'GET',
         isArray: true,
-        //params: { }
+        params: { compId: '@compId' }
       }
     });
   }

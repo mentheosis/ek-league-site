@@ -64,6 +64,19 @@
   border-width: 0 0 0 3px;
   padding-left: 20px;
   padding-right: 10px;
+	max-width:55%;
+}
+
+.manage-matchup-container {
+  width: 100%;
+  min-height: 300px;
+  color: #777777;
+  border: 1px solid #555555;
+  word-wrap: break-word;
+  background: #0c0c0c;
+  position: relative;
+  padding: 15px;
+	word-wrap: break-word;
 }
 
 .matchup-container {
@@ -75,6 +88,52 @@
   background: #0c0c0c;
   position: relative;
   padding: 15px;
+	word-wrap: break-word;
+
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
+	flex-wrap: wrap; /* firefox */
+}
+
+.matchup {
+	width:180px;
+	height: 85px;
+	margin: 5px 50px 0 0;
+	word-wrap: break-word;
+	display: inline-block;
+	position:relative;
+	text-align: center;
+}
+
+.home-img {
+	position:absolute;
+	padding: 1px;
+	border: 1px solid #555555;
+	top: 5px;
+	left: 5px;
+	width: 75px;
+	height: 75px;
+}
+
+.v{
+	position: absolute;
+	color: #FF7000;
+	top: 40px;
+	left: 83px;
+}
+
+.away-img {
+	position:absolute;
+	padding: 1px;
+	border: 1px solid #555555;
+	top: 5px;
+	right: 5px;
+	width: 75px;
+	height: 75px;
 }
 
 .map-container {
@@ -137,4 +196,5 @@
   background: #111111;
   border: 1px solid #555555;
   color: #FF9000;
+	display: inline;
 }

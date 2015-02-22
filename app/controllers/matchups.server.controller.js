@@ -23,7 +23,7 @@ exports.create = function(req, res) {
 
 exports.list = function(req, res) {
 
-  if(!req.comp._id) { 
+  if(!req.comp._id) {
     return res.status(500).send({ message: 'Improper request', })
   }
 
@@ -33,15 +33,18 @@ exports.list = function(req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else if (!comp) {
-      return res.status(400).send({ 
+      return res.status(400).send({
         message: 'No competition with id ' + req.query.compId
       });
     } else {
 
-      Matchup.find({competition: comp._id, week: comp.currentWeek}).exec(function(err, matchups) {
-        if(err) { return res.status(500).send({  message: errorHandler.getErrorMessage(err) }); }
-        res.json(matchups);
-      });
+      Matchup.find({competition: comp._id, week: comp.currentWeek})
+        .populate('home away', 'name imageurl')
+        //.populate({path:'away', select: 'name imageurl', model: 'Team'})
+        .exec(function(err, matchups) {
+          if(err) { return res.status(500).send({  message: errorHandler.getErrorMessage(err) }); }
+          res.json(matchups);
+        });
 
     }
   });

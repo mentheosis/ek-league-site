@@ -101,10 +101,34 @@ exports.addRanking = function(req, res) {
   });
 };
 
+exports.deleteRanking = function(req, res) {
+	if(req.query.rankId)
+  {
+    Ranking.findOne({_id: req.query.rankId}, function(err,ranking){
+      if(ranking)
+      {
+        ranking.remove(function(err){
+          if(err){
+      			return res.status(400).send({
+      				message: errorHandler.getErrorMessage(err)
+      			});
+      		} else {
+      			return res.status(200).send({
+      				message: 'team removed'
+      			});
+      		}
+        });
+      }
+    });
+  }
+  else
+    return res.status(400).send({
+      message: errorHandler.getErrorMessage(err)
+    });
+};
+
 exports.generateMatchups = function(req, res) {
-  console.log("a");
-  console.log(req.comp._id);
-  if(!req.comp._id) { 
+  if(!req.comp._id) {
     return res.status(500).send({ message: 'Improper request', })
   }
 
@@ -114,7 +138,7 @@ exports.generateMatchups = function(req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else if (!comp) {
-      return res.status(400).send({ 
+      return res.status(400).send({
         message: 'No competition with id ' + req.query.compId
       });
     } else {
@@ -128,9 +152,9 @@ exports.generateMatchups = function(req, res) {
               message: errorHandler.getErrorMessage(err)
             });
           } else {
-            
+
             SingleWeekGenerate(teams, comp._id, comp.currentWeek, function(err, matchupCount) {
-              if(err) { 
+              if(err) {
                 return res.status(400).send({ message: errorHandler.getErrorMessage(err) })
               }
               res.json(matchupCount);
@@ -157,15 +181,15 @@ function SingleWeekGenerate(teams, compId, weekNo, callback)
 
   for (var t = 0; t < teams.length/2; t++) {
     var t_f = teams.length - 1 - t;
-    console.log(t);
+    console.log(teams[t]);
     console.log("vs");
-    console.log(t_f);
+    console.log(teams[t_f]);
 
     var matchup = new Matchup({
       competition: compId,
       week: weekNo,
-      home: teams[t]._id,
-      away: teams[t_f]._id,
+      home: teams[t].team,
+      away: teams[t_f].team,
     });
 
     matchup.save(function(err) {
