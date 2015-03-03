@@ -15,7 +15,7 @@ var ScrimSchema = new Schema({
     type: String,
     default: '',
     trim: true,
-    required: 'Team cannot be blank'
+    //required: 'Team cannot be blank'
   },
   map: {
     type: String,

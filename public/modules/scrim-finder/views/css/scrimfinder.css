@@ -15,7 +15,7 @@
   font-size: 3em;
 }
 
-.scrim-headline{
+.scrim-headline {
   margin: -10px 0 15px 0;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .chat-message-container {
-  height:300px;
+  height:285px;
   overflow-y:auto;
 }
 
@@ -92,6 +92,24 @@
   }
 }
 
+
+.chat-users {
+  color: #66DDAA;
+  font-style: italic;
+  text-align: center;
+  font-size: 0.8em;
+  padding-right: 1em;
+  border-bottom: 1px solid #333333;
+  background: black;
+  cursor: pointer;
+}
+
+.chat-userlist {
+  float:right;
+  padding: 5px;
+  background: black;
+  color: #66DDAA;
+}
 
 .chat-bar-container {
   border: solid;
@@ -113,14 +131,11 @@ input:focus{
 }
 
 .chat-user{
-  display:inline-block;
-  margin: 0 0 0 2px;
+  padding: 0 5px 0 2px;
   font-weight: 500;
   color: #FF9000;
 }
 
 .chat-msg{
-  display:inline-block;
-  margin: 0 0 0 5px;
   color: white;
 }

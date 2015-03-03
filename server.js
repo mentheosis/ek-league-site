@@ -33,7 +33,7 @@ var server = app.listen(config.port);
 var socket = require('socket.io').listen(server);
 
 socket.on('connection', function(socketconn){
-	console.log('a user connected');
+	console.log('a user connected ' + socketconn.id);
 	socketconn.on('disconnect', function(){
 		console.log('user disconnected');
 	});
@@ -42,6 +42,9 @@ socket.on('connection', function(socketconn){
 	});
 	socketconn.on('initialize chat', function(req){
 		scrimController.InitializeMessageDisplay(socket, socketconn, req);
+	});
+	socketconn.on('exiting chat', function(req){
+		scrimController.ExitChat(socket, socketconn, req);
 	});
 });
 

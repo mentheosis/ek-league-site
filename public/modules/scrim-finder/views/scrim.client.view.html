@@ -5,7 +5,7 @@
           Scrim Finder
         </div>
         <div class = "scrim-headline">
-          Post a scrim request on the board, or just chat with other players
+          {{team}} Post a scrim request on the board, or just chat with other players
         </div>
       </div>
 
@@ -17,9 +17,9 @@
             <form ng-show="createVisible" ng-submit="" novalidate>
               <fieldset>
                 <img class="scrim-img" ng-src="{{authentication.user.avatar}}">
-                <div class="scrim-bit">FORMAT:<input class="scrim-input" ng-model="team" placeholder="who are you" type="text"></div>
+                <div class="scrim-bit">FORMAT:<input class="scrim-input" ng-model="format" placeholder="(8v8, 5v5...)" type="text"></div>
                 <div class="scrim-bit">   MAP:<input class="scrim-input" ng-model="map" placeholder="operation overlord" type="text"></div>
-                <div class="scrim-bit">  TIME:<input class="scrim-input" ng-model="format" placeholder="(8v8, 5v5...)" type="text"></div>
+                <div class="scrim-bit">  TIME:<input class="scrim-input" ng-model="notes" placeholder="9pm EST" type="text"></div>
                 <br>
                 <!--
                 <div class = "scrim-desc-container">
@@ -43,10 +43,10 @@
           </div>
 
           <div data-ng-repeat="scrim in scrims" class="scrim-container">
-            <img class="scrim-img" ng-src="{{scrim.imageurl}}">
-            <div class="scrim-bit">FORMAT:<span class="scrim-input" ng-bind="scrim.team"></span></div>
+            <img class="scrim-img" title="{{scrim.team}}" ng-src="{{scrim.imageurl}}">
+            <div class="scrim-bit">FORMAT:<span class="scrim-input" ng-bind="scrim.format"></span></div>
             <div class="scrim-bit">   MAP:<span class="scrim-input" ng-bind="scrim.map"></span></div>
-            <div class="scrim-bit">  TIME:<span class="scrim-input" ng-bind="scrim.format"></span></div>
+            <div class="scrim-bit">  TIME:<span class="scrim-input" ng-bind="scrim.notes"></span></div>
             <!--
             <br>
             <div class = "scrim-desc-container">
@@ -59,8 +59,16 @@
         <div class="col-xs-6">
 
           <div class = "chat-window">
+            <div class = "chat-users" ng-click= "showUsers = !showUsers">
+            {{userList.length}} Users Online - Click to show/hide
+            </div>
+            <div class = "chat-userlist chat-message-container" ng-show="showUsers">
+              <div ng-repeat="user in userList">
+                {{user}}
+              </div>
+            </div>
             <div scroll-glue class="chat-message-container">
-              <div style="display:flex" ng-repeat="msg in chatMessages track by $index">
+              <div ng-repeat="msg in chatMessages track by $index">
                 <span class="chat-user">{{msg.user}}:</span>
                 <span class="chat-msg">{{msg.message}}</span>
               </div>

@@ -42,9 +42,32 @@ exports.list = function(req, res){
   });
 };
 
+var userList = []
+
+var addUser = function(user) {
+  var exists = userList.indexOf(user)
+  if(exists === -1) {
+    userList.push(user)
+  }
+}
+
+var removeUser = function(user) {
+  var exists = userList.indexOf(user)
+  if(exists !== -1) {
+    userList.splice(exists,1);
+  }
+}
+
 exports.InitializeMessageDisplay = function(socket, conn, req){
   conn.emit('initialize chat', MessageQueue);
+  addUser(req.user);
+  socket.emit('update userlist', userList);
 };
+
+exports.ExitChat = function(socket, conn, req){
+  removeUser(req.user);
+  socket.emit('update userlist', userList);
+}
 
 exports.messageReceived = function(socket, msg){
   //console.log("message incoming:" + JSON.stringify(msg));

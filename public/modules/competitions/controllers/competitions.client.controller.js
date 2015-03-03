@@ -7,7 +7,7 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Ma
   $scope.createComp = function() {
     var comp = new Competitions({
       name: this.compName,
-      banner: this.compBanner,
+      bannerurl: this.compBanner,
       description: this.compDesc
     });
 

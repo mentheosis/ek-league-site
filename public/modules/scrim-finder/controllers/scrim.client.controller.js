@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('scrim-finder').controller('ScrimController', ['$scope', '$rootScope', 'Authentication', 'Scrims', 'SocketIO',
-function($scope, $rootScope, Authentication, Scrims, SocketIO) {
+angular.module('scrim-finder').controller('ScrimController', ['$scope', '$rootScope', 'Authentication', 'Scrims', 'SocketIO', 'Teams',
+function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
 
   // This provides Authentication context.
   $scope.authentication = Authentication;
@@ -12,20 +12,39 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO) {
     $scope.createVisible = !$scope.createVisible;
   };
 
+  /*
+  function findTeam() {
+    if(Authentication.user.team) {
+      $scope.team = Teams.get({
+				teamId: Authentication.user.team
+			});
+    }
+  }
+  //get user team at load
+  findTeam();
+  */
+
   $scope.createScrim = function() {
+    var image;
+    if(!Authentication.user.avatar) {
+      image = '/modules/core/img/default-avatar.png'
+    }
+    else {
+      image = Authentication.user.avatar
+    }
+
     var scrim = new Scrims({
-      team: this.team,
       map: this.map,
       format: this.format,
       notes: this.notes,
-      imageurl: Authentication.user.avatar
+      imageurl: image,
+      team: Authentication.user.username
     });
 
     scrim.$save(function(response) {
       //$location.path('articles/' + response._id);
       $scope.switchCreateVisible();
 
-      $scope.team = '';
       $scope.map = '';
       $scope.format = '';
       $scope.notes = '';
@@ -40,15 +59,12 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO) {
     if($scope.chatMsg !== '')
     {
       SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
-      //$scope.chatMessages.push(msg);
       $scope.chatMsg='';
     }
   };
 
   $scope.initialize = function(){
-    console.log('initializing..');
-    console.log('scope: ' + $scope.$id)
-    SocketIO.emit('initialize chat');
+    SocketIO.emit('initialize chat', {user: Authentication.user.username});
     $scope.scrims = Scrims.query();
   };
 
@@ -66,20 +82,27 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO) {
     if(clearInitlistener) {
       clearInitlistener();
     }
-    console.log('destroying scope '+$scope.$id);
+    if(clearUserListener) {
+      clearUserListener();
+    }
+    SocketIO.emit('exiting chat', {user: Authentication.user.username});
   });
 
   var clearScrimChatListener = SocketIO.on('chat message', function(msg){
     $scope.chatMessages.push(msg);
-    //console.log('chat message:  ' + JSON.stringify(msg));
-    //console.log('check: ' + JSON.stringify($scope.chatMessages));
-    //console.log('scope: ' + $scope.$id);
   });
 
   var clearInitlistener = SocketIO.on('initialize chat', function(res){
-    //console.log('init chat');
     $scope.chatMessages = res;
   });
+
+  $scope.userList = []
+  var clearUserListener = SocketIO.on('update userlist', function(userlist){
+    console.log('got userlist')
+    console.log(JSON.stringify(userlist));
+    $scope.userList = userlist;
+  });
+
 
 }
 ]);
