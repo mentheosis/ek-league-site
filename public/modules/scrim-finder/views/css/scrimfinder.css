@@ -23,6 +23,7 @@
   border: 1px solid #555555;
   margin: 0 -15px 15px 15px;
   background: #111111;
+  position: relative;
 }
 
 .scrim-bit {
@@ -39,6 +40,13 @@
   margin: 1px 0 1px 0;
 }
 
+.scrim-replies {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: #66DDAA;
+}
+
 .scrim-input {
   background:none;
   width: calc(100% - 5em);
@@ -47,6 +55,14 @@
   color: #AAAAAA;
   margin-left: 5px;
   white-space: pre-wrap;
+}
+
+.scrim-finalized {
+  height: 40px;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 30px;
+  font-size: 2em;
 }
 
 .scrim-desc-container {

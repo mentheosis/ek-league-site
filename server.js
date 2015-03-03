@@ -31,22 +31,7 @@ require('./config/passport')();
 var server = app.listen(config.port);
 
 var socket = require('socket.io').listen(server);
-
-socket.on('connection', function(socketconn){
-	console.log('a user connected ' + socketconn.id);
-	socketconn.on('disconnect', function(){
-		console.log('user disconnected');
-	});
-	socketconn.on('scrim-chat', function(msg){
-		scrimController.messageReceived(socket, msg);
-	});
-	socketconn.on('initialize chat', function(req){
-		scrimController.InitializeMessageDisplay(socket, socketconn, req);
-	});
-	socketconn.on('exiting chat', function(req){
-		scrimController.ExitChat(socket, socketconn, req);
-	});
-});
+scrimController.setSocket(socket);
 
 // Expose app
 exports = module.exports = app;

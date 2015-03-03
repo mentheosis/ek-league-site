@@ -42,6 +42,18 @@ var ScrimSchema = new Schema({
     type: String,
     default: '',
     trim: true
+  },
+  replies: {
+    type: [String],
+    default: []
+  },
+  acceptedUser: {
+    type: String,
+    default: ""
+  },
+  acceptMessage: {
+    type: String,
+    default: ""
   }
 });
 

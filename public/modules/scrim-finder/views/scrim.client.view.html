@@ -44,9 +44,29 @@
 
           <div data-ng-repeat="scrim in scrims" class="scrim-container">
             <img class="scrim-img" title="{{scrim.team}}" ng-src="{{scrim.imageurl}}">
-            <div class="scrim-bit">FORMAT:<span class="scrim-input" ng-bind="scrim.format"></span></div>
-            <div class="scrim-bit">   MAP:<span class="scrim-input" ng-bind="scrim.map"></span></div>
-            <div class="scrim-bit">  TIME:<span class="scrim-input" ng-bind="scrim.notes"></span></div>
+
+            <div ng-show = "scrimFinalized(scrim)" class="scrim-finalized">
+              Challenge Taken
+            </div>
+
+            <div ng-show = "!scrimFinalized(scrim)">
+
+              <div class="scrim-bit">FORMAT:<span class="scrim-input" ng-bind="scrim.format"></span></div>
+              <div class="scrim-bit">   MAP:<span class="scrim-input" ng-bind="scrim.map"></span></div>
+              <div class="scrim-bit">  TIME:<span class="scrim-input" ng-bind="scrim.notes"></span></div>
+              <div class="scrim-replies">
+                <a ng-show="!isScrimCreator(scrim) && !replied(scrim)" href ng-click="replyToScrim(scrim._id)">Accept</a>
+                <span ng-show="!isScrimCreator(scrim) && replied(scrim)">Replied</span>
+                <a ng-show="isScrimCreator(scrim) && hasReplies(scrim)" href ng-click="showReplies = !showReplies">See Replies</a>
+                <div ng-show="showReplies" ng-repeat="user in scrim.replies">
+                  <a href title="Accept" ng-click="acceptReply(scrim._id, user)">
+                    <i class="glyphicon glyphicon-check"></i>
+                  </a>
+                  {{user}}
+                </div>
+              </div>
+
+            </div>
             <!--
             <br>
             <div class = "scrim-desc-container">
@@ -55,6 +75,7 @@
             -->
 
           </div>
+
         </div>
         <div class="col-xs-6">
 

@@ -962,7 +962,8 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
       $scope.map = '';
       $scope.format = '';
       $scope.notes = '';
-      $scope.scrims.unshift(scrim); //push it to the display
+      //the unshift is now handled by sockets!
+      //$scope.scrims.unshift(scrim); //push it to the display
       //$scope.createVisible = !$scope.createVisible;
     }, function(errorResponse) {
       $scope.error = errorResponse.data.message;
@@ -970,12 +971,38 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
   };
 
   $scope.sendChat = function(msg) {
-    if($scope.chatMsg !== '')
+    if(msg !== '')
     {
       SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
       $scope.chatMsg='';
     }
   };
+
+  $scope.isScrimCreator = function (scrim) {
+    return scrim.team === Authentication.user.username
+  }
+
+  $scope.hasReplies = function (scrim) {
+    return scrim.replies.length >= 1;
+  }
+
+  $scope.replied = function (scrim) {
+    return scrim.replies.indexOf(Authentication.user.username) !== -1
+  }
+
+  $scope.scrimFinalized = function(scrim) {
+    return scrim.acceptedUser && scrim.acceptedUser !== "";
+  };
+
+  $scope.replyToScrim = function(scrimId) {
+    SocketIO.emit('scrim reply', { scrim: scrimId, user: Authentication.user.username })
+  };
+
+  $scope.acceptReply = function(scrimId, acceptedUser) {
+    SocketIO.emit('scrim accept', { scrim: scrimId, user: acceptedUser })
+  };
+
+
 
   $scope.initialize = function(){
     SocketIO.emit('initialize chat', {user: Authentication.user.username});
@@ -990,16 +1017,28 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
 
     Must cleanup listeners when the scope is destroyed! */
   $scope.$on('$destroy', function() {
-    if(clearScrimChatListener) {
-      clearScrimChatListener();
-    }
-    if(clearInitlistener) {
-      clearInitlistener();
-    }
-    if(clearUserListener) {
-      clearUserListener();
-    }
+    if(clearScrimChatListener) { clearScrimChatListener(); }
+    if(clearInitlistener) { clearInitlistener(); }
+    if(clearUserListener) { clearUserListener(); }
+    if(clearScrimAddListener) { clearScrimAddListener(); }
     SocketIO.emit('exiting chat', {user: Authentication.user.username});
+  });
+
+  var clearScrimAddListener = SocketIO.on('scrim updated', function(scrim){
+    console.log("updating scrim");
+    console.log(scrim);
+    $scope.scrims = Scrims.query();
+    /* better approach not working yet
+    var index = $scope.scrims.indexOf(scrim);
+    console.log("index " + index);
+    $scope.$apply(function(){
+      $scope.scrims.splice(index, 1, scrim);
+    });
+    */
+  });
+
+  var clearScrimAddListener = SocketIO.on('scrim added', function(scrim){
+    $scope.scrims.unshift(scrim);
   });
 
   var clearScrimChatListener = SocketIO.on('chat message', function(msg){
