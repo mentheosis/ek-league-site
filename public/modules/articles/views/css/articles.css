@@ -31,7 +31,7 @@ a:hover, a:visited, a:link, a:active {
 
 .news-container {
   border:solid;
-  border-width:5px 5px 0 0;
+  border-width:5px 5px 5px 0;
   border-color:#555555;
 }
 
@@ -43,6 +43,8 @@ a:hover, a:visited, a:link, a:active {
 	display: flex;
   margin:0 0 0 0;
   padding:5px 5px 5px 2px;
+    background: #111111;
+
 }
 
 .news-post {
@@ -98,7 +100,7 @@ a:hover, a:visited, a:link, a:active {
 .news-image {
   border:solid;
   border-width:3px;
-  border-color:white;
+  border-color:black;
   /*margin-left:15px;*/
   width:464px;
   margin-left: 5px;

@@ -100,13 +100,14 @@ a:active {
 }
 
 .top-bar {
-	background: black;
+	background: url('/modules/core/img/steel-back.png');
 	/*border: solid;
 	border-width: 1px 1px 1px 1px;
 	border-color: black;*/
 	background-clip: border-box;
 	min-width: 1250px;
-	height: 250px;
+	height: 200px;
+	margin-bottom: 50px;
 }
 
 .row {
@@ -135,28 +136,22 @@ a:active {
 .top-banner-line {
 	position:absolute;
 	top: 55px;
-	left: 400px;
+	left: 500px;
 	width: calc(100% - 400px);
 	min-width:850px;
 	border: solid;
-	border-width: 2px 0 0 0;
-	border-color: #333333;
+	border-width: 1px 0 1px 0;
+	height: 4px;
+	background: #111111;
+	border-color: #777777;
 	z-index: 1;
 	overflow-x:hidden;
 }
 
 @media only screen and (min-width: 1900px) {
 	.top-banner-line {
-		position:absolute;
-		top: 55px;
-		left: 800px;
+		left: 900px;
 		width: calc(100% - 800px);
-		min-width:850px;
-		border: solid;
-		border-width: 2px 0 0 0;
-		border-color: #333333;
-		z-index: 1;
-		overflow-x:hidden;
 	}
 }
 
@@ -165,7 +160,7 @@ a:active {
 	border: solid;
 	border-width: 2px;
 	border-color: #777777;
-	margin-left: 15px;
+	margin-left: 75px;
 	margin-top:20px;
 	height: 119px;
 	width: 600px;
@@ -173,19 +168,20 @@ a:active {
 }
 
 .top-scroll {
-	color:white;
-	margin-left:13px;
-	width: 604px;
+	color:#777777;
+	margin-left:75px;
+	width: 600px;
 	border: solid;
 	border-width: 1px;
 	border-color: #555555;
 	margin-top: 2px;
-	background: none;
+	background: #131313;
+	font-size: 0.8em;
 }
 
 .top-scroll-edit {
 	position:absolute;
-	margin-left: 625px;
+	margin-left: 685px;
 	margin-top: -21px;
 }
 
