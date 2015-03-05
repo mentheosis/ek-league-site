@@ -30,6 +30,10 @@ exports.setSocket = function (socket) {
   	socketconn.on('scrim accept', function(req){
   		acceptReply(req);
   	});
+  	socketconn.on('scrim message', function(req){
+  		saveMessage(req);
+  	});
+
 
   });
 
@@ -127,6 +131,26 @@ var acceptReply = function (req) {
       console.log("couldn't find scrim " + req.scrim)
     }
     scrim.acceptedUser = req.user
+    scrim.acceptMessage = "host server info"
+
+    scrim.save(function(err){
+      if(err){
+        console.log("couldn't save scrim " + req.scrim)
+      }
+      else {
+        socketIo.emit('scrim updated', scrim);
+      }
+    });
+  });
+};
+
+var saveMessage = function (req) {
+  console.log('trying to save message');
+  Scrim.findById(req.scrim, function(err,scrim){
+    if(err || !scrim){
+      console.log("couldn't find scrim " + req.scrim)
+    }
+    scrim.acceptMessage = req.message
 
     scrim.save(function(err){
       if(err){

@@ -44,25 +44,36 @@
   position: absolute;
   bottom: 5px;
   right: 5px;
+  font-size: 0.9em;
   color: #66DDAA;
 }
 
 .scrim-input {
   background:none;
   width: calc(100% - 5em);
-  border:none;
+  border: 1px solid #333333;
+  margin: 0 0 0 2px;
+  color: #555555;
+  margin-left: 5px;
+  white-space: pre-wrap;
+}
+
+.scrim-info {
+  background:none;
+  width: calc(100% - 5em);
+  border: none;
   margin: 0 0 0 2px;
   color: #AAAAAA;
   margin-left: 5px;
   white-space: pre-wrap;
 }
 
+
 .scrim-finalized {
   height: 40px;
   text-align: center;
   padding: 10px;
   margin-bottom: 30px;
-  font-size: 2em;
 }
 
 .scrim-desc-container {
@@ -81,6 +92,7 @@
   border: 1px solid #555555;
   margin: 1px 2px 0 1px;
   color:#FF7000;
+  background: black;
 }
 
 .chat-window{

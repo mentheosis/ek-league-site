@@ -982,12 +982,18 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
     return scrim.team === Authentication.user.username
   }
 
+  $scope.canSeePrivateChat = function (scrim) {
+    return ((scrim.team === Authentication.user.username && scrim.acceptedUser !== "")
+      || scrim.acceptedUser === Authentication.user.username)
+  }
+
   $scope.hasReplies = function (scrim) {
-    return scrim.replies.length >= 1;
+
+    return $scope.isScrimCreator(scrim) && scrim.replies.length >= 1;
   }
 
   $scope.replied = function (scrim) {
-    return scrim.replies.indexOf(Authentication.user.username) !== -1
+    return !$scope.isScrimCreator(scrim) && scrim.replies.indexOf(Authentication.user.username) !== -1
   }
 
   $scope.scrimFinalized = function(scrim) {
@@ -1002,7 +1008,21 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
     SocketIO.emit('scrim accept', { scrim: scrimId, user: acceptedUser })
   };
 
+  $scope.savePrivateMessage = function (scrim) {
+    SocketIO.emit('scrim message', { 'scrim': scrim._id, 'message': scrim.acceptMessage })
+    $scope.editingDetails = false;
+  };
 
+  $scope.orderScrims = function(scrim) {
+    if($scope.canSeePrivateChat(scrim))
+      return 0
+    else if($scope.replied(scrim) || $scope.hasReplies(scrim))
+      return 1
+    else if(scrim.acceptedUser && scrim.acceptedUser !== "")
+      return 99
+    else
+      return 55
+  };
 
   $scope.initialize = function(){
     SocketIO.emit('initialize chat', {user: Authentication.user.username});
