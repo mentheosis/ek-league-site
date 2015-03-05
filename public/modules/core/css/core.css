@@ -59,6 +59,7 @@ a:active {
 }
 
 .about-bg {
+	margin-top: -15px;
 	height: 900px;
 	background: url("/modules/core/img/about-bg-900.jpg");
 	background-repeat: no-repeat;
@@ -129,8 +130,8 @@ a:active {
 .top-logo {
 	margin-left: 5px;
 	margin-top: 5px;
-	width:239px;
-	height:160px;
+	width:272px;
+	height:158px;
 }
 
 .top-banner-line {
@@ -197,6 +198,14 @@ a:active {
 	font-size:1.5em;
 	margin-right: 7px;
 	margin-left: 7px;
+	text-shadow:  1px 0 0 #000000,
+	-1px 0 0 #000000,
+	0 1px 0 #000000,
+	0 -1px 0 #000000,
+	1px 1px 0 #000000,
+	-1px -1px 0 #000000,
+	-1px 1px 0 #000000,
+	1px -1px 0 #000000;
 }
 
 .top-first-row-2 {
