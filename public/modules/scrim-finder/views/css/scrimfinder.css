@@ -26,6 +26,14 @@
   position: relative;
 }
 
+.scrim-container-new {
+  border: 1px solid #555555;
+  margin: 0 -15px 15px 15px;
+  background: #111111;
+  position: relative;
+  width: 600px;
+}
+
 .scrim-bit {
   display:inline-block;
   background:none;
