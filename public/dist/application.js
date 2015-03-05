@@ -620,7 +620,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$sce', '$rootS
 
 
 
-    $scope.targetDate = new Date(2015, 2, 7, 12);
+    $scope.targetDate = new Date(2015, 2, 15, 0);
     $scope.now = new Date();
 		$scope.showCountdownLogin = false;
 
