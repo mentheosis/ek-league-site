@@ -21,6 +21,10 @@ var validateLocalStrategyPassword = function(password) {
 	return (this.provider !== 'local' || (password && password.length > 6));
 };
 
+var validateUsernameLength = function(username) {
+	return username.length <= 25;
+};
+
 /**
  * User Schema
  */
@@ -37,6 +41,7 @@ var UserSchema = new Schema({
 		type: String,
 		unique: 'Username already exists',
 		required: 'Please fill in a username',
+		validate: [validateUsernameLength, 'Username must be 25 characters or less'],
 		trim: true
 	},
 	firstname: {

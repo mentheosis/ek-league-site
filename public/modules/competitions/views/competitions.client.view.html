@@ -1,6 +1,6 @@
 <section style="background:black" data-ng-controller="CompController" ng-init="listComps()">
 
-  <div ng-repeat="comp in competitions" style="display: inline-block; margin: 5px">
+  <div ng-repeat="comp in competitions" class="comp-entrance">
     <a href="#!/competitions/{{comp._id}}"><img class="big-comp-banner" ng-src="{{comp.bannerurl}}"></a>
   </div>
 

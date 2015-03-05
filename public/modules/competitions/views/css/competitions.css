@@ -1,3 +1,13 @@
+.comp-entrance {
+	display: inline-block;
+	margin: 5px;
+	border: 1px solid black;
+}
+
+.comp-entrance:hover {
+	border: 1px solid orange;
+}
+
 .comp-container {
 	display: -webkit-box;
 	display: -moz-box;
