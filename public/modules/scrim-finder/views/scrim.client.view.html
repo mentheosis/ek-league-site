@@ -5,12 +5,17 @@
           Scrim Finder
         </div>
         <div class = "scrim-headline">
-          Post a scrim request on the board, or just chat with other players
+        <!--  Post a scrim request on the board, or just chat with other players
           <br>
-
-            <div class="scrim-container-new">
-              <div ng-hide="createVisible" ng-click="switchCreateVisible()" style="cursor:pointer; color: #FF9000">New Post</div>
-              <form ng-show="createVisible" ng-submit="" novalidate>
+        -->
+          <div class = "scrim-top-control-container">
+            <div class = "scrim-top-button" ng-hide="createVisible" ng-click="switchCreateVisible()">Create a scrim</div>
+            <div class = "scrim-top-button" ng-hide="createVisible" ng-click="showInstructions = !showInstructions" >Help I'm confused!</div>
+            <p ng-show="showInstructions">
+              Instructions will go here...
+            </p>
+            <div class = "scrim-container" ng-show="createVisible">
+              <form ng-submit="" novalidate>
                 <fieldset>
                   <img class="scrim-img" ng-src="{{authentication.user.avatar}}">
                   <div class="scrim-bit">FORMAT:<input class="scrim-input" ng-model="format" placeholder="(8v8, 5v5...)" type="text"></div>
@@ -37,7 +42,7 @@
                 </fieldset>
               </form>
             </div>
-
+          </div>
         </div>
       </div>
 

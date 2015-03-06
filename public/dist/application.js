@@ -924,6 +924,7 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
   $scope.createVisible = false;
   $scope.switchCreateVisible = function(){
     $scope.createVisible = !$scope.createVisible;
+    $scope.showInstructions = false;
   };
 
   /*

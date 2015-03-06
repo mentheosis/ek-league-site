@@ -26,12 +26,27 @@
   position: relative;
 }
 
-.scrim-container-new {
+.scrim-top-button {
   border: 1px solid #555555;
-  margin: 0 -15px 15px 15px;
+  margin: auto;
+  display: inline-block;
   background: #111111;
-  position: relative;
-  width: 600px;
+  width: 300px;
+  cursor:pointer;
+  color: #66DDAA
+}
+
+.scrim-top-button:hover {
+  border: 1px solid white;
+  background: #66DDAA;
+  color: black;
+}
+
+
+.scrim-top-control-container {
+  margin: auto;
+  margin-top: 0.5em;
+  width: 750px;
 }
 
 .scrim-bit {
