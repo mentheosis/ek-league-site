@@ -1009,10 +1009,13 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
     SocketIO.emit('scrim accept', { scrim: scrimId, user: acceptedUser })
   };
 
-  $scope.savePrivateMessage = function (scrim) {
-    SocketIO.emit('scrim message', { 'scrim': scrim._id, 'message': scrim.acceptMessage })
-    $scope.editingDetails = false;
+  $scope.saveHomeInfo = function (scrim) {
+    SocketIO.emit('home info', { 'scrim': scrim._id, 'home': scrim.homeInfo })
   };
+  $scope.saveAwayInfo = function (scrim) {
+    SocketIO.emit('away info', { 'scrim': scrim._id, 'away': scrim.awayInfo })
+  };
+
 
   $scope.orderScrims = function(scrim) {
     if($scope.canSeePrivateChat(scrim))
@@ -1047,7 +1050,7 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
   });
 
   var clearUpdateListener = SocketIO.on('scrim updated', function(scrim){
-    for (var s = 0; s < $scope.scrims.length; i++ ){
+    for (var s = 0; s < $scope.scrims.length; s++ ){
       if ($scope.scrims[s]._id === scrim._id) {
         $scope.scrims.splice(s, 1, scrim);
         return;

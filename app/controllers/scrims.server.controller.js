@@ -31,9 +31,13 @@ exports.setSocket = function (socket) {
   	socketconn.on('scrim accept', function(req){
   		acceptReply(req);
   	});
-  	socketconn.on('scrim message', function(req){
+  	socketconn.on('home info', function(req){
   		saveMessage(req);
   	});
+  	socketconn.on('away info', function(req){
+  		saveMessage(req);
+  	});
+
 
 
   });
@@ -51,6 +55,8 @@ exports.create = function(req,res){
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log('added scrim');
+      console.log('scrim');
       socketIo.emit('scrim added', scrim);
       //res.json(scrim);
       res.status(200).send({
@@ -153,7 +159,13 @@ var saveMessage = function (req) {
     if(err || !scrim){
       console.log("couldn't find scrim " + req.scrim)
     }
-    scrim.acceptMessage = req.message
+
+    if(req.home) {
+      scrim.homeInfo = req.home;
+    }
+    if(req.away) {
+      scrim.awayInfo = req.away;
+    }
 
     scrim.save(function(err){
       if(err){
@@ -161,6 +173,7 @@ var saveMessage = function (req) {
       }
       else {
         socketIo.emit('scrim updated', scrim);
+        console.log('message saved')
       }
     });
   });

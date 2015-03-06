@@ -1,76 +1,92 @@
 <section style="margin-right: 20px" data-ng-controller="ScrimController" ng-init="initialize()">
 
+      <!--
       <div class='scrim-headline-container'>
         <div class = "scrim-title">
           Scrim Finder
         </div>
         <div class = "scrim-headline">
-        <!--  Post a scrim request on the board, or just chat with other players
+          Post a scrim request on the board, or just chat with other players
           <br>
-        -->
           <div class = "scrim-top-control-container">
-            <div class = "scrim-top-button" ng-hide="createVisible" ng-click="switchCreateVisible()">Create a scrim</div>
             <div class = "scrim-top-button" ng-hide="createVisible" ng-click="showInstructions = !showInstructions" >Help I'm confused!</div>
             <p ng-show="showInstructions">
               Instructions will go here...
             </p>
-            <div class = "scrim-container" ng-show="createVisible">
-              <form ng-submit="" novalidate>
+          </div>
+        </div>
+      </div>
+      -->
+
+      <div class="row scrim-page-buffer">
+        <div class="col-xs-6">
+
+            <div class = "annoying-container" ng-click="switchCreateVisible()">
+              <div class = "scrim-top-line"></div>
+              <div class = "scrim-top-centerline"></div>
+              <div class = "scrim-top-button">C<span class="small-scrim-button">REATE</span>&nbspN<span class="small-scrim-button">EW</span>&nbspS<span class="small-scrim-button">CRIM</span></div>
+            </div>
+
+            <div class = "scrim-container-new" ng-show="createVisible" >
+              <form novalidate>
                 <fieldset>
                   <img class="scrim-img" ng-src="{{authentication.user.avatar}}">
-                  <div class="scrim-bit">FORMAT:<input class="scrim-input" ng-model="format" placeholder="(8v8, 5v5...)" type="text"></div>
-                  <div class="scrim-bit">   MAP:<input class="scrim-input" ng-model="map" placeholder="operation overlord" type="text"></div>
-                  <div class="scrim-bit">  TIME:<input class="scrim-input" ng-model="notes" placeholder="9pm EST" type="text"></div>
-                  <br>
+                  <div class="scrim-bit">FORMAT:<input class="scrim-input" ng-model="format" placeholder="&nbsp&nbsp(e.g. 8v8 heist downtown)" type="text"></div>
+                  <div class="scrim-bit">&nbsp&nbspTEAM:<input class="scrim-input" ng-model="notes" placeholder="&nbsp&nbsp your team's name" type="text"></div>
+                  <div class="scrim-bit">&nbsp&nbspTIME:<input class="scrim-input" ng-model="time" placeholder="&nbsp&nbsp--:-- EST/PST" type="text"></div>
                   <!--
                   <div class = "scrim-desc-container">
                     <textarea class="scrim-desc scrim-bit scrim-input" placeholder="Contact info, notes..." data-ng-model="notes"></textarea>
                   </div>
                   -->
-                  <div style="display:flex">
+                  <div style="display:flex; margin-left: 80px">
                     <div style="display: inline-block; width: 75px">
                       <input ng-click="createScrim()" type="submit" style="width:75px; color:black" value="Post!">
                     </div>
                     <div style="display: inline-block; width: 75px; cursor:pointer; color:black">
                       <input ng-click="switchCreateVisible()" type="submit" value="Cancel" style="width:75px">
                     </div>
-                  </div>
+                    <span data-ng-show="error" class="text-danger">
+                      &nbsp&nbsp<strong data-ng-bind="error"></strong>
+                    </span>
 
-                  <span data-ng-show="error" class="text-danger">
-                    <strong data-ng-bind="error"></strong>
-                  </span>
+                  </div>
                 </fieldset>
               </form>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-6">
 
           <div data-ng-repeat="scrim in scrims" class="scrim-container">
             <img class="scrim-img" title="{{scrim.team}}" ng-src="{{scrim.imageurl}}">
 
             <div ng-show = "scrimFinalized(scrim)" class="scrim-finalized">
-              <span style= "font-size: 2em">Challenge Accepted</span>
-              <div class="scrim-replies" ng-show="authentication.user && canSeePrivateChat(scrim)">
-                <span ng-hide="editingDetails">
-                  <a href ng-click="editingDetails = true">edit </a>
-                  {{scrim.acceptMessage}}
-                </span>
-                <span ng-show="editingDetails">
-                  <a href ng-click="savePrivateMessage(scrim)">save </a>
-                  <input class="scrim-input" ng-model="scrim.acceptMessage" placeholder="server and pw" type="text">
-                </span>
+              <div style="font-size: 2em; margin: 0.5em 0 0 0; text-align: center" ng-hide="authentication.user && canSeePrivateChat(scrim)">Challenge Accepted</div>
+              <div class="scrim-replies-final" ng-show="authentication.user && canSeePrivateChat(scrim)">
+
+                <div class="details" ng-show="scrim.team === authentication.user.username">
+                    You've accepted a challenge from {{scrim.acceptedUser}}
+                    <br>
+                    Your&nbspInfo:&nbsp<input class="scrim-input" ng-model="scrim.homeInfo" ng-model-options="{ debounce:2000 }" ng-change="saveHomeInfo(scrim)" placeholder=" (e.g. server and pw)" type="text">
+                    <br>
+                    Their&nbspInfo:&nbsp{{scrim.awayInfo}}
+                </div>
+
+                <div class="details" ng-show="scrim.acceptedUser === authentication.user.username">
+                    {{scrim.team}} has accepted your challenge
+                    <br>
+                    Their&nbspInfo:&nbsp{{scrim.homeInfo}}
+                    <br>
+                    Your&nbspInfo:&nbsp<input class="scrim-input" ng-model="scrim.awayInfo" ng-model-options="{ debounce:2000 }" ng-change="saveAwayInfo(scrim)" placeholder=" (e.g. server and pw)" type="text">
+                </div>
+
               </div>
             </div>
 
-            <div ng-show = "!scrimFinalized(scrim)">
-
-              <div class="scrim-bit">FORMAT:<span class="scrim-info" ng-bind="scrim.format"></span></div>
-              <div class="scrim-bit">   MAP:<span class="scrim-info" ng-bind="scrim.map"></span></div>
-              <div class="scrim-bit">  TIME:<span class="scrim-info" ng-bind="scrim.notes"></span></div>
+            <div ng-show = "!scrimFinalized(scrim)" style="position:relative">
+              <div style="display: inline-block">
+                <div class="scrim-bit">FORMAT:<span class="scrim-info" ng-bind="scrim.format.substring(0,50)"></span></div>
+                <div class="scrim-bit">&nbsp&nbspTEAM:<span class="scrim-info" ng-bind="scrim.notes.substring(0,50)"></span></div>
+                <div class="scrim-bit">&nbsp&nbspTIME:<span class="scrim-info" ng-bind="scrim.time.substring(0,50)"></span></div>
+              </div>
               <div class="scrim-replies" ng-show="authentication.user">
                 <a ng-show="!isScrimCreator(scrim) && !replied(scrim)" href ng-click="replyToScrim(scrim._id)">Challenge</a>
                 <span ng-show="replied(scrim)">Sent Challenge</span>
@@ -95,6 +111,16 @@
 
         </div>
         <div class="col-xs-6">
+
+
+            <div class = "annoying-container-right" ng-click="showInstructions = !showInstructions">
+              <div class = "scrim-top-line"></div>
+              <div class = "scrim-top-centerline"></div>
+              <div class = "scrim-top-button">V<span class="small-scrim-button">IEW</span>&nbspI<span class="small-scrim-button">NSTRUCTIONS</span></div>
+            </div>
+            <div class="chat-window" ng-show="showInstructions">
+              Instructions will go here...
+            </div>
 
           <div class = "chat-window">
             <!--

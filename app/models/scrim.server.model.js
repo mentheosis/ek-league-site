@@ -21,7 +21,6 @@ var ScrimSchema = new Schema({
     type: String,
     default: '',
     trim: true,
-    required: 'Map cannot be blank'
   },
   format: {
     type: String,
@@ -30,6 +29,11 @@ var ScrimSchema = new Schema({
     required: 'Format cannot be blank'
   },
   notes: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  time: {
     type: String,
     default: '',
     trim: true
@@ -51,7 +55,11 @@ var ScrimSchema = new Schema({
     type: String,
     default: ""
   },
-  acceptMessage: {
+  homeInfo: {
+    type: String,
+    default: ""
+  },
+  awayInfo: {
     type: String,
     default: ""
   }

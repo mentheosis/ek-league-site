@@ -109,8 +109,8 @@
 	flex-wrap: wrap; /* firefox */
 	align-items: center;
 	-webkit-align-items: center;
-	justify-content: space-around;
-	-webkit-justify-content: space-around;
+	justify-content: center;
+	-webkit-justify-content: center;
 }
 
 .matchup-list {
@@ -121,6 +121,8 @@
 .matchup {
 	width:180px;
 	height: 85px;
+	margin-left: 25px;
+	margin-right: 25px;
 	word-wrap: break-word;
 	display: inline-block;
 	position:relative;

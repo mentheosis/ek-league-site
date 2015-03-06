@@ -134,6 +134,7 @@ a:active {
 	height:158px;
 }
 
+/*
 .top-banner-line {
 	position:absolute;
 	top: 55px;
@@ -142,12 +143,13 @@ a:active {
 	min-width:850px;
 	border: solid;
 	border-width: 1px 0 1px 0;
-	height: 4px;
-	background: #111111;
-	border-color: #777777;
+	height: 5px;
+	background: #777777;
+	border-color: black;
 	z-index: 1;
 	overflow-x:hidden;
 }
+*/
 
 @media only screen and (min-width: 1900px) {
 	.top-banner-line {

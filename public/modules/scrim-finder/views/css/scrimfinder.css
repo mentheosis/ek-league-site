@@ -23,24 +23,75 @@
   border: 1px solid #555555;
   margin: 0 -15px 15px 15px;
   background: #111111;
-  position: relative;
+  height: 70px;
 }
+
+.scrim-container-new {
+  border: 1px solid #555555;
+  margin: 0 -15px 15px 15px;
+  background: #111111;
+  height: 110px;
+}
+
+
+.scrim-top-line {
+  height: 7px;
+  border-top: 2px solid #777777;
+  border-bottom: 2px solid #777777;
+  margin-bottom: -5px;
+}
+
+.scrim-top-centerline {
+  margin-top:1px;
+  height:1px;
+  border-top: 1px solid;
+  border-color: inherit;
+  margin-bottom: -2em;
+}
+
+.annoying-container {
+  margin: 0.5em -15px 15px 15px;
+  border-color: #66DDAA;
+  color: #66DDAA;
+  margin-bottom: -2em;
+  cursor: pointer;
+}
+
+.annoying-container-right {
+  margin: 0.5em -45px 15px 0;
+  border-color: #66DDAA;
+  color: #66DDAA;
+  margin-bottom: -2em;
+  cursor: pointer;
+}
+
 
 .scrim-top-button {
-  border: 1px solid #555555;
   margin: auto;
-  display: inline-block;
-  background: #111111;
-  width: 300px;
+  margin-top:0.2em;
+  margin-bottom: 1em;
+  color:inherit;
+  display: block;
+  background: black;
+  width: 9em;
   cursor:pointer;
-  color: #66DDAA
+  text-align: center;
+  font-weight:500;
+  font-size: 2em;
+}
+.small-scrim-button {
+  font-size:0.7em;
 }
 
-.scrim-top-button:hover {
-  border: 1px solid white;
-  background: #66DDAA;
-  color: black;
+.annoying-container:hover {
+  border-color: #FF9000;
+  color: white;
 }
+.annoying-container-right:hover {
+  border-color: #FF9000;
+  color: white;
+}
+
 
 
 .scrim-top-control-container {
@@ -50,7 +101,7 @@
 }
 
 .scrim-bit {
-  display:inline-block;
+  display:block;
   background:none;
   /*
   border: solid;
@@ -59,43 +110,69 @@
   color: #FF9000;
   */
   color: #555555;
-  width: calc(100% - 80px);
   margin: 1px 0 1px 0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:clip;
+}
+
+.pre-final-container {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	align-items: flex-end;
+	-webkit-align-items: flex-end;
+	justify-content: space-between;
+	-webkit-justify-content: space-between;
 }
 
 .scrim-replies {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
   font-size: 0.9em;
   color: #66DDAA;
+  text-align:right;
+  position:absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.scrim-replies-final {
+    color: #66DDAA;
+    display: inline-block;
+}
+
+.details {
+  float:left;
+  text-align: left;
+  background: #111111;
 }
 
 .scrim-input {
-  background:none;
-  width: calc(100% - 5em);
+  background:black;
+  display:inline-block;
   border: 1px solid #333333;
   margin: 0 0 0 2px;
   color: #555555;
   margin-left: 5px;
   white-space: pre-wrap;
+  width:65%;
 }
 
 .scrim-info {
   background:none;
-  width: calc(100% - 5em);
   border: none;
   margin: 0 0 0 2px;
   color: #AAAAAA;
   margin-left: 5px;
-  white-space: pre-wrap;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:clip;
 }
 
 
 .scrim-finalized {
   height: 40px;
-  text-align: center;
-  padding: 10px;
   margin-bottom: 30px;
 }
 
@@ -122,8 +199,9 @@
   background: #111111;
   margin-right:-45px;
   border: solid;
-  border-width: 1px 1px 0 1px;
+  border-width: 1px 1px 1px 1px;
   border-color: #555555;
+  margin-bottom:1em;
 }
 
 .chat-message-container {
@@ -173,7 +251,7 @@
 
 .chat-bar-container {
   border: solid;
-  border-width: 1px 0 1px 0;
+  border-width: 1px 0 0 0;
   border-color: #555555;
 }
 
