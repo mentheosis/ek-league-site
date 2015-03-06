@@ -1037,31 +1037,28 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
 
     Must cleanup listeners when the scope is destroyed! */
   $scope.$on('$destroy', function() {
-    if(clearScrimChatListener) { clearScrimChatListener(); }
+    if(clearChatListener) { clearChatListener(); }
     if(clearInitlistener) { clearInitlistener(); }
     if(clearUserListener) { clearUserListener(); }
-    if(clearScrimAddListener) { clearScrimAddListener(); }
+    if(clearAddListener) { clearAddListener(); }
+    if(clearUpdateListener) { clearUpdateListener(); }
     SocketIO.emit('exiting chat', {user: Authentication.user.username});
   });
 
-  var clearScrimAddListener = SocketIO.on('scrim updated', function(scrim){
-    console.log("updating scrim");
-    console.log(scrim);
-    $scope.scrims = Scrims.query();
-    /* better approach not working yet
-    var index = $scope.scrims.indexOf(scrim);
-    console.log("index " + index);
-    $scope.$apply(function(){
-      $scope.scrims.splice(index, 1, scrim);
-    });
-    */
+  var clearUpdateListener = SocketIO.on('scrim updated', function(scrim){
+    for (var s = 0; s < $scope.scrims.length; i++ ){
+      if ($scope.scrims[s]._id === scrim._id) {
+        $scope.scrims.splice(s, 1, scrim);
+        return;
+      }
+    }
   });
 
-  var clearScrimAddListener = SocketIO.on('scrim added', function(scrim){
+  var clearAddListener = SocketIO.on('scrim added', function(scrim){
     $scope.scrims.unshift(scrim);
   });
 
-  var clearScrimChatListener = SocketIO.on('chat message', function(msg){
+  var clearChatListener = SocketIO.on('chat message', function(msg){
     $scope.chatMessages.push(msg);
   });
 
