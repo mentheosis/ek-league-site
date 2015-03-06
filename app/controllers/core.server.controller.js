@@ -16,17 +16,15 @@ exports.index = function(req, res) {
 	});
 };
 
-/*
-var initSettings = function() {
+var initSetting = function(settingName, settingValue) {
 	console.log("initializing settings");
 	var banner = new Settings({
-		name:"bannerScroll",
-		value:"Welcome to EKombat"
+		name: settingName,
+		value: settingValue
 	});
 
 	banner.save();
 };
-*/
 
 exports.changeSettings = function(req, res) {
 	console.log(JSON.stringify(req.query));
@@ -49,8 +47,9 @@ exports.changeSettings = function(req, res) {
 				return res.status(400).send({
 					message: errorHandler.getErrorMessage(err)
 				});
-			} else {
-				//console.log("sending setting " + JSON.stringify(setting));
+			} else if(!setting)	{
+					initSetting(settingName, settingValue);
+			}	else {
 				res.json(setting);
 			}
 		});

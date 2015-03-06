@@ -19,10 +19,11 @@ exports.setSocket = function (socket) {
   		messageReceived(msg);
   	});
   	socketconn.on('initialize chat', function(req){
-  		InitializeMessageDisplay(socketconn, req);
+      socketconn.emit('initialize chat', MessageQueue);
+      addUser(req.user);
   	});
   	socketconn.on('exiting chat', function(req){
-  		ExitChat(req);
+      removeUser(req.user);
   	});
   	socketconn.on('scrim reply', function(req){
   		replyToScrim(req);
@@ -89,6 +90,7 @@ var addUser = function(user) {
   var exists = userList.indexOf(user)
   if(exists === -1) {
     userList.push(user)
+    socketIo.emit('update userlist', userList);
   }
 }
 
@@ -96,6 +98,7 @@ var removeUser = function(user) {
   var exists = userList.indexOf(user)
   if(exists !== -1) {
     userList.splice(exists,1);
+    socketIo.emit('update userlist', userList);
   }
 }
 
@@ -162,18 +165,6 @@ var saveMessage = function (req) {
     });
   });
 };
-
-
-var InitializeMessageDisplay = function(conn, req){
-  conn.emit('initialize chat', MessageQueue);
-  addUser(req.user);
-  socketIo.emit('update userlist', userList);
-};
-
-var ExitChat = function(req){
-  removeUser(req.user);
-  socketIo.emit('update userlist', userList);
-}
 
 var messageReceived = function(msg){
   //console.log("message incoming:" + JSON.stringify(msg));
