@@ -31,9 +31,9 @@
               <form novalidate>
                 <fieldset>
                   <img class="scrim-img" ng-src="{{authentication.user.avatar}}">
-                  <div class="scrim-bit">FORMAT:<input class="scrim-input" ng-model="format" placeholder="&nbsp&nbsp(e.g. 8v8 heist downtown)" type="text"></div>
-                  <div class="scrim-bit">&nbsp&nbspTEAM:<input class="scrim-input" ng-model="notes" placeholder="&nbsp&nbsp your team's name" type="text"></div>
-                  <div class="scrim-bit">&nbsp&nbspTIME:<input class="scrim-input" ng-model="time" placeholder="&nbsp&nbsp--:-- EST/PST" type="text"></div>
+                  <div class="scrim-bit">FORMAT:<input class="scrim-input" maxlength="50" ng-model="format" placeholder="&nbsp&nbsp(e.g. 8v8 heist downtown)" type="text"></div>
+                  <div class="scrim-bit">&nbsp&nbspTEAM:<input class="scrim-input" maxlength="50" ng-model="notes" placeholder="&nbsp&nbsp your team's name" type="text"></div>
+                  <div class="scrim-bit">&nbsp&nbspTIME:<input class="scrim-input" maxlength="50" ng-model="time" placeholder="&nbsp&nbsp--:-- EST/PST" type="text"></div>
                   <!--
                   <div class = "scrim-desc-container">
                     <textarea class="scrim-desc scrim-bit scrim-input" placeholder="Contact info, notes..." data-ng-model="notes"></textarea>
@@ -63,19 +63,19 @@
               <div class="scrim-replies-final" ng-show="authentication.user && canSeePrivateChat(scrim)">
 
                 <div class="details" ng-show="scrim.team === authentication.user.username">
-                    You've accepted a challenge from {{scrim.acceptedUser}}
+                    You've accepted a challenge from <span class="detail-highlight">{{scrim.acceptedUser}}</span>
                     <br>
-                    Your&nbspInfo:&nbsp<input class="scrim-input" ng-model="scrim.homeInfo" ng-model-options="{ debounce:2000 }" ng-change="saveHomeInfo(scrim)" placeholder=" (e.g. server and pw)" type="text">
+                    Your&nbspInfo:&nbsp<input class="detail-input" maxlength="50" ng-model="scrim.homeInfo" ng-model-options="{ debounce:1500 }" ng-change="saveHomeInfo(scrim)" placeholder=" (e.g. server and pw)" type="text">
                     <br>
-                    Their&nbspInfo:&nbsp{{scrim.awayInfo}}
+                    Their&nbspInfo:&nbsp<span class="detail-highlight">{{scrim.awayInfo.substring(0,50)}}</span>
                 </div>
 
                 <div class="details" ng-show="scrim.acceptedUser === authentication.user.username">
-                    {{scrim.team}} has accepted your challenge
+                    <span class="detail-highlight">{{scrim.team}}</span> has accepted your challenge
                     <br>
-                    Their&nbspInfo:&nbsp{{scrim.homeInfo}}
+                    Your&nbspInfo:&nbsp<input class="detail-input" maxlength="50" ng-model="scrim.awayInfo" ng-model-options="{ debounce:1500 }" ng-change="saveAwayInfo(scrim)" placeholder=" (e.g. server and pw)" type="text">
                     <br>
-                    Your&nbspInfo:&nbsp<input class="scrim-input" ng-model="scrim.awayInfo" ng-model-options="{ debounce:2000 }" ng-change="saveAwayInfo(scrim)" placeholder=" (e.g. server and pw)" type="text">
+                    Their&nbspInfo:&nbsp<span class="detail-highlight">{{scrim.homeInfo.substring(0,50)}}</span>
                 </div>
 
               </div>
@@ -87,10 +87,11 @@
                 <div class="scrim-bit">&nbsp&nbspTEAM:<span class="scrim-info" ng-bind="scrim.notes.substring(0,50)"></span></div>
                 <div class="scrim-bit">&nbsp&nbspTIME:<span class="scrim-info" ng-bind="scrim.time.substring(0,50)"></span></div>
               </div>
-              <div class="scrim-replies" ng-show="authentication.user">
+              <div class="scrim-replies" ng-class="{'scrim-replies-box':showReplies}" ng-show="authentication.user">
                 <a ng-show="!isScrimCreator(scrim) && !replied(scrim)" href ng-click="replyToScrim(scrim._id)">Challenge</a>
                 <span ng-show="replied(scrim)">Sent Challenge</span>
-                <a ng-show="hasReplies(scrim)" href ng-click="showReplies = !showReplies">View Challengers</a>
+                <a ng-show="hasReplies(scrim)" href ng-click="showReplies = !showReplies"><span ng-show="!showReplies">View</span><span ng-show="showReplies">Hide</span> Challengers</a>
+                <span style="color:#777777" ng-show="isScrimCreator(scrim) && !hasReplies(scrim)">No Challengers Yet</span>
                 <div ng-show="showReplies" ng-repeat="user in scrim.replies">
                   <a href title="Accept" ng-click="acceptReply(scrim._id, user)">
                     <i class="glyphicon glyphicon-check"></i>

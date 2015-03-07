@@ -135,17 +135,39 @@
   position:absolute;
   bottom: 5px;
   right: 5px;
+  background: #111111;
+}
+
+.scrim-replies-box {
+  border: 1px solid #777777;
+  padding: 3px;
 }
 
 .scrim-replies-final {
-    color: #66DDAA;
-    display: inline-block;
+    color: #777777;
 }
 
 .details {
   float:left;
   text-align: left;
   background: #111111;
+}
+
+.detail-highlight {
+  /*color: #66DDAA;*/
+  color: #FF9000;
+}
+
+.detail-input {
+  background:black;
+  display:inline-block;
+  border: 1px solid #333333;
+  color: #FF9000;
+  width:250px;
+}
+
+.detail-input:focus {
+  color: #AAAAAA;
 }
 
 .scrim-input {
@@ -172,8 +194,9 @@
 
 
 .scrim-finalized {
-  height: 40px;
+  height: 65px;
   margin-bottom: 30px;
+  overflow:auto;
 }
 
 .scrim-desc-container {

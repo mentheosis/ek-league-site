@@ -952,6 +952,7 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
       map: this.map,
       format: this.format,
       notes: this.notes,
+      time: this.time,
       imageurl: image,
       team: Authentication.user.username
     });
@@ -963,6 +964,7 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
       $scope.map = '';
       $scope.format = '';
       $scope.notes = '';
+      $scope.time = '';
       //the unshift is now handled by sockets!
       //$scope.scrims.unshift(scrim); //push it to the display
       //$scope.createVisible = !$scope.createVisible;
