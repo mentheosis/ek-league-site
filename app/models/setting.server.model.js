@@ -23,7 +23,7 @@ var SettingSchema = new Schema({
     required: 'Name cannot be blank'
   },
   value: {
-    type: String,
+    type: [String],
     default: '',
     trim: true
   }

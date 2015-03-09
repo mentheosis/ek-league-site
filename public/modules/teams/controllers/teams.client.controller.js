@@ -7,8 +7,8 @@ Array.prototype.indexOfUsername = function(username) {
     return -1;
 }
 
-angular.module('teams').controller('TeamsController', ['$scope', '$stateParams', '$location', '$animate', '$timeout', 'Authentication', 'Teams',
-	function($scope, $stateParams, $location, $animate, $timeout, Authentication, Teams) {
+angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '$stateParams', '$location', '$animate', '$timeout', 'Authentication', 'Settings', 'Teams',
+	function($scope, $rootScope, $stateParams, $location, $animate, $timeout, Authentication, Settings, Teams) {
 		$scope.authentication = Authentication;
 		//if(authentication.user.color)
 		//	$scope.userSelectedColor = authentication.user.color;
@@ -16,6 +16,24 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		$scope.indexOfUsername = function(id){
 			return this.indexOfUsername(id);
 		}
+
+    $scope.teamProfileItems = [];
+		$scope.getTeamProfileItems = function() {
+			Settings.get({settingName:'teamProfile'},
+				function(response){
+          if(response && response.value)
+					  $scope.teamProfileItems = response.value;
+				}
+			);
+		}
+
+		$scope.saveTeamProfileItems = function(){
+			if($scope.teamProfileItems)
+			{
+        console.log("saving: " + $scope.teamProfileItems)
+				Settings.update({settingName:'teamProfile', settingValue:$scope.teamProfileItems});
+			}
+		};
 
 		$scope.joinpassword='';
 		$scope.joinTeam = function() {
@@ -115,6 +133,7 @@ angular.module('teams').controller('TeamsController', ['$scope', '$stateParams',
 		};
 
 		$scope.findOne = function() {
+      $scope.getTeamProfileItems();
 			$scope.team = Teams.get({
 				teamId: $stateParams.teamId
 			});

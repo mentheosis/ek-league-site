@@ -34,12 +34,12 @@ exports.setSocket = function (socket) {
   	});
   	socketconn.on('home info', function(req){
   		saveMessage(req);
+      socketconn.broadcast.emit('home info updated', req);
   	});
   	socketconn.on('away info', function(req){
   		saveMessage(req);
+      socketconn.broadcast.emit('away info updated', req);
   	});
-
-
 
   });
 
@@ -56,8 +56,6 @@ exports.create = function(req,res){
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      console.log('added scrim');
-      console.log('scrim');
       socketIo.emit('scrim added', scrim);
       //res.json(scrim);
       res.status(200).send({
@@ -69,8 +67,8 @@ exports.create = function(req,res){
 
 exports.list = function(req, res){
   var yesterday = new Date();
-  yesterday.setDate(yesterday.getTime() - (12 * 60 * 60 * 1000));
-  Scrim.find({"created_on": {"$gte": yesterday}}).sort('-created').exec(function(err, scrims) {
+  yesterday.setHours(yesterday.getHours() - 12);
+  Scrim.find({"created": {"$gte": yesterday}}).sort('-created').exec(function(err, scrims) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -125,6 +123,8 @@ var removeUserBySocketId = function(socketId) {
   for (var i=0; i<userMap.length; i++) {
     if(userMap[i].socketId === socketId) {
       userToRemove = userMap[i].username;
+      userMap.splice(i,1);
+      break;
     }
   }
   removeUser(userToRemove);
@@ -194,7 +194,8 @@ var saveMessage = function (req) {
         console.log("couldn't save scrim " + req.scrim)
       }
       else {
-        socketIo.emit('scrim updated', scrim);
+        //emitting to all caused some kind of ng-change feedback loop, so taking different approach above.
+        //socketIo.emit('scrim updated', scrim);
         console.log('message saved')
       }
     });

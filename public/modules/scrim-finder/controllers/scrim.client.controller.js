@@ -137,6 +137,27 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
     SocketIO.emit('exiting chat', {user: Authentication.user.username});
   });
 
+
+  var clearHomeInfoListener = SocketIO.on('home info updated', function(req){
+    for (var s = 0; s < $scope.scrims.length; s++ ){
+      if ($scope.scrims[s]._id === req.scrim) {
+        //$scope.scrims.splice(s, 1, scrim);
+        $scope.scrims[s].homeInfo = req.home;
+        return;
+      }
+    }
+  });
+
+  var clearAwayInfoListener = SocketIO.on('away info updated', function(req){
+    for (var s = 0; s < $scope.scrims.length; s++ ){
+      if ($scope.scrims[s]._id === req.scrim) {
+        //$scope.scrims.splice(s, 1, scrim);
+        $scope.scrims[s].awayInfo = req.away;
+        return;
+      }
+    }
+  });
+
   var clearUpdateListener = SocketIO.on('scrim updated', function(scrim){
     for (var s = 0; s < $scope.scrims.length; s++ ){
       if ($scope.scrims[s]._id === scrim._id) {

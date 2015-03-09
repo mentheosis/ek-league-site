@@ -17,13 +17,13 @@ exports.index = function(req, res) {
 };
 
 var initSetting = function(settingName, settingValue) {
-	console.log("initializing settings");
-	var banner = new Settings({
+	console.log("initializing setting");
+	var setting = new Settings({
 		name: settingName,
 		value: settingValue
 	});
 
-	banner.save();
+	setting.save();
 };
 
 exports.changeSettings = function(req, res) {
@@ -33,6 +33,7 @@ exports.changeSettings = function(req, res) {
 	{
 		var settingName = req.query.settingName;
 		var settingValue = req.query.settingValue;
+		console.log('saving setting: '+settingName+' val: '+settingValue);
 
 		Settings.update(
 			{name: settingName},

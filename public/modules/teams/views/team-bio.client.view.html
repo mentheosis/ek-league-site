@@ -72,11 +72,21 @@
           </div>
 
           <div class="team-info">
-            <div class="team-info-bit">HOMEPAGE:</div>
-            <div class="team-info-bit">YEAR FOUNDED:</div>
-            <div class="team-info-bit">FAVORITE COLORS:</div>
-            <div class="team-info-bit">RECRUITMENT STATUS:</div>
-            <div class="team-info-bit">SPONSORSHIPS:</div>
+            <div ng-repeat="item in teamProfileItems track by $index">
+              <div class="team-info-bit">{{item}}</div>
+            </div>
+
+            <div ng-show="adminMode">
+              <br>
+              <br>
+              <div ng-repeat="item in teamProfileItems track by $index">
+                {{$index+1}}:<input ng-model="teamProfileItems[$index]" class="manage-comp-input">
+                <a href ng-click="teamProfileItems.splice($index, 1)">remove</a>
+              </div>
+              <a href ng-click="teamProfileItems.push('')">add an item</a>
+              &nbsp-&nbsp<a href ng-click="saveTeamProfileItems()">save</a>
+            </div>
+
           </div>
 
         </div>
