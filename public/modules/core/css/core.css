@@ -69,8 +69,9 @@ a:active {
 
 @media only screen and (min-width: 1700px) {
 	.about-bg {
-		height: 1474px;
-		background: url("/modules/core/img/about-bg.jpg");
+		height: 1330px;
+		background: url("/modules/core/img/about-bg.png");
+		background-repeat: no-repeat;
 	}
 }
 
