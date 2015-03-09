@@ -19,11 +19,6 @@ module.exports = function(app) {
 		.get(articles.read)
 		.put(users.requiresLogin,articles.hasAuthorization,articles.update)
 		.delete(users.requiresLogin, articles.hasAuthorization, articles.delete)
-		.post(
-			users.requiresLogin,
-			//users.getAddress,
-			//cp_api.send_kismet,
-			articles.kismet);
 
 	// Finish by binding the article middleware
 	app.param('articleId', articles.articleByID);

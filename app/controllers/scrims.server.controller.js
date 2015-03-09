@@ -68,7 +68,9 @@ exports.create = function(req,res){
 };
 
 exports.list = function(req, res){
-  Scrim.find().sort('-created').exec(function(err, scrims) {
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getTime() - (12 * 60 * 60 * 1000));
+  Scrim.find({"created_on": {"$gte": yesterday}}).sort('-created').exec(function(err, scrims) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

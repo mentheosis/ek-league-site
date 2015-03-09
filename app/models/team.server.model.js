@@ -7,6 +7,10 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
 	crypto = require('crypto');
 
+var validateNameLength = function(name) {
+	return name.length <= 25;
+};
+
 /**
 * Article Schema
 */
@@ -18,8 +22,9 @@ var TeamSchema = new Schema({
   name: {
     type: String,
     default: '',
-    trim: true,
-    required: 'Name cannot be blank'
+    required: 'Name cannot be blank',
+		validate: [validateNameLength, 'Name must be 25 characters or less'],
+    trim: true
   },
   lowername: {
     type: String,
