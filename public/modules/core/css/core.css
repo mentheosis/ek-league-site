@@ -67,6 +67,13 @@ a:active {
 	position: relative;
 }
 
+@media only screen and (min-width: 1700px) {
+	.about-bg {
+		height: 1474px;
+		background: url("/modules/core/img/about-bg.jpg");
+	}
+}
+
 .about-text-block {
 	position: absolute;
 	color: #FF9000;
@@ -96,7 +103,7 @@ a:active {
 .about-text {
 	color: #DD6000;
 	text-align: left;
-	margin-left: 75px;
+	/*margin-left: 75px;*/
 	/*width: 250px;*/
 }
 

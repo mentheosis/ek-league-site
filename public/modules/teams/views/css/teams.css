@@ -13,6 +13,16 @@
 	margin: 0 0 0 10px;
 }
 
+.team-edit-control {
+	font-size:0.8em;
+	cursor: pointer;
+}
+
+.team-edit-control:hover {
+	color: #FF9000;
+}
+
+
 .team-bio-panel {
 	height:206px;
 	width:206px;

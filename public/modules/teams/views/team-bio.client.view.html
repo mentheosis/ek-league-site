@@ -49,7 +49,7 @@
     <div class="team-bio-container">
 
       <div class="team-bio-title">
-        BIO <i style="font-size:0.8em" ng-show="authentication.user._id === team.founder || (authentication.user && authentication.user.roles.indexOf('admin') !== -1)" ng-click="processBio()" class="glyphicon glyphicon-pencil" title="edit bio"></i>
+        BIO <i ng-show="authentication.user._id === team.founder || (authentication.user && authentication.user.roles.indexOf('admin') !== -1)" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-pencil" title="edit bio"></i>
       </div>
 
       <div class="team-bio">
