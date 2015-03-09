@@ -115,57 +115,15 @@ angular.module('articles').config(['$stateProvider',
 angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', '$animate', '$timeout', 'Authentication', 'Articles', 'Comments',
 	function($scope, $stateParams, $location, $animate, $timeout, Authentication, Articles, Comments) {
 		$scope.authentication = Authentication;
-		//if(authentication.user.color)
-		//	$scope.userSelectedColor = authentication.user.color;
-
-		var welcomeToTheSpot = [
-			'Welcome to the Spot',
-			'Your spot is now hit',
-			'Cigarette spot, smoke em if you got em',
-			'You are now a spot',
-			'See spot play bongos',
-			'There is no smoking in the spot',
-			'Spotted leopards everywhere',
-			'For all your spot hitting needs',
-			'There once was a man from nantucket..',
-			'I spy',
-			'Somebody poisoned the other spot',
-			'This is no child\'s spot',
-			'This spot is worth two in the bush',
-			'This is an open spot',
-			'Small spot: handle with care',
-			'The standard in out spot',
-			'Your text spot studio',
-			'A free spot',
-		];
-		$scope.WelcomeToTheSpot = welcomeToTheSpot[Math.floor(Math.random()*welcomeToTheSpot.length)];
 
 		$scope.switchShowFull = function(repeatScope){
 			repeatScope.showFull = !repeatScope.showFull;
-		};
-
-		$scope.userSelectedColor = 'Blue';
-		$scope.colorsVisible = false;
-		$scope.switchColorsVisible = function(){
-			$scope.colorsVisible = !$scope.colorsVisible;
 		};
 
 		$scope.createVisible = false;
 		$scope.switchCreateVisible = function(){
 			$scope.createVisible = !$scope.createVisible;
 		};
-
-		$scope.simpleUI = false;
-		$scope.switchSimpleUI = function(){
-			$scope.simpleUI = !$scope.simpleUI;
-		};
-
-/*
-		$scope.editBanner = false;
-		$scope.switchEditBanner = function(){
-			$scope.adminMode = !$scope.adminMode;
-		};
-*/
 
 		$scope.create = function() {
 			var article = new Articles({
@@ -243,35 +201,6 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			});
 		};
 
-		$scope.kismet = function(article, articleScope) {
-			if(!article)
-			{
-				article = $scope.article;
-			}
-			article.kismet += 1;
-			article.$kismet(function() {
-				//$location.path('articles/' + article._id);
-			}, function(errorResponse) {
-				article.kismet -= 1;
-				articleScope.thisError = errorResponse.data.message;
-				articleScope.showError=true;
-				$timeout(function(){
-					articleScope.showError=false;
-				},2000);
-			});
-		};
-
-		$scope.unkismet = function() {
-			var article = $scope.article;
-
-			article.kismet -= 1;
-
-			article.$update(function() {
-				$location.path('articles/' + article._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
 
 		$scope.sortBy = 'created';
 		$scope.sortDesc = true;
