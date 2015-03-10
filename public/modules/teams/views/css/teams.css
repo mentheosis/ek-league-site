@@ -144,8 +144,14 @@
 	min-height: 5em;
 }
 
+.edit-answer {
+	background: black;
+}
+
+
 .profile-answer {
 	color: #FF9000;
+	font-weight: 500;
 }
 
 .team-bottom-container {

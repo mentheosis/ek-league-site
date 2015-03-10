@@ -89,7 +89,7 @@
                 &nbsp<i ng-show="canEditStuff()" ng-click="editingAnswers = !editingAnswers" class="team-edit-control glyphicon glyphicon-pencil" title="edit"></i>
               </div>
               <div class="team-info-bit" ng-show="editingAnswers">
-                {{item.key}}&nbsp<input type='text' ng-model="item.answer">&nbsp<i ng-show="canEditStuff()" ng-click="saveTeamProfileAnswers(this)" class="team-edit-control glyphicon glyphicon-check" title="save"></i>
+                {{item.key}}&nbsp<input type='text' class="edit-answer profile-answer" ng-model="item.answer">&nbsp<i ng-show="canEditStuff()" ng-click="saveTeamProfileAnswers(this)" class="team-edit-control glyphicon glyphicon-check" title="save">save</i>
               </div>
             </div>
 
