@@ -53,9 +53,9 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 
 	var team = req.team;
-	console.log('before ' + JSON.stringify(team));
+	//console.log('before ' + JSON.stringify(team));
 	team = _.extend(team, req.body);
-	console.log('after ' + JSON.stringify(team));
+	//console.log('after ' + JSON.stringify(team));
 
 	team.save(function(err) {
 		if (err) {
@@ -237,7 +237,14 @@ exports.hasAuthorization = function(req, res, next) {
 		next();
 		return;
 	}
-		return res.status(403).send({
-			message: 'User is not authorized'
-		});
+
+	if(req.team.captains.indexOf(req.user.username) !== -1){
+		next();
+		return;
+	}
+
+
+	return res.status(403).send({
+		message: 'User is not authorized'
+	});
 };

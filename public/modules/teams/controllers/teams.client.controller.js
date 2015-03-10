@@ -17,12 +17,24 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 			return this.indexOfUsername(id);
 		}
 
+    $scope.canEditStuff = function() {
+      return (
+        $scope.team &&
+        Authentication.user &&
+        (
+          Authentication.user._id === $scope.team.founder
+          || Authentication.user.roles.indexOf('admin') !== -1
+          || ($scope.team.captains && $scope.team.captains.indexOf(Authentication.user.username) !== -1)
+        ));
+    };
+
     $scope.teamProfileItems = [];
 		$scope.getTeamProfileItems = function() {
 			Settings.get({settingName:'teamProfile'},
 				function(response){
           if(response && response.value)
 					  $scope.teamProfileItems = response.value;
+            buildTeamProfileAnswers();
 				}
 			);
 		}
@@ -34,6 +46,32 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 				Settings.update({settingName:'teamProfile', settingValue:$scope.teamProfileItems});
 			}
 		};
+
+    var buildTeamProfileAnswers = function() {
+      console.log('building answers');
+      var teamProfileAnswers = [];
+      for(var i=0; i<$scope.teamProfileItems.length; i++) {
+        teamProfileAnswers.push({key: $scope.teamProfileItems[i], answer: ''});
+        if($scope.team && $scope.team.profileAnswers) {
+          var teamAnswer;
+          for(var j=0; j<$scope.team.profileAnswers.length; j++) {
+            //console.log('profile answers');
+            //console.log($scope.team.profileAnswers[j])
+            //console.log($scope.teamProfileItems[i])
+
+            if($scope.team.profileAnswers[j].key === $scope.teamProfileItems[i])
+              teamProfileAnswers[i].answer = $scope.team.profileAnswers[j].answer;
+          }
+        }
+      }
+      $scope.teamProfileAnswers = teamProfileAnswers;
+    };
+
+    $scope.saveTeamProfileAnswers = function(innerScope) {
+      $scope.team.profileAnswers = $scope.teamProfileAnswers;
+      $scope.team.$update();
+      innerScope.editingAnswers = false;
+    };
 
 		$scope.joinpassword='';
 		$scope.joinTeam = function() {
@@ -114,6 +152,26 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 			}
 		};
 
+    $scope.promote = function(username) {
+      if($scope.team.captains.indexOf(username) === -1) {
+        $scope.team.captains.push(username);
+        $scope.team.$update();
+      }
+    }
+
+    $scope.demote = function(username) {
+      var index = $scope.team.captains.indexOf(username);
+      if(index !== -1) {
+        $scope.team.captains.splice(index,1);
+        $scope.team.$update();
+      }
+    }
+
+    $scope.isCaptain = function(username) {
+      if($scope.team.captains.indexOf(username) !== -1)
+        return true;
+      return false;
+    }
 
 		$scope.update = function() {
 			var team = $scope.team;
@@ -133,10 +191,9 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 		};
 
 		$scope.findOne = function() {
-      $scope.getTeamProfileItems();
-			$scope.team = Teams.get({
-				teamId: $stateParams.teamId
-			});
+			$scope.team = Teams.get({teamId: $stateParams.teamId}, function(res){
+        $scope.getTeamProfileItems();
+      });
 		};
 
 	}

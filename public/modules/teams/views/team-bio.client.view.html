@@ -38,7 +38,6 @@
 					</div>
 			</div>
 
-
       <div class="team-links">
         <a href class="team-links"> CONTACT </a>
       </div>
@@ -49,7 +48,7 @@
     <div class="team-bio-container">
 
       <div class="team-bio-title">
-        BIO <i ng-show="authentication.user._id === team.founder || (authentication.user && authentication.user.roles.indexOf('admin') !== -1)" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-pencil" title="edit bio"></i>
+        BIO <i ng-show="canEditStuff()" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-pencil" title="edit bio"></i>
       </div>
 
       <div class="team-bio">
@@ -62,18 +61,36 @@
         <div class="team-member-container">
           <div class="member-img-container" ng-repeat="member in team.members">
             <img class="avatar-inline" title="{{member.username}}" ng-src="{{member.avatar}}">
-            <span ng-bind="member.username" class="team-name"></span>
+
+            <span class="team-name">
+              <i ng-show="isCaptain(member.username)" title="Captain" class="glyphicon glyphicon-star"></i>
+              {{member.username}}
+            </span>
+            <span class="promote-control" ng-show="canEditStuff()">
+  						<a title="Promote to captain" ng-show="!isCaptain(member.username)" class="admin-control" href="" style="cursor:pointer" data-ng-click="promote(member.username)">
+  							<i class="glyphicon glyphicon-star"></i>
+  						</a>
+  						<a title="Demote" ng-show="isCaptain(member.username)" class="admin-control" href="" style="cursor:pointer" data-ng-click="demote(member.username)">
+  							<i class="glyphicon glyphicon-minus"></i>
+  						</a>
+            </span>
           </div>
         </div>
-
         <div class="team-info-container">
           <div class="team-bio-title" style="margin: -3px 0 0 -3px">
             TEAM INFO
           </div>
 
           <div class="team-info">
-            <div ng-repeat="item in teamProfileItems track by $index">
-              <div class="team-info-bit">{{item}}</div>
+            <div ng-repeat="item in teamProfileAnswers track by $index">
+              <div class="team-info-bit" ng-show="!editingAnswers">
+                {{item.key}}&nbsp
+                <span class="profile-answer">{{item.answer}}</span>
+                &nbsp<i ng-show="canEditStuff()" ng-click="editingAnswers = !editingAnswers" class="team-edit-control glyphicon glyphicon-pencil" title="edit"></i>
+              </div>
+              <div class="team-info-bit" ng-show="editingAnswers">
+                {{item.key}}&nbsp<input type='text' ng-model="item.answer">&nbsp<i ng-show="canEditStuff()" ng-click="saveTeamProfileAnswers(this)" class="team-edit-control glyphicon glyphicon-check" title="save"></i>
+              </div>
             </div>
 
             <div ng-show="adminMode">

@@ -41,11 +41,15 @@ var TeamSchema = new Schema({
     ref: 'User'
   },
   captains: {
-    type: [{type: Schema.ObjectId, ref: 'User' }],
+    type: [String],
     default: []
   },
   members: {
     type: [{type: Schema.ObjectId, ref: 'User' }],
+    default: []
+  },
+  profileAnswers: {
+    type: [{key:String, answer:String}],
     default: []
   },
   joinpw: {
