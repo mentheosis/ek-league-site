@@ -1198,7 +1198,7 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 			{
 				$scope.team.password = $scope.joinpassword;
 				//$scope.team.members.push(Authentication.user._id);
-				$scope.team.$save({newMember: Authentication.user.username},
+				$scope.team.$save({newMember: Authentication.user._id},
 					function(team){
 						$scope.team = team;
 						$scope.tryJoinTeam=false;
@@ -1216,17 +1216,19 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 			if(Authentication.user && $scope.team && $scope.team.members.indexOfUsername(Authentication.user.username) !== -1)
 			{
 				//$scope.team.members.push(Authentication.user._id);
-				$scope.team.$save({removeMember: Authentication.user.username},
+				$scope.team.$save({removeMember: Authentication.user._id},
 					function(team){
 						$scope.team = team;
+            $scope.demote(Authentication.user.username);
 					});
 			}
 		};
 
-		$scope.kickMember = function(username) {
-  		$scope.team.$save({removeMember: username},
+		$scope.kickMember = function(member) {
+  		$scope.team.$save({removeMember: member._id},
   			function(team){
   				$scope.team = team;
+          $scope.demote(member.username);
         });
 		};
 

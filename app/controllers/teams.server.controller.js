@@ -114,7 +114,7 @@ function joinTeam(req, res) {
 
 function quitTeam(req, res) {
 	var team = req.team;
-	var memberIndex = req.team.members.indexOf(req.user._id);
+	var memberIndex = req.team.members.indexOf(req.query.removeMember);
 	if(memberIndex !== -1)
 	{
 		req.team.members.splice(memberIndex, 1);

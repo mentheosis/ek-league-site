@@ -43,6 +43,9 @@
         <a href class="team-links"> CONTACT </a>
       </div>
       -->
+      <div class="team-links" ng-show="canEditStuff()">
+        <a href ng-click="showTeamControls = !showTeamControls" class="team-links"> EDIT MODE </a>
+      </div>
 
       <div class="team-links" ng-show="canEditStuff()">
         <a href ng-click="changingPassword = true" class="team-links"> CHANGE PASSWORD </a>
@@ -76,7 +79,7 @@
     <div class="team-bio-container">
 
       <div class="team-bio-title">
-        BIO <i ng-show="canEditStuff()" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-pencil" title="edit bio"></i>
+        BIO <i ng-show="showTeamControls" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-pencil" title="edit bio"></i>
       </div>
 
       <div class="team-bio">
@@ -95,12 +98,12 @@
               <i ng-show="isCaptain(member.username)" title="Captain" class="glyphicon glyphicon-star"></i>
               {{member.username}}
             </span>
-            <span class="kick-control" ng-show="canEditStuff()">
-  						<a title="Kick" class="admin-control" href="" style="cursor:pointer" ng-click="kickMember(member.username)">
+            <span class="kick-control" ng-show="showTeamControls">
+  						<a title="Kick" class="admin-control" href="" style="cursor:pointer" ng-click="kickMember(member)">
   							X
   						</a>
             </span>
-            <span class="promote-control" ng-show="canEditStuff()">
+            <span class="promote-control" ng-show="showTeamControls">
   						<a title="Promote to captain" ng-show="!isCaptain(member.username)" class="admin-control" href="" style="cursor:pointer" data-ng-click="promote(member.username)">
   							<i class="glyphicon glyphicon-star"></i>
   						</a>
@@ -120,10 +123,10 @@
               <div class="team-info-bit" ng-show="!editingAnswers">
                 {{item.key}}&nbsp
                 <span class="profile-answer">{{item.answer}}</span>
-                &nbsp<i ng-show="canEditStuff()" ng-click="editingAnswers = !editingAnswers" class="team-edit-control glyphicon glyphicon-pencil" title="edit"></i>
+                &nbsp<i ng-show="showTeamControls" ng-click="editingAnswers = !editingAnswers" class="team-edit-control glyphicon glyphicon-pencil" title="edit"></i>
               </div>
               <div class="team-info-bit" ng-show="editingAnswers">
-                {{item.key}}&nbsp<input type='text' class="edit-answer profile-answer" ng-model="item.answer">&nbsp<i ng-show="canEditStuff()" ng-click="saveTeamProfileAnswers(this)" class="team-edit-control glyphicon glyphicon-check" title="save">save</i>
+                {{item.key}}&nbsp<input type='text' class="edit-answer profile-answer" ng-model="item.answer">&nbsp<i ng-show="showTeamControls" ng-click="saveTeamProfileAnswers(this)" class="team-edit-control glyphicon glyphicon-check" title="save">save</i>
               </div>
             </div>
 
