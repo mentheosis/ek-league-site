@@ -1141,7 +1141,7 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
         Authentication.user &&
         (
           Authentication.user._id === $scope.team.founder
-          || Authentication.user.roles.indexOf('admin') !== -1
+          || $rootScope.adminMode
           || ($scope.team.captains && $scope.team.captains.indexOf(Authentication.user.username) !== -1)
         ));
     };
@@ -1223,6 +1223,12 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 			}
 		};
 
+		$scope.kickMember = function(username) {
+  		$scope.team.$save({removeMember: username},
+  			function(team){
+  				$scope.team = team;
+        });
+		};
 
 		$scope.editBio = false;
 		$scope.processBio = function(){
@@ -1252,6 +1258,15 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 				$scope.error = errorResponse.data.message;
 			});
 		};
+
+    $scope.updatePassword = function() {
+      $scope.team.joinpw = $scope.joinpassword;
+      $scope.team.$update(function(){
+        $scope.changingPassword = false;
+      }, function(err){
+        $scope.error = err.data.message;
+      });
+    }
 
 		$scope.delete = function(team) {
 			$scope.confirmDelete = false;

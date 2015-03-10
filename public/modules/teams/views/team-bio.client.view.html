@@ -38,9 +38,37 @@
 					</div>
 			</div>
 
+      <!--
       <div class="team-links">
         <a href class="team-links"> CONTACT </a>
       </div>
+      -->
+
+      <div class="team-links" ng-show="canEditStuff()">
+        <a href ng-click="changingPassword = true" class="team-links"> CHANGE PASSWORD </a>
+      </div>
+			<div style="position: relative" ng-show="changingPassword">
+					<div class="confirmDelete">
+					    <div style="width:400px">
+					      <a href ng-click="changingPassword = false" title="Close" class="confirmDelete-close">X</a>
+
+					      <h3>New Password?</h3>
+					      <br>
+                <input class="manage-comp-input" type="text" ng-model="joinpassword" placeholder="" required>
+					      <span ng-click="updatePassword()" class="delete-button">
+					        Save
+					      </span>
+					      <span ng-click="changingPassword = false" class="delete-button">
+					        Cancel
+					      </span>
+                <div ng-show="errText">
+                  {{errText}}
+                </div>
+					    </div>
+					</div>
+			</div>
+
+
     </div>
   </div>
 
@@ -63,8 +91,14 @@
             <img class="avatar-inline" title="{{member.username}}" ng-src="{{member.avatar}}">
 
             <span class="team-name">
+              <i ng-show="member._id === team.founder" title="Founder" style="color:red" class="glyphicon glyphicon-star"></i>
               <i ng-show="isCaptain(member.username)" title="Captain" class="glyphicon glyphicon-star"></i>
               {{member.username}}
+            </span>
+            <span class="kick-control" ng-show="canEditStuff()">
+  						<a title="Kick" class="admin-control" href="" style="cursor:pointer" ng-click="kickMember(member.username)">
+  							X
+  						</a>
             </span>
             <span class="promote-control" ng-show="canEditStuff()">
   						<a title="Promote to captain" ng-show="!isCaptain(member.username)" class="admin-control" href="" style="cursor:pointer" data-ng-click="promote(member.username)">

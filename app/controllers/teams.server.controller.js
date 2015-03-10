@@ -54,6 +54,11 @@ exports.update = function(req, res) {
 
 	var team = req.team;
 	//console.log('before ' + JSON.stringify(team));
+
+	if(req.body.joinpw) {
+		req.body.joinpw = team.hashPassword(req.body.joinpw);
+	}
+
 	team = _.extend(team, req.body);
 	//console.log('after ' + JSON.stringify(team));
 
@@ -203,7 +208,7 @@ function teamByIdPopulated(req, res, next, id) {
 
 	  Team.populate(team, opts, function(){
 			if (err) return next(err);
-			if (!team) return next(new Error('Failed to load teams ' + id));
+			if (!team) return next(new Error('Failed to load team ' + id));
 
 			req.team = team;
 			//console.log(JSON.stringify(team))
@@ -215,7 +220,7 @@ function teamByIdPopulated(req, res, next, id) {
 function teamByIdJoinQuit(req, res, next, id) {
 	Team.findById(id).exec(function(err, team) {
 			if (err) return next(err);
-			if (!team) return next(new Error('Failed to load teams ' + id));
+			if (!team) return next(new Error('Failed to load team ' + id));
 
 			req.team = team;
 			//console.log(JSON.stringify(team))

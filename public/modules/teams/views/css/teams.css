@@ -24,11 +24,21 @@
 	background:black;
 	border-radius: 20px;
 	padding: 2px 0 0 0;
-	bottom: 5px;
-	right: 5px;
+	bottom: 0;
+	right: 0;
 	font-size:0.8em;
 }
 
+.kick-control {
+	position:absolute;
+	background:black;
+	padding:0;
+	margin:0;
+	top: 0;
+	right: 0;
+	font-size:0.8em;
+	font-weight: 900;
+}
 
 .register-team {
 	margin: 0 0 0 10px;
