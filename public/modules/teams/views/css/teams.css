@@ -194,10 +194,10 @@
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	min-width: 600px;
 }
 
 .team-member-container {
+	flex-grow: 1;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -205,8 +205,16 @@
 	display: flex;
 	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
 	flex-wrap: wrap; /* firefox */
-	width: 250px;
-	margin: 15px 0 0 15px;
+	align-items: flex-start;
+	-webkit-align-items: flex-start;
+	align-content: flex-start;
+	-webkit-align-content: flex-start;
+	justify-content: center;
+	-webkit-justify-content: center;
+
+	width: 35%;
+	padding: 15px 0 15px 0;
+	margin: 0;
 }
 
 .member-img-container {
@@ -219,15 +227,17 @@
 }
 
 .team-info-container {
+	flex-grow:2;
 	border: solid;
 	border-color: #333333;
 	border-width: 0 0 0 2px;
 	display: inline-block;
-	width:100%;
-	padding: 0 0 0 15px;
+	width:65%;
+	padding: 15px 10px 15px 15px;
 	margin: 0;
 	min-height: 200px;
 	position: relative;
+	text-wrap: break-word;
 }
 
 .team-info {
