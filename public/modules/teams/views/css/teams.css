@@ -69,6 +69,7 @@
 	font-size:0.8em;
 	cursor: pointer;
 	color: #FF9000;
+	letter-spacing: 0 !important;
 }
 
 .team-edit-control:hover {

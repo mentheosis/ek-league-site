@@ -103,20 +103,19 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
 		$scope.quitTeam = function() {
 			if(Authentication.user && $scope.team && $scope.team.members.indexOfUsername(Authentication.user.username) !== -1)
 			{
-				//$scope.team.members.push(Authentication.user._id);
+        $scope.demote(Authentication.user.username);
 				$scope.team.$save({removeMember: Authentication.user._id},
 					function(team){
 						$scope.team = team;
-            $scope.demote(Authentication.user.username);
 					});
 			}
 		};
 
 		$scope.kickMember = function(member) {
+      $scope.demote(member.username);
   		$scope.team.$save({removeMember: member._id},
   			function(team){
   				$scope.team = team;
-          $scope.demote(member.username);
         });
 		};
 

@@ -7,10 +7,10 @@
       <div class="team-bio-panel">
         <img class="team-img" ng-src="{{team.imageurl}}">
         <div class="change-img-control" ng-show="showTeamControls">
-          <a href ng-show="!showEditImage" ng-click="showEditImage = !showEditImage" title="Edit image" class="glyphicon glyphicon-pencil"></a>
-          <a href ng-show="showEditImage" ng-click="saveTeamImg()" class="glyphicon glyphicon-check">save</a>
+          <a href ng-show="!showEditImage && showTeamControls" ng-click="showEditImage = !showEditImage" title="Edit image" class="glyphicon glyphicon-pencil"></a>
+          <a href ng-show="showEditImage && showTeamControls" ng-click="saveTeamImg()" class="glyphicon glyphicon-check">save</a>
         </div>
-        <input type="text" ng-model="team.imageurl" ng-show="showEditImage" class="change-img-input">
+        <input type="text" ng-model="team.imageurl" ng-show="showEditImage && showTeamControls" class="change-img-input">
       </div>
       <br>
       <div class="team-bio-name">
@@ -84,12 +84,14 @@
     <div class="team-bio-container">
 
       <div class="team-bio-title">
-        BIO <i ng-show="showTeamControls" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-pencil" title="edit bio"></i>
+        BIO
+        <i ng-show="!editBio && showTeamControls" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-pencil" title="edit bio"></i>
+        <i ng-show="editBio && showTeamControls" ng-click="processBio()" class="team-edit-control glyphicon glyphicon-check">save</i>
       </div>
 
       <div class="team-bio">
-        <span ng-show="!editBio">{{team.description}}</span>
-        <textarea ng-show="editBio" class="edit-team-bio" placeholder="Write about your team" data-ng-model="team.description"></textarea>
+        <span ng-show="!editBio && showTeamControls">{{team.description}}</span>
+        <textarea ng-show="editBio && showTeamControls" class="edit-team-bio" placeholder="Write about your team" data-ng-model="team.description"></textarea>
       </div>
 
       <div class="team-bottom-container">
@@ -130,7 +132,7 @@
                 <span class="profile-answer">{{item.answer}}</span>
                 &nbsp<i ng-show="showTeamControls" ng-click="editingAnswers = !editingAnswers" class="team-edit-control glyphicon glyphicon-pencil" title="edit"></i>
               </div>
-              <div class="team-info-bit" ng-show="editingAnswers">
+              <div class="team-info-bit" ng-show="editingAnswers && showTeamControls">
                 {{item.key}}&nbsp<input type='text' class="edit-answer profile-answer" ng-model="item.answer">&nbsp<i ng-show="showTeamControls" ng-click="saveTeamProfileAnswers(this)" class="team-edit-control glyphicon glyphicon-check" title="save">save</i>
               </div>
             </div>
