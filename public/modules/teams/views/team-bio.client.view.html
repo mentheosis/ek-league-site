@@ -90,7 +90,7 @@
       </div>
 
       <div class="team-bio">
-        <span ng-show="!editBio && showTeamControls">{{team.description}}</span>
+        <span ng-show="!editBio">{{team.description}}</span>
         <textarea ng-show="editBio && showTeamControls" class="edit-team-bio" placeholder="Write about your team" data-ng-model="team.description"></textarea>
       </div>
 
