@@ -75,6 +75,27 @@ a:active {
 	}
 }
 
+.about-input {
+	background:black;
+	color: #FF9000;
+	width:100%;
+	margin: 2px;
+}
+
+.about-button {
+	background: black;
+	border:1px solid white;
+	padding:3px;
+	margin: 2px;
+	color: #FF9000;
+}
+
+.about-button:hover {
+	color: white;
+	background: #FF9000;
+}
+
+
 .about-text-block {
 	position: absolute;
 	color: #FF9000;
@@ -104,6 +125,7 @@ a:active {
 .about-text {
 	color: #DD6000;
 	text-align: left;
+	margin-top:5px;
 	/*margin-left: 75px;*/
 	/*width: 250px;*/
 }

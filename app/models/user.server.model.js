@@ -99,7 +99,7 @@ var UserSchema = new Schema({
 	},
 	avatar: {
 		type: String,
-		default: '',
+		default: '/modules/core/img/default-avatar.png',
 		trim: true
 	}
 });

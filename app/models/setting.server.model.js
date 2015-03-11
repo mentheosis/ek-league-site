@@ -16,6 +16,11 @@ var SettingSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
+  category: {
+    type: String,
+    default: '',
+    trim: true
+  },
   name: {
     type: String,
     default: '',

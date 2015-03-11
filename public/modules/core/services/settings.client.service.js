@@ -5,7 +5,7 @@ angular.module('core')
 .factory('Settings', //the name of the resource Class
 ['$resource',
 function($resource) {
-  return $resource('settings',
+  return $resource('settings/:settingId',
   {
     settingId: '@_id',
   },

@@ -9,5 +9,13 @@ module.exports = function(app) {
 
 	app.route('/settings')
 		.get(core.getSettings)
-		.put(auth.hasAuthorization(['admin']),core.changeSettings);
+		.post(auth.hasAuthorization(['admin']),core.saveSetting)
+		.put(auth.hasAuthorization(['admin']),core.changeSetting);
+
+	app.route('/settings/:settingId')
+		.put(auth.hasAuthorization(['admin']),core.updateSetting)
+		.delete(auth.hasAuthorization(['admin']),core.deleteSetting);
+
+	app.param('settingId', core.settingByID);
+
 };
