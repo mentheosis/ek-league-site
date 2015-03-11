@@ -62,6 +62,10 @@ exports.update = function(req, res) {
 	team = _.extend(team, req.body);
 	//console.log('after ' + JSON.stringify(team));
 
+	if (!team.imageurl || team.imageurl === "") {
+		team.imageurl = "/modules/teams/img/team-default.png";
+	}
+
 	team.save(function(err) {
 		if (err) {
 			return res.status(400).send({

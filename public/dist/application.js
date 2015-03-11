@@ -1146,6 +1146,12 @@ angular.module('teams').controller('TeamsController', ['$scope', '$rootScope', '
         ));
     };
 
+    $scope.saveTeamImg = function() {
+      $scope.team.$update(function(res){
+        $scope.showEditImage = false;
+      });
+    };
+
     $scope.teamProfileItems = [];
 		$scope.getTeamProfileItems = function() {
 			Settings.get({settingName:'teamProfile'},

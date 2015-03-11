@@ -6,6 +6,11 @@
     <div class="team-links-container">
       <div class="team-bio-panel">
         <img class="team-img" ng-src="{{team.imageurl}}">
+        <div class="change-img-control" ng-show="showTeamControls">
+          <a href ng-show="!showEditImage" ng-click="showEditImage = !showEditImage" title="Edit image" class="glyphicon glyphicon-pencil"></a>
+          <a href ng-show="showEditImage" ng-click="saveTeamImg()" class="glyphicon glyphicon-check">save</a>
+        </div>
+        <input type="text" ng-model="team.imageurl" ng-show="showEditImage" class="change-img-input">
       </div>
       <br>
       <div class="team-bio-name">

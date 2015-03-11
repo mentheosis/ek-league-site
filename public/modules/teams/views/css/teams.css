@@ -40,6 +40,27 @@
 	font-weight: 900;
 }
 
+.change-img-control{
+	position:absolute;
+	background:black;
+	padding:2px 5px 2px 5px;
+	border-radius: 20px;
+	margin:0;
+	top: 5px;
+	right: 5px;
+	font-size:0.8em;
+	font-weight: 900;
+}
+
+.change-img-input{
+	position:absolute;
+	top:2em;
+	left:2px;
+	width:200px;
+	background:black;
+	color: #FF9000;
+}
+
 .register-team {
 	margin: 0 0 0 10px;
 }
@@ -47,10 +68,11 @@
 .team-edit-control {
 	font-size:0.8em;
 	cursor: pointer;
+	color: #FF9000;
 }
 
 .team-edit-control:hover {
-	color: #FF9000;
+	color: white;
 }
 
 
@@ -61,6 +83,7 @@
 	margin: 3px;
 	padding: 2px;
 	border: 1px solid #555555;
+	position: relative;
 	/*	cursor: pointer; */
 }
 
@@ -125,6 +148,7 @@
 	width:100%;
 	word-wrap: break-word;
 	min-height: 400px;
+	max-width: 750px;
 }
 
 .team-bio-title {
