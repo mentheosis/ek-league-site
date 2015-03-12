@@ -1,7 +1,7 @@
-<section style="background:black" data-ng-controller="CompController" ng-init="listComps()">
+<section class="comp-entrance-container" data-ng-controller="CompController" ng-init="listComps()">
 
   <div ng-repeat="comp in competitions" class="comp-entrance">
-    <a href="#!/competitions/{{comp._id}}"><img class="big-comp-banner" ng-src="{{comp.bannerurl}}"></a>
+    <a href="#bfh/competitions/{{comp._id}}"><img class="big-comp-banner" ng-src="{{comp.bannerurl}}"></a>
   </div>
 
 </section>

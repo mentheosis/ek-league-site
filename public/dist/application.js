@@ -30,7 +30,7 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
 // Setting HTML5 Location Mode
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider',
 	function($locationProvider) {
-		$locationProvider.hashPrefix('!');
+		$locationProvider.hashPrefix('bfh');
 	}
 ]);
 
@@ -42,6 +42,7 @@ angular.element(document).ready(function() {
 	//Then init the app
 	angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);
 });
+
 'use strict';
 
 // Use Applicaion configuration module to register a new module
@@ -1491,7 +1492,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		$scope.authentication = Authentication;
 
 		// If user is signed in then redirect back home
-		if ($scope.authentication.user) $location.path('/');
+		// if ($scope.authentication.user) $location.path('/');
 
 		$scope.signup = function() {
 			$http.post('/auth/signup', $scope.credentials).success(function(response) {
@@ -1518,6 +1519,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		};
 	}
 ]);
+
 'use strict';
 
 angular.module('users').controller('PasswordController', ['$scope', '$stateParams', '$http', '$location', 'Authentication',

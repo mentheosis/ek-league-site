@@ -1,8 +1,8 @@
 <div class="top-bar" data-ng-controller="HeaderController" ng-init="getBanner()">
 	<div class="top-first-row"> </div>
 	<div class="top-banner-line"> </div>
-	<a href="/#!/"><img class="top-logo" src="modules/core/img/logo.png"></a>
-	<a href="/#!/"><img class="top-banner" src="modules/core/img/banner.png"></a>
+	<a href="/#bfh/"><img class="top-logo" src="modules/core/img/logo.png"></a>
+	<a href="/#bfh/"><img class="top-banner" src="modules/core/img/banner.png"></a>
 
 	<!--
 		<marquee class="top-scroll" behavior="scroll" direction="left">{{banner.value}}<span style="color:black">fuckingstupidbufferug</span></marquee>
@@ -15,15 +15,15 @@
 
 	<div class="top-links-row">
 
-		<a href="/#!/about" class="top-bar-link">About Us</a>
+		<a href="/#bfh/about" class="top-bar-link">About Us</a>
 		<span style="color:white; font-size:1.5em"> | </span>
 		<span data-ng-hide="authentication.user">
 			<span ui-route="/signup" ng-class="{active: $uiRoute}">
-				<a class="top-bar-link" href="/#!/signup">Sign Up</a>
+				<a class="top-bar-link" href="/#bfh/signup">Sign Up</a>
 			</span>
 			<span style="color:white; font-size:1.5em"> | </span>
 			<span ui-route="/signin" ng-class="{active: $uiRoute}">
-				<a class="top-bar-link" href="/#!/signin">Sign In</a>
+				<a class="top-bar-link" href="/#bfh/signin">Sign In</a>
 			</span>
 		</span>
 
@@ -35,10 +35,10 @@
 				</a>
 				<span class="dropdown-menu dropdown-menu-right ek-dropdown">
 					<li>
-						<a href="/#!/settings/profile">Edit Profile</a>
+						<a href="/#bfh/settings/profile">Edit Profile</a>
 					</li>
 					<li data-ng-show="authentication.user.provider === 'local'">
-						<a href="/#!/settings/password">Change Password</a>
+						<a href="/#bfh/settings/password">Change Password</a>
 					</li>
 					<li class="divider"></li>
 					<li>
@@ -49,7 +49,7 @@
 		</span>
 	</div>
 	<span class="admin-mode" ng-show="authentication.user && authentication.user.roles.indexOf('admin') != -1">
-		<a class='admin-control' ng-show="adminMode" href="#!/manage-comps">
+		<a class='admin-control' ng-show="adminMode" href="#bfh/manage-comps">
 			Manage Comps
 		</a>
 		<a class='admin-control' href="" ng-click="switchAdminMode()">
@@ -70,10 +70,10 @@
 				</a>
 				<ul ng-switch-when="dropdown" class="dropdown-menu">
 					<li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-						<a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
+						<a href="/#bfh/{{subitem.link}}" data-ng-bind="subitem.title"></a>
 					</li>
 				</ul>
-				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
+				<a ng-switch-default href="/#bfh/{{item.link}}" data-ng-bind="item.title"></a>
 			</li>
 		</ul>
 	</nav>

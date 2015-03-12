@@ -6,6 +6,7 @@
   border: solid;
   border-color: #555555;
   border-width: 1px;
+	border-radius: 3px;
   /*background: #111111;*/
   margin: 0 -15px 15px 15px;
 
@@ -21,6 +22,7 @@
 
 .scrim-container {
   border: 1px solid #555555;
+	border-radius: 3px;
   margin: 0 0 15px 0;
   background: #111111;
   height: 70px;
@@ -28,6 +30,7 @@
 
 .scrim-container-new {
   border: 1px solid #555555;
+	border-radius: 3px;
   margin: 0 0 15px 0;
   background: #111111;
   height: 110px;
@@ -52,6 +55,7 @@
 .annoying-container {
   border-color: #66DDAA;
   color: #66DDAA;
+  margin-top: 10px;
   margin-bottom: -2em;
   cursor: pointer;
 }
@@ -59,6 +63,7 @@
 .annoying-container-right {
   border-color: #66DDAA;
   color: #66DDAA;
+  margin-top: 10px;
   margin-bottom: -2em;
   cursor: pointer;
 }
@@ -136,6 +141,7 @@
 
 .scrim-replies-box {
   border: 1px solid #777777;
+	border-radius: 3px;
   padding: 3px;
 }
 
@@ -219,6 +225,7 @@
   border: solid;
   border-width: 1px 1px 1px 1px;
   border-color: #555555;
+	border-radius: 3px;
   margin-bottom:1em;
 }
 
