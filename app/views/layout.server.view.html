@@ -45,11 +45,11 @@
 
 <body ng-controller='HomeController' style="background:black; padding: none; margin: none" class="ng-cloak">
 
-<div ng-show="false && !authentication.user">
+<div ng-show="!authentication.user">
 	<div ng-include="'/modules/core/views/countdown.client.view.html'"> TEST </div>
 </div>
 
-<span ng-show="true || authentication.user">
+<span ng-show="authentication.user">
 	<header data-ng-include="'/modules/core/views/header.client.view.html'"></header>
 
 	<div class="row outer-view-container" style="padding: none; margin: none">
