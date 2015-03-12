@@ -132,7 +132,10 @@ a:active {
 
 .top-bar {
 	/*background: url('/modules/core/img/steel-back.png');*/
-	background:#111111;
+	background: -webkit-linear-gradient(#222222, black, black); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#222222, black, black); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#222222, black, black); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#222222, black, black); /* Standard syntax */
 	/*border: solid;
 	border-width: 1px 1px 1px 1px;
 	border-color: black;*/
@@ -140,10 +143,7 @@ a:active {
 	min-width: 1250px;
 	height: 200px;
 	margin-bottom: 50px;
-}
-
-.row {
-	margin-right:15px;
+	position: relative;
 }
 
 .top-first-row {
@@ -154,8 +154,8 @@ a:active {
 	width:100%;
 }
 
-.head-min-width {
-	min-width: 1250px;
+.row{
+	margin: 0;
 }
 
 .top-logo {
@@ -165,13 +165,11 @@ a:active {
 	height:158px;
 }
 
-
 .top-banner-line {
 	position:absolute;
-	top: 55px;
-	left: 500px;
-	width: calc(100% - 400px);
-	min-width:850px;
+	top: 35px;
+	right: 0;
+	width: 60%; /*calc(100% - 400px);*/
 	border: solid;
 	border-width: 1px 0 1px 0;
 	height: 4px;
@@ -179,14 +177,6 @@ a:active {
 	border-color: black;
 	z-index: 1;
 	overflow-x:hidden;
-}
-
-
-@media only screen and (min-width: 1900px) {
-	.top-banner-line {
-		left: 900px;
-		width: calc(100% - 800px);
-	}
 }
 
 .top-banner {
@@ -221,8 +211,8 @@ a:active {
 
 .top-links-row {
 	position:absolute;
-	right:0;
-	margin-top: 140px;
+	right:5px;
+	top: 140px;
 	text-align: right;
 }
 
@@ -301,39 +291,20 @@ a:active {
 }
 
 .side-link-container {
-	width: 400px;
-
-	font-size:40px;
+	font-size:25px;
 	font-weight: 900;
 }
 
-@media only screen and (max-width: 1400px) {
-	.side-link-container {
-		width: 350px;
-		font-size: 35px;
-	}
-}
-
-@media only screen and (max-width: 1300px) {
-	.side-link-container {
-		width: 300px;
-		font-size: 30px;
-	}
-}
-
-.side-link > a{
-	color: #FF9000 !important;
-
+.side-link{
 	width: 100%;
 
 	background: #111111;
-	border: 3px solid #777777;
+	border: 1px solid #777777;
 	border-radius: 3px;
 	text-align:center;
 
-	padding:5px;
-	margin-bottom:100px;
-
+	padding:3px;
+	margin-bottom:10px;
 
 	/*
 	text-shadow:  1px 0 0 #FFFFFF,
@@ -345,12 +316,6 @@ a:active {
 	-1px 1px 0 #FFFFFF,
 	1px -1px 0 #FFFFFF;
 	*/
-}
-
-.side-link > a:hover {
-	color: white !important;
-	text-shadow:none;
-
 }
 
 .avatar {
