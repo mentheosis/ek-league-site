@@ -101,9 +101,8 @@
             <img class="avatar-inline" title="{{member.username}}" ng-src="{{member.avatar}}">
 
             <span class="team-name">
-              <i ng-show="member._id === team.founder" title="Founder" style="color:red" class="glyphicon glyphicon-star"></i>
-              <i ng-show="isCaptain(member.username)" title="Captain" class="glyphicon glyphicon-star"></i>
-              {{member.username}}
+              <!-- the next line has to stay on one line because html is stupid -->
+              <span class="founder-star" title="founder" ng-show="member._id === team.founder">&#x2605</span><span class="captain-star" title="captain" ng-show="isCaptain(member.username)">&#x2605</span>&nbsp{{member.username}}&nbsp
             </span>
             <span class="kick-control" ng-show="showTeamControls">
   						<a title="Kick" class="admin-control" href="" style="cursor:pointer" ng-click="kickMember(member)">

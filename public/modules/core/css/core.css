@@ -185,7 +185,7 @@ a:active {
 	border: solid;
 	border-width: 2px 2px 1px 2px;
 	border-color: #777777;
-	border-radius:3px 3px 0 0;
+	border-radius:5px 5px 0 0;
 	left: calc(50% - 320px);
 	top: 20px;
 	height: 115px;
@@ -202,7 +202,7 @@ a:active {
 	border: solid;
 	border-width: 1px;
 	border-color: #555555;
-	border-radius:0 0 3px 3px;
+	border-radius:0 0 5px 5px;
 	background: #0c0c0c;
 	font-size: 0.8em;
 }
@@ -305,7 +305,7 @@ a:active {
 
 	background: #111111;
 	border: 1px solid #777777;
-	border-radius: 3px;
+	border-radius: 5px;
 	text-align:center;
 
 	padding:3px;

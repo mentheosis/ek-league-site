@@ -28,7 +28,10 @@
       </div>
       <div class="col-xs-4 map-list">
         <div ng-repeat="week in comp.maps">
-          Week {{$index+1}}: {{week.map}}
+          Week {{$index+1}}:
+          <span style="color:#FF9000">
+            {{week.map}}
+          </span>
         </div>
         <div class="comp-section-title">Map List</div>
       </div>
@@ -40,7 +43,11 @@
     <div class="ranking-container">
 
       <div ng-repeat="team in rankings">
-        {{$index+1}}. {{team.team.name}} - {{team.wins}} - {{team.losses}}
+        {{$index+1}}.
+        <span style="color:#FF9000">
+          {{team.team.name}}
+        </span>
+         &nbsp({{team.wins}},&nbsp{{team.losses}})
       </div>
 
     </div>

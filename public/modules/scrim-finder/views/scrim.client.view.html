@@ -145,7 +145,7 @@
             </div>
             <div class="chat-bar-container">
               <form ng-show="authentication.user" ng-submit="sendChat(chatMsg)">
-                <input class = "chat-bar" type="text" ng-model="chatMsg" placeholder="Chat!">
+                <input class = "chat-bar" type="text" maxlength="300" ng-model="chatMsg" placeholder="Chat!">
               </form>
               <div class="chat-bar" ng-hide="authentication.user">
                 <span> signin or signup to chat</span>

@@ -264,6 +264,24 @@
 	color: #FF7000;
 	text-align: center;
 	font-size: 0.75em;
+	word-wrap: break-word;
+	position: relative;
+}
+
+.captain-star {
+	font-size: 1.3em;
+	cursor: default;
+}
+
+.founder-star {
+	color:red;
+	font-size: 1.3em;
+	cursor: default;
+}
+
+
+.member-name{
+	margin-left: -10px;
 }
 
 .team-image {

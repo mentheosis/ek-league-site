@@ -44,7 +44,7 @@ a:hover, a:visited, a:link, a:active {
   padding: 15px;
   border: 1px solid;
   border-color:#777777;
-  border-radius: 3px;
+  border-radius: 5px;
   align:center;
   width: 100%;
   background: #111111;
@@ -88,6 +88,7 @@ a:hover, a:visited, a:link, a:active {
 
 .news-image-container {
   width: 480px;
+  min-height: 200px;
   display: inline-block;
 }
 

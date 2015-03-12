@@ -1,15 +1,15 @@
-<section class="row" ng-controller="CompController" ng-init="listComps()">
+<section ng-controller="CompController" ng-init="listComps()">
   <section ng-hide="authentication.user.roles && authentication.user.roles.indexOf('admin') !== -1">
     Only admins may use this page.
   </section>
   <section class="comp-container" ng-show="authentication.user.roles && authentication.user.roles.indexOf('admin') !== -1">
 
-  <div class="col-xs-2 banner-outer">
+  <div class="banner-outer">
     <div class="banner-container">
       Choose a competition:
       <br>
       <div ng-repeat="comp in competitions">
-        <a href ng-click="gatherCompData(comp._id)">{{comp.name}}</a>
+        <a href style="font-size:1.5em" ng-click="gatherCompData(comp._id)">{{comp.name}}</a>
       </div>
 
       <br><br>
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="col-xs-8 matchup-outer">
+  <div class="matchup-outer">
     <div class="manage-matchup-container">
       <div ng-show="comp">
       Name: <input ng-model="comp.name" class="manage-comp-input">
@@ -96,7 +96,7 @@
 
   </div>
 
-  <div class="col-xs-2 ranking-outer">
+  <div class="ranking-outer">
     <div class="ranking-container">
       Choose a team to include: <br>
       <select class="manage-comp-input" ng-model="selectedTeam" ng-options="team.name for team in teams"></select>
@@ -105,7 +105,7 @@
 
       <br><br>
       <div ng-repeat="team in rankings">
-        <span title="remove" style="color:#FF7000" ng-click="removeTeam(team)">[X]</span>{{team.team.name}} - {{team.wins}} - {{team.losses}}
+        <a href title="remove" ng-click="removeTeam(team)">[X]&nbsp</a>{{team.team.name}} - {{team.wins}} - {{team.losses}}
       </div>
     </div>
   </div>
