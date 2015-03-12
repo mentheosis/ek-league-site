@@ -30,9 +30,6 @@ a:hover, a:visited, a:link, a:active {
 }
 
 .news-container {
-  border:solid;
-  border-width:5px 5px 5px 0;
-  border-color:#555555;
 }
 
 .article-container {
@@ -43,18 +40,19 @@ a:hover, a:visited, a:link, a:active {
 	display: flex;
   margin:0 0 0 0;
   padding:5px 5px 5px 2px;
-    background: #111111;
 
 }
 
 .news-post {
   margin-top: 15px;
   padding-bottom: 25px;
-  border: solid;
-  border-width: 0 0 3px 0;
+  border: 3px solid;
   border-color:#555555;
+  border-radius: 3px;
   align:center;
   width: 100%;
+  background: #111111;
+
 }
 
 .image-entry-container {
