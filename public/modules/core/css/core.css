@@ -159,8 +159,9 @@ a:active {
 }
 
 .top-logo {
-	margin-left: 5px;
-	margin-top: 5px;
+	position: absolute;
+	left: -10px;
+	top: 10px;
 	width:272px;
 	height:158px;
 }
@@ -180,35 +181,36 @@ a:active {
 }
 
 .top-banner {
-	position:relative;
+	position:absolute;
 	border: solid;
 	border-width: 2px;
 	border-color: #777777;
 	border-radius:3px 3px 0 0;
-	margin-left: 75px;
-	margin-top:20px;
-	height: 119px;
-	width: 600px;
+	left: calc(50% - 320px);
+	top: 20px;
+	height: 115px;
+	width: 640px;
 	z-index: 2;
 }
 
 .top-scroll {
+	position:absolute;
+	left: calc(50% - 320px);
+	top: 137px;
 	color:#777777;
-	margin-left:75px;
-	width: 600px;
+	width: 640px;
 	border: solid;
-	border-width: 1px;
+	border-width: 2px;
 	border-color: #555555;
 	border-radius:0 0 3px 3px;
-	margin-top: 2px;
 	background: #0c0c0c;
 	font-size: 0.8em;
 }
 
 .top-scroll-edit {
 	position:absolute;
-	margin-left: 685px;
-	margin-top: -21px;
+	right: calc(50% - 340px);
+	top: 137px;
 }
 
 .top-links-row {
@@ -244,8 +246,8 @@ a:active {
 }
 
 .top-bottom-row {
-	position:relative;
-	margin-top: 15px;
+	position:absolute;
+	top: 180px;
 	z-index: 1;
 	border: solid;
 	border-width: 1px 0 0 0;
@@ -255,11 +257,10 @@ a:active {
 }
 
 .top-gradient {
-	position:relative;
-	left: 0;
+	position:absolute;
+	top: 182px;
 	height:40px;
 	width: 100%;
-	min-width:100px;
 	background: -webkit-linear-gradient(black, #222222, black); /* For Safari 5.1 to 6.0 */
 	background: -o-linear-gradient(black, #222222, black); /* For Opera 11.1 to 12.0 */
 	background: -moz-linear-gradient(black, #222222, black); /* For Firefox 3.6 to 15 */
@@ -277,7 +278,6 @@ a:active {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	margin-top: -20px;
 }
 
 .view-container {
@@ -297,6 +297,7 @@ a:active {
 	font-size:25px;
 	font-weight: 900;
 	margin-left: -15px;
+	margin-top: -15px;
 }
 
 .side-link{

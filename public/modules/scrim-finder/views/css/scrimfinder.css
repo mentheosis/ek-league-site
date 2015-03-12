@@ -21,14 +21,14 @@
 
 .scrim-container {
   border: 1px solid #555555;
-  margin: 0 -15px 15px 15px;
+  margin: 0 0 15px 0;
   background: #111111;
   height: 70px;
 }
 
 .scrim-container-new {
   border: 1px solid #555555;
-  margin: 0 -15px 15px 15px;
+  margin: 0 0 15px 0;
   background: #111111;
   height: 110px;
 }
@@ -50,7 +50,6 @@
 }
 
 .annoying-container {
-  margin: 0.5em -15px 15px 15px;
   border-color: #66DDAA;
   color: #66DDAA;
   margin-bottom: -2em;
@@ -58,13 +57,11 @@
 }
 
 .annoying-container-right {
-  margin: 0.5em -45px 15px 0;
   border-color: #66DDAA;
   color: #66DDAA;
   margin-bottom: -2em;
   cursor: pointer;
 }
-
 
 .scrim-top-button {
   margin: auto;
@@ -79,6 +76,7 @@
   font-weight:500;
   font-size: 2em;
 }
+
 .small-scrim-button {
   font-size:0.7em;
 }
@@ -91,8 +89,6 @@
   border-color: #FF9000;
   color: white;
 }
-
-
 
 .scrim-top-control-container {
   margin: auto;
@@ -113,7 +109,7 @@
   margin: 1px 0 1px 0;
   white-space:nowrap;
   overflow:hidden;
-  text-overflow:clip;
+  text-overflow: clip;
 }
 
 .pre-final-container {
@@ -144,7 +140,7 @@
 }
 
 .scrim-replies-final {
-    color: #777777;
+  color: #777777;
 }
 
 .details {
@@ -163,7 +159,7 @@
   display:inline-block;
   border: 1px solid #333333;
   color: #FF9000;
-  width:250px;
+  width: 250px;
 }
 
 .detail-input:focus {
@@ -220,7 +216,6 @@
 
 .chat-window{
   background: #111111;
-  margin-right:-45px;
   border: solid;
   border-width: 1px 1px 1px 1px;
   border-color: #555555;

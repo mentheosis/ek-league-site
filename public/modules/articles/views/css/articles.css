@@ -29,9 +29,6 @@ a:hover, a:visited, a:link, a:active {
   z-index: 3;
 }
 
-.news-container {
-}
-
 .article-container {
 	display: -webkit-box;
 	display: -moz-box;
@@ -44,7 +41,6 @@ a:hover, a:visited, a:link, a:active {
 }
 
 .news-post {
-  margin-top: 15px;
   padding-bottom: 25px;
   border: 1px solid;
   border-color:#777777;
