@@ -184,6 +184,7 @@ a:active {
 	border: solid;
 	border-width: 2px;
 	border-color: #777777;
+	border-radius:3px 3px 0 0;
 	margin-left: 75px;
 	margin-top:20px;
 	height: 119px;
@@ -198,6 +199,7 @@ a:active {
 	border: solid;
 	border-width: 1px;
 	border-color: #555555;
+	border-radius:0 0 3px 3px;
 	margin-top: 2px;
 	background: #0c0c0c;
 	font-size: 0.8em;
@@ -258,10 +260,10 @@ a:active {
 	height:40px;
 	width: 100%;
 	min-width:100px;
-	background: -webkit-linear-gradient(black, #222222, #111111); /* For Safari 5.1 to 6.0 */
-	background: -o-linear-gradient(black, #222222, #111111); /* For Opera 11.1 to 12.0 */
-	background: -moz-linear-gradient(black, #222222, #111111); /* For Firefox 3.6 to 15 */
-	background: linear-gradient(black, #222222, #111111); /* Standard syntax */
+	background: -webkit-linear-gradient(black, #222222, black); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(black, #222222, black); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(black, #222222, black); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(black, #222222, black); /* Standard syntax */
 	z-index: 1;
 }
 
@@ -275,6 +277,7 @@ a:active {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
+	margin-top: -20px;
 }
 
 .view-container {
@@ -293,6 +296,7 @@ a:active {
 .side-link-container {
 	font-size:25px;
 	font-weight: 900;
+	margin-left: -15px;
 }
 
 .side-link{
