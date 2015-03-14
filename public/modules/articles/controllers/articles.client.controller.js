@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', '$animate', '$timeout', 'Authentication', 'Articles', 'Comments',
-	function($scope, $stateParams, $location, $animate, $timeout, Authentication, Articles, Comments) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$rootScope', '$stateParams', '$location', '$animate', '$timeout', 'Authentication', 'Articles', 'Comments',
+	function($scope, $rootScope, $stateParams, $location, $animate, $timeout, Authentication, Articles, Comments) {
 		$scope.authentication = Authentication;
 
 		$scope.switchShowFull = function(repeatScope){
@@ -13,13 +13,17 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 			$scope.createVisible = !$scope.createVisible;
 		};
 
-		$scope.create = function() {
+		$scope.canEdit = function(post) {
+			return ($rootScope.adminMode || post.user._id === Authentication.user._id)
+		}
+
+		$scope.create = function(parentString) {
 			var article = new Articles({
 				title: this.title,
 				content: this.content
 			});
 
-			article.parent = 'top'; //by default the articles list only shows where parent = 'top'
+			article.parent = parentString; //by default the articles list only shows where parent = 'top'
 			article.user = this.user;
 			article.imageurl = this.imageurl;
 
@@ -29,6 +33,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 				$scope.title = '';
 				$scope.content = '';
 				$scope.imageurl= '';
+				article.user = Authentication.user;
 				$scope.articles.unshift(article); //push it to the display
 				$scope.createVisible = !$scope.createVisible;
 			}, function(errorResponse) {
@@ -49,17 +54,12 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
 				//$scope.title = '';
 				$scope.content = '';
+				article.user = Authentication.user;
 				$scope.comments.unshift(article); //display the new comment
 				$scope.showComment = !$scope.showComment;
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-		};
-
-		//init the comment field to hidden on load
-		$scope.showComment = false;
-		$scope.showcomment = function(){
-			$scope.showComment = !$scope.showComment;
 		};
 
 		$scope.remove = function(article) {
@@ -128,8 +128,12 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 */
 		$scope.find = function() {
 			//$scope.articles = Articles.query();
-			$scope.articles = Articles.list({sortBy:($scope.sortDesc?'-':'') + $scope.sortBy});
+			$scope.articles = Articles.list({parent:'top', limit:4, sortBy:($scope.sortDesc?'-':'') + $scope.sortBy});
 		};
+
+		$scope.listMsgs = function() {
+			$scope.articles = Articles.list({parent:'msg', limit:25, sortBy:($scope.sortDesc?'-':'') + $scope.sortBy});
+		}
 
 		$scope.findOne = function() {
 			$scope.article = Articles.get({

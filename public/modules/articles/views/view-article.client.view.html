@@ -1,50 +1,80 @@
-<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
-	<div class="page-header">
+<section class="news-post" data-ng-controller="ArticlesController" data-ng-init="findOne()">
 
-		<div>
-				<span style="color:#999" data-ng-bind="article.kismet"></span>
-				<a style="cursor:pointer" ng-click="kismet(article)">
-					<i style="color:#999" class="glyphicon glyphicon-chevron-left"></i>
-				</a>
 
-				<span class="post-header" ng-class="{'dev-mode':devMode}">
-					Posted on
-					<span data-ng-bind="article.created | date:'mediumDate'"></span>
-					by
-					<span data-ng-bind="article.user.username"></span>
-				</span>
+    <span class="msg-avatar-container">
+      <img class="avatar-inline" ng-src="{{article.user.avatar}}">
+    </span>
+		<div class="msg-container view-msg" style="display:inline-block">
+
+			<div>
+					<span class="post-header" ng-class="{'dev-mode':devMode}">
+						Posted on
+						<span data-ng-bind="article.created | date:'mediumDate'"></span>
+						by
+						<span data-ng-bind="article.user.username"></span>
+					</span>
+
+					<span data-ng-show="canEdit(article)">
+						<a ng-show="canEdit(article)" href="/#bfh/articles/{{article._id}}/edit">
+							<i class="msg-button">Edit</i>
+						</a>
+						<a ng-show="canEdit(article)" ng-click="confirmDelete = true" href="">
+							<i class="msg-button">Delete</i>
+						</a>
+							<div style="position: relative" ng-show="confirmDelete">
+									<div class="confirmDelete">
+									    <div>
+									      <a href ng-click="confirmDelete = false" title="Close" class="confirmDelete-close">X</a>
+
+									      <h3>Confirm Delete</h3>
+									      <br>
+									      <span ng-click="remove(article)" class="delete-button">
+									        Delete
+									      </span>
+									      <span ng-click="confirmDelete = false" class="delete-button">
+									        Cancel
+									      </span>
+									    </div>
+									</div>
+							</div>
+					</span>
+
+			</div>
+
+			<div data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></div>
 		</div>
 
-
-		<h1 style="display:inline; color:#337ab7" data-ng-bind="article.title"></h1>
-
-		<span data-ng-show="authentication.user._id == article.user._id">
-			<a href="/#bfh/articles/{{article._id}}/edit">
-				<i style="color:#999" class="glyphicon glyphicon-edit"></i>
-			</a>
-			<a data-ng-click="remove();">
-				<i style="color:#999" class="glyphicon glyphicon-trash"></i>
-			</a>
-		</span>
-
-	</div>
 
 	<div class="post" ng-class="{'dev-mode':devMode}">
 		<span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content"></span>
 	<div>
 
-<br><h2 style="color:#999">comments:</h2>
+	<div class="post-title comment-buffer">comments:</div>
 
-	<a style="cursor:pointer" ng-click="showcomment()">
-		<i style="color:#999" class="glyphicon glyphicon-align-justify"></i>
-	</a> <-click to add a comment!
+	<a href ng-hide="showComment" ng-click="showComment = !showComment">
+		<i class="msg-button">New Comment</i>
+	</a>
 
-  <form ng-show="showComment">
-		<textarea name="comment" data-ng-model="content" class="form-control" cols="10" rows="5" placeholder="Write something!"></textarea>
-  	<input type="submit" ng-click="createComment()" value="Save" class="myButton"/>
-	</form>
+	<div class="news-post" ng-show="showComment">
 
-	<div ng-repeat="comment in comments" class="article-container">
+			<form name="articleForm" novalidate>
+				<fieldset>
+					<div class="post" style="width:100%; height: 50px" ng-class="{'dev-mode':devMode}">
+							<textarea placeholder="Type here!" name="content" data-ng-model="content" id="content" class="post-full"></textarea>
+					</div>
+					<input class="msg-button" type="submit" value="Save" ng-click="createComment()">
+					<input class="msg-button" type="submit" value="Cancel" ng-click="showComment = !showComment">
+
+					<span data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+					</span>
+
+				</fieldset>
+			</form>
+	</div>
+
+
+	<div ng-repeat="comment in comments" class="news-post">
 		<div>
 			<span class="post-header" ng-class="{'dev-mode':devMode}">
 				Posted on

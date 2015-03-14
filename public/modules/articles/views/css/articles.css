@@ -49,12 +49,6 @@ a:hover, a:visited, a:link, a:active {
   border: none;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  .image-entry-container {
-    left: -430px;
-  }
-}
-
 .image-entry {
   width:100%;
   height:100%;
@@ -86,6 +80,7 @@ a:hover, a:visited, a:link, a:active {
   border-color:black;
   /*margin-left:15px;*/
   width:464px;
+  height:266px;
   margin-left: 5px;
 }
 
@@ -103,6 +98,40 @@ a:hover, a:visited, a:link, a:active {
   margin-left:85px;
   vertical-align: top;
   min-height: 70px;
+  margin-bottom: 10px;
+}
+
+.view-msg {
+  margin-top: 25px;
+  margin-bottom: 0;
+}
+
+.msg-controls {
+  margin: 0 0 0 90px;
+}
+
+.comment-buffer {
+  padding-top: 50px;
+}
+
+.edit-article-form {
+  background:black;
+  border: 1px solid #777777 !important;
+}
+
+.msg-button {
+	background: black;
+	border:1px solid #555555;
+  font-size: 0.8em;
+	padding: 1px 3px 1px 3px;
+	margin: 2px;
+	color: #FF7000;
+}
+
+.msg-button:hover {
+	color: black;
+	background: #FF7000;
+  border-color: #FF7000;
 }
 
 .msg-avatar-container {
@@ -172,10 +201,12 @@ textarea.post-full {
   display: inline-block;
   vertical-align: top;
   color: #FF6600;
+  width: 100%;
 }
 
 .post-preview {
   font-size: 1em;
+  width: 100%;
   word-wrap: break-word;
 }
 
@@ -184,6 +215,7 @@ textarea.post-full {
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
   white-space: -pre-wrap;      /* Opera 4-6 */
   white-space: -o-pre-wrap;    /* Opera 7 */
+  width: 100%;
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 

@@ -1,9 +1,9 @@
-<section style="background:black" data-ng-controller="ArticlesController" data-ng-init="find()">
+<section style="background:black" data-ng-controller="ArticlesController" data-ng-init="listMsgs()">
 
-  <a href><div class="news-post" ng-show="!creating" ng-click="creating = !creating">
+  <a href><div class="news-post orange-hover" ng-show="!createVisible" ng-click="createVisible = !createVisible">
     New Post
   </div></a>
-	<div class="news-post" ng-show="creating">
+	<div class="news-post" ng-show="createVisible">
     <span class="msg-avatar-container">
       <img class="avatar-inline" ng-src="{{authentication.user.avatar}}">
     </span>
@@ -16,8 +16,8 @@
 					<div class="post" style="width:100%; height: 200px" ng-class="{'dev-mode':devMode}">
 							<textarea placeholder="Type here!" name="content" data-ng-model="content" id="content" class="post-full"></textarea>
 					</div>
-					<input type="submit" value="Post it!" ng-click="" class="">
-					<input type="submit" value="Cancel" ng-click="creating = !creating" class="">
+					<input type="submit" value="Post it!" ng-click="create('msg')" class="">
+					<input type="submit" value="Cancel" ng-click="createVisible = !createVisible" class="">
 
           <span data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
@@ -29,36 +29,11 @@
 	</div>
 
 	<div data-ng-repeat="article in articles" class="news-post">
-
     <span class="msg-avatar-container">
-      <img class="avatar-inline" ng-src="{{authentication.user.avatar}}">
+      <img class="avatar-inline" ng-src="{{article.user.avatar}}">
     </span>
 
 		<div class="msg-container">
-			<span style="margin-left: 15px" data-ng-show="adminMode">
-				<a title="Edit" class="admin-control" href="/#bfh/articles/{{article._id}}/edit">
-					<i class="glyphicon glyphicon-edit"></i>
-				</a>
-				<a title="Delete" ng-click="confirmDelete = true" class="admin-control" href="" style="cursor:pointer" >
-					<i class="glyphicon glyphicon-trash"></i>
-				</a>
-					<div style="position: relative" ng-show="confirmDelete">
-							<div class="confirmDelete">
-							    <div>
-							      <a href ng-click="confirmDelete = false" title="Close" class="confirmDelete-close">X</a>
-
-							      <h3>Confirm Delete</h3>
-							      <br>
-							      <span ng-click="remove(article)" class="delete-button">
-							        Delete
-							      </span>
-							      <span ng-click="confirmDelete = false" class="delete-button">
-							        Cancel
-							      </span>
-							    </div>
-							</div>
-					</div>
-			</span>
 
 			<div data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></div>
 
@@ -67,6 +42,34 @@
 				<span ng-show="showFull"><span class="post-full" data-ng-bind="article.content"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [<<<]</span></span>
 			</div>
 		</div>
+
+		<span class="msg-controls">
+			<a href="/#bfh/articles/{{article._id}}">
+				<i class="msg-button">Comments</i>
+			</a>
+			<a ng-show="canEdit(article)" href="/#bfh/articles/{{article._id}}/edit">
+				<i class="msg-button">Edit</i>
+			</a>
+			<a ng-show="canEdit(article)" ng-click="confirmDelete = true" href="">
+				<i class="msg-button">Delete</i>
+			</a>
+				<div style="position: relative" ng-show="confirmDelete">
+						<div class="confirmDelete">
+						    <div>
+						      <a href ng-click="confirmDelete = false" title="Close" class="confirmDelete-close">X</a>
+
+						      <h3>Confirm Delete</h3>
+						      <br>
+						      <span ng-click="remove(article)" class="delete-button">
+						        Delete
+						      </span>
+						      <span ng-click="confirmDelete = false" class="delete-button">
+						        Cancel
+						      </span>
+						    </div>
+						</div>
+				</div>
+		</span>
 
 	</div>
 

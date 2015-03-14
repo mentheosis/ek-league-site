@@ -78,9 +78,7 @@ exports.delete = function(req, res) {
  * List of Articles
  */
 exports.list = function(req, res) {
-	var sortBy = req.query.sortBy;
-
-	Article.find({parent:'top'}).sort(sortBy).limit(4).populate('user', 'username').exec(function(err, articles) {
+	Article.find({parent:req.query.parent}).sort(req.query.sortBy).limit(req.query.limit).populate('user', 'username avatar').exec(function(err, articles) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -95,7 +93,7 @@ exports.listComments = function(req, res) {
 //	console.log('list:');
 //	console.log(JSON.stringify(req.query));
 
-	Article.find({parent:req.param('parentId')}).sort('-created').populate('user', 'username').exec(function(err, articles) {
+	Article.find({parent:req.param('parentId')}).sort('-created').populate('user', 'username avatar').exec(function(err, articles) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -110,7 +108,7 @@ exports.listComments = function(req, res) {
  * Article middleware
  */
 exports.articleByID = function(req, res, next, id) {
-	Article.findById(id).populate('user', 'username').exec(function(err, article) {
+	Article.findById(id).populate('user', 'username avatar').exec(function(err, article) {
 		if (err) return next(err);
 		if (!article) return next(new Error('Failed to load article ' + id));
 		req.article = article;
@@ -119,7 +117,7 @@ exports.articleByID = function(req, res, next, id) {
 };
 
 exports.articleByParent = function(req, res, next, id) {
-	Article.where('parent').equals(id).populate('user', 'username').exec(function(err, article) {
+	Article.where('parent').equals(id).populate('user', 'username avatar').exec(function(err, article) {
 		if (err) return next(err);
 		if (!article) return next(new Error('Failed to load article ' + id));
 		req.article = article;
@@ -130,7 +128,8 @@ exports.articleByParent = function(req, res, next, id) {
  * Article authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.user.roles.indexOf('admin') != -1) {
+
+	if (req.user.roles.indexOf('admin') !== -1 || req.article.user._id.toString() === req.user._id.toString()) {
 		next();
 		return;
 	}

@@ -12,7 +12,7 @@
 	-webkit-justify-content: flex-start;
 
 	margin-left: -10px;
-	margin-right: -10px;
+	margin-right: 10px;
 
 	background: black;
 }
@@ -93,6 +93,7 @@
 	display:inline-block;
   border: solid;
 	width: calc(100% - 380px);
+	min-width: 500px;
   border-color: #555555;
   border-width: 0 0 0 3px;
   padding-left: 15px;

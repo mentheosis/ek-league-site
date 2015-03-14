@@ -59,11 +59,11 @@ a:active {
 }
 
 .about-bg {
-	margin-top: -15px;
+	margin-top: -20px;
+	margin-left: -15px;
 	height: 900px;
 	background: url("/modules/core/img/about-bg-900.jpg");
 	background-repeat: no-repeat;
-	margin-right: -15px;
 	position: relative;
 }
 
@@ -84,15 +84,15 @@ a:active {
 
 .about-button {
 	background: black;
-	border:1px solid white;
+	border:1px solid #777777;
 	padding:3px;
 	margin: 2px;
-	color: #FF9000;
+	color: #FF7000;
 }
 
 .about-button:hover {
 	color: white;
-	background: #FF9000;
+	background: #FF7000;
 }
 
 
@@ -102,6 +102,9 @@ a:active {
 	top: 5%;
 	left: 610px;
 	max-width: 600px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color:rgba(0, 0, 0, 0.4);
 }
 
 .about-text-header {
@@ -263,8 +266,6 @@ a:active {
 
 .outer-view-container {
 	height: calc(100% - 260px);
-	min-width: 1000px;
-	width: 100%;
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -281,9 +282,8 @@ a:active {
 	margin-top: -20px;
 	margin-left: 15px;
 	width: calc(100% - 380px);
-/*	min-height: 200px; */
+	min-width: 860px;
 	min-height: calc(100% + 30px);
-	/*overflow-y: hidden;*/
 }
 
 .side-link-container {
@@ -304,6 +304,8 @@ a:active {
 	padding:3px;
 	margin-bottom:10px;
 
+	position:relative;
+
 	/*
 	text-shadow:  1px 0 0 #FFFFFF,
 	-1px 0 0 #FFFFFF,
@@ -317,6 +319,48 @@ a:active {
 }
 
 .side-link:hover{
+	border-color: #FF9000;
+}
+
+.side-hover:hover{
+	position:absolute;
+	top: 0;
+	left: 0;
+	background-color:rgba(255, 255, 255, 0.1);
+	width: 350px;
+	height: 44px;
+	border-radius: 5px;
+	z-index: 5;
+}
+
+.news-link {
+	background: url('/modules/core/img/news-side.png');
+	width:350px;
+	height: 44px;
+}
+.competitions-link {
+	background: url('/modules/core/img/competitions-side.png');
+	width:350px;
+	height: 44px;
+}
+.teams-link {
+	background: url('/modules/core/img/teams-side.png');
+	width:350px;
+	height: 44px;
+}
+.scrim-link {
+	background: url('/modules/core/img/scrim-side.png');
+	width:350px;
+	height: 44px;
+}
+.msgboard-link {
+	background: url('/modules/core/img/msgboard-side.png');
+	width:350px;
+	height: 44px;
+}
+
+
+.orange-hover:hover {
 	border-color: #FF9000;
 }
 
