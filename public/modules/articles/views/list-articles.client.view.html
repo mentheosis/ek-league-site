@@ -1,4 +1,4 @@
-<section style="background:black" data-ng-controller="ArticlesController" data-ng-init="find()">
+<section style="position: relative; background:black" data-ng-controller="ArticlesController" data-ng-init="find()">
 
 	<span class='admin-controls'  style="margin: 5px 20px 0 0" data-ng-show="adminMode">
 		<a href="" title="Create a news post" class='admin-control' ng-click="switchCreateVisible()">
@@ -6,9 +6,9 @@
 		</a>
 	</span>
 
-	<div ng-show="createVisible" class="news-post article-container">
-		<div style="width:480px; display:inline-block">
-			<div class="news-image" style="height:270px"></div>
+	<div ng-show="createVisible" class="news-post">
+		<div class="news-image-container">
+			<div class="news-image"></div>
 		</div>
 		<div class="post-container" style="display:inline-block">
 			<form name="articleForm" data-ng-submit="create()" novalidate>
@@ -32,8 +32,7 @@
 		</div>
 	</div>
 
-	<div data-ng-repeat="article in articles" class="article-container" ng-class="{'dev-mode':devMode}">
-		<div class="news-post article-container">
+	<div data-ng-repeat="article in articles" class="news-post">
 
 			<div class="news-image-container">
 				<img class="news-image" ng-src="{{article.imageurl}}">
@@ -65,15 +64,13 @@
 						</div>
 				</span>
 
-				<div data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></div>
+				<div data-ng-bind="article.title" class="post-title"></div>
 
 				<div class="post" ng-class="{'dev-mode':devMode}">
 					<span ng-show="!showFull"><span class="post-preview" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content.substring(0,850)"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [...]</span></span>
 					<span ng-show="showFull"><span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="article.content"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [<<<]</span></span>
 				</div>
 			</div>
-
-		</div>
 	</div>
 
 </section>

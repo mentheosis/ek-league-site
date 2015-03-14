@@ -4,19 +4,22 @@
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
-	flex-wrap: wrap; /* firefox */
-	align-items: center;
-	-webkit-align-items: center;
-	justify-content: space-around;
-	-webkit-justify-content: space-around;
+	-webkit-flex-wrap: nowrap; /* Safari 6.1+ */
+	flex-wrap: nowrap; /* firefox */
+	align-items: flex-start;
+	-webkit-align-items: flex-start;
+	justify-content: flex-start;
+	-webkit-justify-content: flex-start;
+
+	margin-left: -10px;
+	margin-right: -10px;
 
 	background: black;
 }
 
 .comp-entrance {
 	display: inline-block;
-	margin: 5px;
+	margin: 2px;
 	border: 1px solid black;
 }
 
@@ -32,6 +35,7 @@
 	display: flex;
 
 	width: 100%;
+
   padding: 5px 0 20px 0;
 	margin: 0 0 0 -10px;
 }
@@ -88,7 +92,7 @@
 .matchup-outer {
 	display:inline-block;
   border: solid;
-	width: calc(100% - 430px);
+	width: calc(100% - 380px);
   border-color: #555555;
   border-width: 0 0 0 3px;
   padding-left: 15px;
@@ -115,7 +119,7 @@
   border: 1px solid #555555;
 	border-radius: 5px;
   word-wrap: break-word;
-  background: #0c0c0c;
+  background: black;
   position: relative;
   padding: 15px;
 	word-wrap: break-word;
@@ -136,8 +140,8 @@
 .matchup {
 	width:180px;
 	height: 85px;
-	margin-left: 25px;
-	margin-right: 25px;
+	margin-left: 15px;
+	margin-right: 15px;
 	word-wrap: break-word;
 	display: inline-block;
 	position:relative;
@@ -190,7 +194,7 @@
 .map-list {
   border: 1px solid #555555;
 	border-radius: 5px;
-  background: #0c0c0c;
+  background: #black;
   color: #777777;
   position: relative;
 	padding:10px;
@@ -200,7 +204,7 @@
 
 .ranking-outer {
   display:inline-block;
-  width: 200px;
+  width: 150px;
 }
 
 .ranking-container {
@@ -209,7 +213,7 @@
   color: #777777;
   border: 1px solid #555555;
 	border-radius: 5px;
-  background: #0c0c0c;
+  background: black;
   padding: 10px;
 }
 

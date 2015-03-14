@@ -9,6 +9,10 @@ angular.module('articles').config(['$stateProvider',
 			url: '/articles',
 			templateUrl: 'modules/articles/views/list-articles.client.view.html'
 		}).
+		state('msgboard', {
+			url: '/msgboard',
+			templateUrl: 'modules/articles/views/msgboard.client.view.html'
+		}).
 		state('createArticle', {
 			url: '/articles/create',
 			templateUrl: 'modules/articles/views/list-articles.client.view.html'

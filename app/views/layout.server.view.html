@@ -51,18 +51,18 @@
 <span ng-show="authentication.user">
 	<header data-ng-include="'/modules/core/views/header.client.view.html'"></header>
 
-	<div class="row outer-view-container" style="padding: none; margin: none">
-		<div class="col-xs-9 view-container">
+	<div class="outer-view-container" style="padding: none; margin: none">
+		<div class="view-container">
 			<section>
 					{% block content %}{% endblock %}
 			</section>
 		</div>
-		<div class="col-xs-3 side-link-container">
+		<div class="side-link-container">
 			<a href="#bfh/"><div class="side-link">NEWS</div></a>
 			<a href="#bfh/competitions"><div class="side-link">COMPETITIONS</div></a>
 			<a href="#bfh/teams"><div class="side-link">TEAMS</div></a>
 			<a href="#bfh/scrim"><div class="side-link">SCRIM&nbspFINDER</div></a>
-			<a href="#bfh/messageboard"><div class="side-link">MSG&nbspBOARD</div></a>
+			<a href="#bfh/msgboard"><div class="side-link">MSG&nbspBOARD</div></a>
 		</div>
 	</div>
 </span>

@@ -29,31 +29,19 @@ a:hover, a:visited, a:link, a:active {
   z-index: 3;
 }
 
-.article-container {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-  margin:0 0 0 0;
-  padding:5px 5px 5px 2px;
-
-}
-
 .news-post {
-  padding: 15px;
-  border: 1px solid;
-  border-color:#777777;
+  position:relative;
+  border: 1px solid #777777;
   border-radius: 5px;
-  align:center;
-  width: 100%;
-  background: #111111;
-
+  background: black;
+  margin: 5px 5px 15px 5px;
+  padding: 15px;
 }
 
 .image-entry-container {
   position: absolute;
-  left: -450px;
+  left: -475px;
+  top: 10px;
   width: 440px;
   height: 225px;
   background:black;
@@ -103,11 +91,26 @@ a:hover, a:visited, a:link, a:active {
 
 .post-container {
   position: relative;
-  width: calc(100% - 480px);
-  min-width: 450px;
   display: inline-block;
-  margin: -5px 0 0 -10px;
+  width: calc(100% - 485px);
   vertical-align: top;
+}
+
+.msg-container {
+  position: relative;
+  display: inline-block;
+  width: calc(100% - 85px);
+  margin-left:85px;
+  vertical-align: top;
+  min-height: 70px;
+}
+
+.msg-avatar-container {
+  position:absolute;
+  top: 10px;
+  left: 10px;
+  border: 1px solid #555555;
+  padding: 2px;
 }
 
 .post-title {
@@ -119,7 +122,6 @@ a:hover, a:visited, a:link, a:active {
   border-width: 0 0 1px 0;
   border-color: #555555;
   width:100%;
-  margin: 0 0 0 15px;
 }
 
 input.post-title {
@@ -144,6 +146,7 @@ textarea.post-full {
   border-bottom: 1px solid #ccc;
   /*outline:none;*/
 }
+
 .post-entry {
   display:inline-block;
   padding: 0 0 5px 0;
@@ -169,13 +172,11 @@ textarea.post-full {
   display: inline-block;
   vertical-align: top;
   color: #FF6600;
-  margin: 0 0 0 15px;
 }
 
 .post-preview {
   font-size: 1em;
   word-wrap: break-word;
-  /*border:2px solid purple;*/
 }
 
 .post-full {
@@ -184,7 +185,6 @@ textarea.post-full {
   white-space: -pre-wrap;      /* Opera 4-6 */
   white-space: -o-pre-wrap;    /* Opera 7 */
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
-  /*border:2px solid purple;*/
 }
 
 .renderButton {
@@ -231,8 +231,4 @@ textarea.post-full {
 
 .animate-errorPopup.ng-hide{
   opacity: 0;
-}
-
-.dev-mode{
-  border:2px solid black
 }
