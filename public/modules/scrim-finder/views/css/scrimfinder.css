@@ -220,6 +220,24 @@
   background: black;
 }
 
+.instructions{
+  background: black;
+  border: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #555555;
+	border-radius: 5px;
+  margin-bottom:1em;
+  text-wrap: break-word;
+  padding: 5px;
+  color: #FF7000;
+}
+
+.instruction-img {
+  border: 2px dashed #777777;
+  padding: 1px;
+  margin: 4px;
+}
+
 .chat-window{
   background: #111111;
   border: solid;

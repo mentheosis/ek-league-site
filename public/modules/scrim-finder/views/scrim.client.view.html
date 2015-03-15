@@ -119,9 +119,34 @@
               <div class = "scrim-top-centerline"></div>
               <div class = "scrim-top-button">V<span class="small-scrim-button">IEW</span>&nbspI<span class="small-scrim-button">NSTRUCTIONS</span></div>
             </div>
-            <div class="chat-window" ng-show="showInstructions">
-              Instructions will go here...
-            </div>
+            <div class="instructions" ng-show="showInstructions">
+              Click the green 'Create New Scrim' button to post a new scrim request. Your post will look like this image.
+              <br>
+              <img class="instruction-img" src="/modules/core/img/scrim-step1.png">
+              <br>
+              <br>
+              Other players will see a challenge button on your post.
+              <br>
+              <img class="instruction-img" src="/modules/core/img/scrim-step2.png">
+              <br>
+              <br>
+              Once someone has challenged you a new button will appear to allow you to view challengers.
+              <br>
+              <img class="instruction-img" src="/modules/core/img/scrim-step3.png">
+              <br>
+              <br>
+              When you accept someone's challenge you will both see a private screen like the image below. This will allow you to share private server info with each other.
+              <br>
+              <img class="instruction-img" src="/modules/core/img/scrim-step4.png">
+              <br>
+              <br>
+              Other players will just see a plain box like below and will not be able to see your private server info.
+              <br>
+              <img class="instruction-img" src="/modules/core/img/scrim-step5.png">
+              <br>
+              <br>
+              <a href><span class="about-button" ng-click="showInstructions = !showInstructions">Hide These Instructions</span></a>
+          </div>
 
           <div class = "chat-window">
             <!--

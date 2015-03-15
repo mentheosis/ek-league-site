@@ -76,11 +76,12 @@ a:hover, a:visited, a:link, a:active {
 
 .news-image {
   border:solid;
-  border-width:3px;
-  border-color:black;
+  border-width:2px;
+  border-color:#777777;
   /*margin-left:15px;*/
-  width:464px;
-  height:266px;
+  width:466px;
+  height:268px;
+  padding: 1px;
   margin-left: 5px;
 }
 
