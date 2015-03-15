@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://192.168.1.4/ekleague',
-	//db: 'mongodb://localhost',
+	//db: 'mongodb://192.168.1.4/ekleague',
+	db: 'localhost/ekleague',
 	port: process.env.PORT || 3000,
 	log: {
 		// Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
@@ -14,40 +14,15 @@ module.exports = {
 		}
 	},
 	app: {
-		title: 'orderly - Development Environment'
-	},
-	facebook: {
-		clientID: process.env.FACEBOOK_ID || 'APP_ID',
-		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
-		callbackURL: '/auth/facebook/callback'
-	},
-	twitter: {
-		clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
-		clientSecret: process.env.TWITTER_SECRET || 'CONSUMER_SECRET',
-		callbackURL: '/auth/twitter/callback'
-	},
-	google: {
-		clientID: process.env.GOOGLE_ID || 'APP_ID',
-		clientSecret: process.env.GOOGLE_SECRET || 'APP_SECRET',
-		callbackURL: '/auth/google/callback'
-	},
-	linkedin: {
-		clientID: process.env.LINKEDIN_ID || 'APP_ID',
-		clientSecret: process.env.LINKEDIN_SECRET || 'APP_SECRET',
-		callbackURL: '/auth/linkedin/callback'
-	},
-	github: {
-		clientID: process.env.GITHUB_ID || 'APP_ID',
-		clientSecret: process.env.GITHUB_SECRET || 'APP_SECRET',
-		callbackURL: '/auth/github/callback'
+		title: 'eKombat - Development Environment'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		from: process.env.MAILER_FROM || 'noreply@stdio.io' || 'MAILER_FROM',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+			service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail' || 'MAILER_SERVICE_PROVIDER',
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+				user: process.env.MAILER_EMAIL_ID || 'stdio.io.bot@gmail.com' || 'MAILER_EMAIL_ID',
+				pass: process.env.MAILER_PASSWORD || "Don'tCh4seTheH4re" || 'MAILER_PASSWORD'
 			}
 		}
 	}

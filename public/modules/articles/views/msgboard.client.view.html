@@ -38,7 +38,7 @@
 			<div data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></div>
 
 			<div class="post" ng-class="{'dev-mode':devMode}">
-				<span ng-show="!showFull"><span class="post-preview" data-ng-bind="article.content.substring(0,300)"></span><span ng-show="article.content.length > 850" ng-click="switchShowFull(this)" style="cursor:pointer" > [...]</span></span>
+				<span ng-show="!showFull"><span class="post-preview" data-ng-bind="article.content.substring(0,300)"></span><span ng-show="article.content.length > 300" ng-click="switchShowFull(this)" style="cursor:pointer" > [...]</span></span>
 				<span ng-show="showFull"><span class="post-full" data-ng-bind="article.content"></span><span ng-show="article.content.length > 300" ng-click="switchShowFull(this)" style="cursor:pointer" > [<<<]</span></span>
 			</div>
 		</div>
