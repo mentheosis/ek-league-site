@@ -78,6 +78,7 @@ a:hover, a:visited, a:link, a:active {
   border:solid;
   border-width:2px;
   border-color:#777777;
+  border-radius: 5px;
   /*margin-left:15px;*/
   width:466px;
   height:268px;

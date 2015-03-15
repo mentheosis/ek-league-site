@@ -99,10 +99,10 @@ a:active {
 .about-text-block {
 	position: absolute;
 	color: #FF9000;
-	top: 5%;
+	top: 0;
 	left: 610px;
 	max-width: 600px;
-	padding: 10px;
+	padding: 35px 10px 10px 10px;
 	border-radius: 5px;
 	background-color:rgba(0, 0, 0, 0.4);
 }
