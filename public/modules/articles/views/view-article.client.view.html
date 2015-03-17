@@ -5,13 +5,11 @@
       <img class="avatar-inline" ng-src="{{article.user.avatar}}">
     </span>
 		<div class="msg-container view-msg" style="display:inline-block">
-
 			<div>
-					<span class="post-header" ng-class="{'dev-mode':devMode}">
-						Posted on
+					<span class="post-header">
+						<span style="color:#FF7000" data-ng-bind="article.user.username"></span>
+            posted on
 						<span data-ng-bind="article.created | date:'mediumDate'"></span>
-						by
-						<span data-ng-bind="article.user.username"></span>
 					</span>
 
 					<span data-ng-show="canEdit(article)">
@@ -75,18 +73,25 @@
 
 
 	<div ng-repeat="comment in comments" class="news-post">
-		<div>
+    <span class="msg-avatar-container">
+      <img class="comment-avatar-inline" ng-src="{{comment.user.avatar}}">
+      <span class="comment-username">
+        {{comment.user.username}}
+      </span>
+    </span>
+
+		<div class="comment-container">
 			<span class="post-header" ng-class="{'dev-mode':devMode}">
 				Posted on
 				<span data-ng-bind="comment.created | date:'mediumDate'"></span>
-				by
-				<span data-ng-bind="comment.user.username"></span>
 			</span>
+
+  		<div class="post" ng-class="{'dev-mode':devMode}">
+  			<span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="comment.content"></span>
+  		<div>
+
 		</div>
 
-		<div class="post" ng-class="{'dev-mode':devMode}">
-			<span class="post-full" ng-class="{'dev-mode':devMode}" data-ng-bind="comment.content"></span>
-		<div>
 	</div>
 
 <!--

@@ -8,6 +8,52 @@ var mongoose = require('mongoose'),
 	Article = mongoose.model('Article'),
 	_ = require('lodash');
 
+
+function initializeArticleReplyCounts(){
+	Article.find({}).sort('-created').limit('25').populate('user', 'username avatar')
+	.exec(function(err, articles) {
+		if (err) {
+			console.log(err);
+			return;
+		} else {
+
+			for (var a in articles) {
+				countArticleReplies(articles[a])
+			}
+			return;
+		}
+	});
+}
+
+function countArticleReplies(article) {
+	Article.count({parent:article._id},
+	function(err,ct){
+		article.replies = ct;
+		article.save(function(err) {
+			if (err) {
+				console.log('err ' + err);
+				return;
+			} else {
+				//console.log(article.title + ' ' + ct)
+			}
+		});
+	});
+}
+
+//initialize on server start
+initializeArticleReplyCounts();
+
+function updateParentReplies(parentId) {
+	Article.findById(parentId).exec(function(err, article) {
+		if (err) return;
+		if (!article) return;
+		article.replies = article.replies + 1;
+		article.save(function(err) {
+			//console.log('updated parent reply count');
+		})
+});}
+
+
 /**
  * Create a article
  */
@@ -22,6 +68,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			updateParentReplies(article.parent);
 			res.json(article);
 		}
 	});
@@ -74,11 +121,13 @@ exports.delete = function(req, res) {
 	});
 };
 
+
 /**
  * List of Articles
  */
 exports.list = function(req, res) {
-	Article.find({parent:req.query.parent}).sort(req.query.sortBy).limit(req.query.limit).populate('user', 'username avatar').exec(function(err, articles) {
+	Article.find({parent:req.query.parent}).sort(req.query.sortBy).limit(req.query.limit).populate('user', 'username avatar')
+	.exec(function(err, articles) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

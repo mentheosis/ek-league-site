@@ -31,13 +31,16 @@
 	<div data-ng-repeat="article in articles" class="news-post">
     <span class="msg-avatar-container">
       <img class="avatar-inline" ng-src="{{article.user.avatar}}">
+      <span class="msg-username">
+        {{article.user.username}}
+      </span>
     </span>
 
 		<div class="msg-container">
 
 			<div data-ng-bind="article.title" class="post-title" ng-class="userSelectedColor"></div>
 
-			<div class="post" ng-class="{'dev-mode':devMode}">
+			<div class="post">
 				<span ng-show="!showFull"><span class="post-preview" data-ng-bind="article.content.substring(0,300)"></span><span ng-show="article.content.length > 300" ng-click="switchShowFull(this)" style="cursor:pointer" > [...]</span></span>
 				<span ng-show="showFull"><span class="post-full" data-ng-bind="article.content"></span><span ng-show="article.content.length > 300" ng-click="switchShowFull(this)" style="cursor:pointer" > [<<<]</span></span>
 			</div>
@@ -45,7 +48,7 @@
 
 		<span class="msg-controls">
 			<a href="/#bfh/articles/{{article._id}}">
-				<i class="msg-button">Comments</i>
+				<i class="msg-button">{{article.replies}} Comments</i>
 			</a>
 			<a ng-show="canEdit(article)" href="/#bfh/articles/{{article._id}}/edit">
 				<i class="msg-button">Edit</i>

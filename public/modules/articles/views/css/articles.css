@@ -144,6 +144,51 @@ a:hover, a:visited, a:link, a:active {
   padding: 2px;
 }
 
+.msg-username {
+	position: absolute;
+  bottom: -20px;
+  left: -5px;
+	color: #FF7000;
+	text-align: center;
+	font-size: 0.75em;
+	word-wrap: break-word;
+  width: 90px;
+}
+
+.comment-container {
+  position: relative;
+  display: inline-block;
+  margin-left:85px;
+  vertical-align: top;
+  min-height: 85px;
+}
+
+.comment-avatar-container {
+  position:absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #555555;
+  padding: 1px;
+}
+
+.comment-avatar-inline {
+	width:75px;
+	height:75px;
+}
+
+.comment-username {
+	position: absolute;
+  bottom: -20px;
+  left: -5px;
+	color: #FF7000;
+	text-align: center;
+	font-size: 0.75em;
+	word-wrap: break-word;
+  width: 90px;
+  overflow:hidden;
+}
+
+
 .post-title {
   display:inline-block;
   font-size:1.4em;

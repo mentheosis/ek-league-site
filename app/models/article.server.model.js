@@ -34,6 +34,9 @@ var ArticleSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	replies: {
+		type: Number
+	},
 	edits: {
 		type: Schema.ObjectId,
 		ref: 'Article',
