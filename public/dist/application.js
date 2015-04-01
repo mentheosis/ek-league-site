@@ -342,9 +342,48 @@ function($stateProvider) {
 
 'use strict';
 
-angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Competitions', 'Rankings', 'Teams', 'Matchups',
-function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Matchups) {
+angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Users', 'Competitions', 'Rankings', 'Teams', 'Matchups',
+function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Teams, Matchups) {
   $scope.authentication = Authentication;
+
+  $scope.hideJoinButton = false;
+  $scope.setHideJoinButton = function() {
+    for(var r in $scope.rankings) {
+      if($scope.rankings[r].team && $scope.rankings[r].team._id === Authentication.user.team){
+        $scope.hideJoinButton = true;
+      }
+      //TODO check user team from db
+      //if($scope.rankings[r].team === Authentication.user.team){
+      //  $scope.hideJoinButton = true;
+      //}
+    }
+  }
+
+
+
+  $scope.joinText = 'Joining competition...'
+	$scope.tryJoinCompetition = function(){
+    $scope.showJoinModal = true;
+		var userFromDb = Users.get({userId:Authentication.user._id}, function() {
+			if(userFromDb.team) {
+        if(userFromDb._id === userFromDb.team.founder || userFromDb.team.captains.indexOf(userFromDb._id) !== -1) {
+          if(userFromDb.team.members.length < 5){
+            $scope.joinText = 'You must have at least 5 members on your roster to register.'
+          }
+          else {
+            $scope.joinText = userFromDb.team.name + ' registered!'
+            $scope.addTeamToComp(userFromDb.team._id, $scope.selectedComp);
+          }
+        }
+  			else {
+          $scope.joinText = 'You must be a team captain to join this competiton.'
+        }
+      }
+			else {
+        $scope.joinText = 'You must be a team captain to join this competiton.'
+      }
+		});
+	}
 
   $scope.createComp = function() {
     var comp = new Competitions({
@@ -399,15 +438,17 @@ function($scope, $stateParams, Authentication, Competitions, Rankings, Teams, Ma
   };
 
   $scope.listRankings = function() {
-    $scope.rankings = Rankings.list({compId: $scope.selectedComp, sortBy:'wins'})
+    $scope.rankings = Rankings.list({compId: $scope.selectedComp, sortBy:'wins'}, function(){
+          $scope.setHideJoinButton();
+    })
   };
 
-  $scope.addTeamToComp = function() {
-    if(this.selectedComp && this.selectedTeam)
+  $scope.addTeamToComp = function(teamId, compId) {
+    if(teamId && compId)
     {
       var team = new Rankings({
-        competition: this.selectedComp,
-        team: this.selectedTeam._id,
+        competition: compId,
+        team: teamId,
       });
 
       team.$save(function(response) {
@@ -550,13 +591,22 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$sce', '$rootScope', '$timeout', 'Authentication', 'Settings', 'Menus',
-	function($scope, $sce, $rootScope, $timeout, Authentication, Settings, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', '$sce', '$rootScope', '$location', '$timeout', 'Authentication', 'Users', 'Settings', 'Menus',
+	function($scope, $sce, $rootScope, $location, $timeout, Authentication, Users, Settings, Menus) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
 
 
+
+		$scope.goToMyTeam = function(){
+			var userFromDb = Users.get({userId:Authentication.user._id}, function(){
+				if(userFromDb.team && userFromDb.team._id !== '')
+					$location.url('/teams/'+userFromDb.team._id);
+				else
+					$location.url('/teams');
+			});
+		}
 
     $scope.targetDate = new Date(2015, 2, 15, 0);
     $scope.now = new Date();
@@ -907,7 +957,6 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
   $scope.createVisible = false;
   $scope.switchCreateVisible = function(){
     $scope.createVisible = !$scope.createVisible;
-    $scope.showInstructions = false;
   };
 
   /*
@@ -1664,7 +1713,7 @@ angular.module('users').factory('Authentication', [
 // Users service used for communicating with the users REST endpoint
 angular.module('users').factory('Users', ['$resource',
 	function($resource) {
-		return $resource('users', {}, {
+		return $resource('users/:userId', {}, {
 			update: {
 				method: 'PUT'
 			}

@@ -181,9 +181,9 @@ function SingleWeekGenerate(teams, compId, weekNo, callback)
 
   for (var t = 0; t < teams.length/2; t++) {
     var t_f = teams.length - 1 - t;
-    console.log(teams[t]);
-    console.log("vs");
-    console.log(teams[t_f]);
+  //  console.log(teams[t]);
+  //  console.log("vs");
+  //  console.log(teams[t_f]);
 
     var matchup = new Matchup({
       competition: compId,

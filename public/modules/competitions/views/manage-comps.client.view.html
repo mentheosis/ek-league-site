@@ -100,7 +100,7 @@
     <div class="ranking-container">
       Choose a team to include: <br>
       <select class="manage-comp-input" ng-model="selectedTeam" ng-options="team.name for team in teams"></select>
-      <br><a href ng-show="comp" ng-click="addTeamToComp()">Add Team</a>
+      <br><a href ng-show="comp" ng-click="addTeamToComp(selectedTeam._id, selectedComp)">Add Team</a>
       <br>
 
       <br><br>

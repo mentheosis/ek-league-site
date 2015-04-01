@@ -4,7 +4,24 @@
     <div class="banner-container">
       <img class="comp-banner" ng-src="{{comp.bannerurl}}">
       <div class="comp-links-container">
-        <div class="comp-links"><a href>REGISTRATION LOCKED</a></div>
+
+        <div class="comp-links" ng-hide="hideJoinButton"><a href ng-click="tryJoinCompetition()">REGISTRATION LOCKED</a></div>
+        			<div style="position: relative" ng-show="showJoinModal">
+        					<div class="confirmDelete">
+        					    <div style="width:400px">
+        					      <a href ng-click="showJoinModal = false" title="Close" class="confirmDelete-close">X</a>
+
+        					      <h3>
+                            {{joinText}}
+                        </h3>
+        					      <br>
+        					      <span ng-click="showJoinModal = false" class="delete-button">
+        					        OK!
+        					      </span>
+        					    </div>
+        					</div>
+        			</div>
+
         <div class="comp-links"><a href>OFFICIAL RULES COMING SOON</a></div>
         <div class="comp-links"><a href>SERVER SETTINGS COMING SOON</a></div>
       </div>
@@ -45,9 +62,9 @@
       <div ng-repeat="team in rankings">
         {{$index+1}}.
         <span style="color:#FF9000">
-          {{team.team.name}}
+          {{team.team.name.substring(0,12)}}
         </span>
-         &nbsp({{team.wins}},&nbsp{{team.losses}})
+        &nbsp({{team.wins}},&nbsp{{team.losses}})
       </div>
 
     </div>

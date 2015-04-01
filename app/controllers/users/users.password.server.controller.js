@@ -44,6 +44,7 @@ exports.forgot = function(req, res, next) {
 						user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
 						user.save(function(err) {
+							console.log('http://' + req.headers.host + '/auth/reset/' + token);
 							done(err, token, user);
 						});
 					}
@@ -90,6 +91,7 @@ exports.forgot = function(req, res, next) {
  * Reset password GET from email token
  */
 exports.validateResetToken = function(req, res) {
+	console.log('trying to reset')
 	User.findOne({
 		resetPasswordToken: req.params.token,
 		resetPasswordExpires: {
@@ -97,10 +99,11 @@ exports.validateResetToken = function(req, res) {
 		}
 	}, function(err, user) {
 		if (!user) {
-			return res.redirect('/#!/password/reset/invalid');
+			console.log('invalid');
+			return res.redirect('/#bfh/password/reset/invalid');
 		}
-
-		res.redirect('/#!/password/reset/' + req.params.token);
+		console.log('redirecting');
+		res.redirect('/#bfh/password/reset/' + req.params.token);
 	});
 };
 

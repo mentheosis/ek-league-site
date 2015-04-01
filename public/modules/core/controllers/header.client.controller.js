@@ -1,12 +1,21 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', '$sce', '$rootScope', '$timeout', 'Authentication', 'Settings', 'Menus',
-	function($scope, $sce, $rootScope, $timeout, Authentication, Settings, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', '$sce', '$rootScope', '$location', '$timeout', 'Authentication', 'Users', 'Settings', 'Menus',
+	function($scope, $sce, $rootScope, $location, $timeout, Authentication, Users, Settings, Menus) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topbar');
 
 
+
+		$scope.goToMyTeam = function(){
+			var userFromDb = Users.get({userId:Authentication.user._id}, function(){
+				if(userFromDb.team && userFromDb.team._id !== '')
+					$location.url('/teams/'+userFromDb.team._id);
+				else
+					$location.url('/teams');
+			});
+		}
 
     $scope.targetDate = new Date(2015, 2, 15, 0);
     $scope.now = new Date();

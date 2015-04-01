@@ -52,4 +52,6 @@ var RankingSchema = new Schema({
   }
 });
 
+RankingSchema.index({competition: 1, team: 1},{unique:true});
+
 mongoose.model('Ranking', RankingSchema);

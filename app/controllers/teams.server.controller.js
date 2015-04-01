@@ -6,34 +6,98 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Team = mongoose.model('Team'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
+
+
+
+function initializeUsersTeam(){
+	Team.find({})
+	.exec(function(err, teams) {
+		if (err) {
+			console.log(err);
+			return;
+		} else {
+			for (var t in teams) {
+				for (var m  in teams[t].toObject().members) {
+					//console.log(teams[t].toObject().members[m]);
+					setUserTeam(teams[t].toObject().members[m], teams[t].toObject()._id)
+				}
+			}
+			return;
+
+		}
+	});
+}
+
+function setUserTeam (userId, teamId) {
+	User.findOne({_id: userId}, '-salt, -password', function(err, user){
+		if(err || !user){
+			console.log('error')
+			console.log(err);
+			return;
+		}
+		//console.log('setting ' + userId + ' to ' + teamId );
+		user.team = teamId;
+		user.save(function(err){
+			if(err) console.log(err);
+			//console.log('updated user team');
+		});
+	});
+}
+
+//initialize on server start
+initializeUsersTeam();
 
 /**
  * Create a Team
  */
 exports.create = function(req, res) {
-	var team = new Team(req.body);
 
-	team.founder = req.user;
-	team.members.push(req.user._id);
-	team.lowername = team.name.toLowerCase();
-	team.joinpw = team.hashPassword(team.joinpw);
+	if(req.user.team && req.user.team !== '') {
+		return res.status(403).send({
+			message: 'You are already on a team'
+		});
+	}
 
-	team.save(function(err) {
+	Team.findOne({founder:req.user._id},'-joinpw').exec(function(err, existingTeam) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
-		} else {
+		} else if(existingTeam){
+			return res.status(403).send({
+				message: 'You have already founded a team'
+			});
+		}
+		else {
 
-			console.log(JSON.stringify(team));
+				var team = new Team(req.body);
 
-			//don't return joinpw to client
-			team.joinpw = undefined;
+				team.founder = req.user;
+				team.members.push(req.user._id);
+				team.lowername = team.name.toLowerCase();
+				team.joinpw = team.hashPassword(team.joinpw);
 
-			res.json(team);
+				team.save(function(err) {
+					if (err) {
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+
+						setUserTeam(req.user._id, team._id);
+
+						//don't return joinpw to client
+						team.joinpw = undefined;
+
+						res.json(team);
+					}
+				});
+
 		}
 	});
+
 };
 
 /**
@@ -90,6 +154,12 @@ exports.joinOrQuitTeam = function(req, res) {
 function joinTeam(req, res) {
 	var team = req.team;
 
+	if(req.user.team && req.user.team !== '') {
+		return res.status(403).send({
+			message: 'You are already a member of a team.'
+		});
+	}
+
 	if(!team.authenticate(req.body.password))
 	{
 		return res.status(403).send({
@@ -107,6 +177,7 @@ function joinTeam(req, res) {
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
+				setUserTeam(req.user._id, team._id);
 				populateTeamMembers(team,res);
 			}
 		});
@@ -129,6 +200,7 @@ function quitTeam(req, res) {
 					message: errorHandler.getErrorMessage(err)
 				});
 			} else {
+					setUserTeam(req.user._id, undefined);
 					populateTeamMembers(team,res)
 			}
 		});

@@ -22,9 +22,10 @@ module.exports = function(app) {
 
   app.route('/rankings')
   .post(users.requiresLogin,
-    auth.hasAuthorization(['admin']),
+    //auth.hasAuthorization(['admin']),
     comps.addRanking)
-  .delete(comps.deleteRanking);
+  .delete(users.requiresLogin,
+    comps.deleteRanking);
 
   app.route('/rankings/:compId')
   .get(comps.listRankings);

@@ -101,6 +101,10 @@ var UserSchema = new Schema({
 		type: String,
 		default: '/modules/core/img/default-avatar.png',
 		trim: true
+	},
+	team: {
+		type: Schema.ObjectId,
+		ref: 'Team' 
 	}
 });
 
