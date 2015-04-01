@@ -35,17 +35,17 @@
           <span class="v">vs</span>
           <img class="away-img" title="{{matchup.away.name}}" ng-src="{{matchup.away.imageurl}}">
         </div>
-    <div class="comp-section-title">This Week's Matches</div>
+    <div class="comp-section-title">Matchups</div>
     </div>
 
     <div class="row" style="margin: 30px 0 0 0">
       <div class="col-xs-8 current-map">
         <img class="img-responsive current-map-img" ng-src="{{comp.maps[comp.currentWeek-1].imageurl}}">
-        <div class="comp-section-title">Week {{comp.currentWeek}}: <span style="color:white">{{comp.maps[comp.currentWeek-1].map}}</span></div>
+        <div class="comp-section-title">Round {{comp.currentWeek}}: <span style="color:white">{{comp.maps[comp.currentWeek-1].map}}</span></div>
       </div>
       <div class="col-xs-4 map-list">
         <div ng-repeat="week in comp.maps">
-          Week {{$index+1}}:
+          Round {{$index+1}}:
           <span style="color:#FF9000">
             {{week.map}}
           </span>
