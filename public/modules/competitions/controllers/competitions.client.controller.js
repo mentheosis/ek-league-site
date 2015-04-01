@@ -24,7 +24,7 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
     $scope.showJoinModal = true;
 		var userFromDb = Users.get({userId:Authentication.user._id}, function() {
 			if(userFromDb.team) {
-        if(userFromDb._id === userFromDb.team.founder || userFromDb.team.captains.indexOf(userFromDb._id) !== -1) {
+        if(userFromDb._id === userFromDb.team.founder || userFromDb.team.captains.indexOf(userFromDb.username) !== -1) {
           if(userFromDb.team.members.length < 5){
             $scope.joinText = 'You must have at least 5 members on your roster to register.'
           }
@@ -34,7 +34,7 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
           }
         }
   			else {
-          $scope.joinText = 'You must be a team captain to join this competiton.'
+          $scope.joinText = 'You must be a captain to register your team.'
         }
       }
 			else {
