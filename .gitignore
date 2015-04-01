@@ -9,3 +9,4 @@ app/tests/coverage/
 config/sslcert/*.pem
 access.log
 bower_components
+config/env
