@@ -34,6 +34,9 @@ var ArticleSchema = new Schema({
 		default: '',
 		trim: true
 	},
+	link: {
+		type: String
+	},
 	replies: {
 		type: Number,
 		default: 0

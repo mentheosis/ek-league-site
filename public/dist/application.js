@@ -137,7 +137,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$rootSco
 		$scope.create = function(parentString) {
 			var article = new Articles({
 				title: this.title,
-				content: this.content
+				content: this.content,
+				link: this.link
 			});
 
 			article.parent = parentString; //by default the articles list only shows where parent = 'top'

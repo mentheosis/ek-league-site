@@ -86,6 +86,10 @@ a:hover, a:visited, a:link, a:active {
   margin-left: 5px;
 }
 
+.news-image-link:hover {
+  border-color: #FF9000;
+}
+
 .post-container {
   position: relative;
   display: inline-block;

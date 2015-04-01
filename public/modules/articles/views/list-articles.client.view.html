@@ -14,7 +14,8 @@
 			<form name="articleForm" data-ng-submit="create('top')" novalidate>
 				<fieldset>
 
-					<input name="title" type="text" data-ng-model="title" id="title" class="post-title" ng-class="userSelectedColor" placeholder="Choose a title" required>
+					<input name="title" type="text" data-ng-model="title" id="title" class="post-title" placeholder="Choose a title" required>
+					<input name="link" type="text" data-ng-model="link" id="link" class="post-title" placeholder="Link?" required>
 					<div class="image-entry-container">
 						<textarea placeholder="Image URL Here" name="imageurl" data-ng-model="imageurl" id="imageurl" class="image-entry"></textarea>
 					</div>
@@ -35,7 +36,9 @@
 	<div data-ng-repeat="article in articles" class="news-post">
 
 			<div class="news-image-container">
-				<img class="news-image" ng-src="{{article.imageurl}}">
+				<a ng-href="{{article.link}}">
+					<img class="news-image" ng-class="{'news-image-link' : article.link}" ng-src="{{article.imageurl}}">
+				</a>
 			</div>
 
 			<div class="post-container">
