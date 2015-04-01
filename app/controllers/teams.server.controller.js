@@ -37,7 +37,7 @@ function setUserTeam (userId, teamId) {
 			console.log(err);
 			return;
 		}
-		//console.log('setting ' + userId + ' to ' + teamId );
+		console.log('setting ' + user.username + ' to ' + teamId );
 		user.team = teamId;
 		user.save(function(err){
 			if(err) console.log(err);

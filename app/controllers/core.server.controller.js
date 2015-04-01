@@ -77,9 +77,6 @@ exports.changeSetting = function(req, res) {
 
 exports.getSettings = function(req, res) {
 
-	console.log('settings query');
-	console.log(req.query);
-
 	if(req.query.settingName) //single setting
 	{
 		var settingName = req.query.settingName;
