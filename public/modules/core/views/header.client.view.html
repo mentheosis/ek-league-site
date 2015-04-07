@@ -53,12 +53,16 @@
 		</span>
 	</div>
 	<span class="admin-mode" ng-show="authentication.user && authentication.user.roles.indexOf('admin') != -1">
+		<a class='admin-control' ng-show="adminMode" href="#bfh/manage-rules">
+			Manage Rules
+		</a>
 		<a class='admin-control' ng-show="adminMode" href="#bfh/manage-comps">
 			Manage Comps
 		</a>
 		<a class='admin-control' href="" ng-click="switchAdminMode()">
 			Admin Mode
 		</a>
+
 	</span>
 
 	<div class="top-bottom-row"> </div>

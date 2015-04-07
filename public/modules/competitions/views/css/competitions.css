@@ -229,3 +229,20 @@
   color: #FF9000;
 	display: inline;
 }
+
+.manage-rule-input {
+  background: #111111;
+  border: 1px solid #555555;
+  color: #FF9000;
+	display: inline;
+	width:100%;
+}
+
+.rules {
+	margin-bottom: 2em;
+	color: #FF7000;
+}
+.rule-title {
+	color:white;
+	font-size:2em;
+}

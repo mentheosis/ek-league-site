@@ -13,6 +13,7 @@ module.exports = function(app) {
 		.put(auth.hasAuthorization(['admin']),core.changeSetting);
 
 	app.route('/settings/:settingId')
+		.get(core.readSetting)
 		.put(auth.hasAuthorization(['admin']),core.updateSetting)
 		.delete(auth.hasAuthorization(['admin']),core.deleteSetting);
 

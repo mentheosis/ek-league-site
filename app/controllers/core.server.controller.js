@@ -148,6 +148,9 @@ exports.deleteSetting = function(req, res) {
 	});
 };
 
+exports.readSetting = function(req, res) {
+	res.json(req.setting);
+}
 
 exports.settingByID = function(req, res, next, id) {
 	Settings.findById(id).exec(function(err, setting) {

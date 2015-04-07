@@ -63,7 +63,9 @@ exports.delete = function(req, res) {
 };
 
 exports.byId = function(req, res, next, id) {
-  Competition.findById(id).exec(function(err, comp) {
+  Competition.findById(id)
+  .populate('rules settings', 'name')
+  .exec(function(err, comp) {
     if (err) return next(err);
     if (!comp) return next(new Error('Failed to find Competition with id ' + id));
     req.comp = comp;

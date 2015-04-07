@@ -72,7 +72,14 @@ var CompetitionSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-
+  rules: {
+    type: Schema.ObjectId,
+    ref: 'Setting'
+  },
+  settings: {
+    type: Schema.ObjectId,
+    ref: 'Setting'
+  },
 });
 
 mongoose.model('Competition', CompetitionSchema);

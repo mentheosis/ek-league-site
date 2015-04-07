@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Users', 'Competitions', 'Rankings', 'Teams', 'Matchups',
-function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Teams, Matchups) {
+angular.module('competitions').controller('CompController', ['$scope', '$stateParams', 'Authentication', 'Users', 'Competitions', 'Rankings', 'Teams', 'Matchups', 'Settings',
+function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Teams, Matchups, Settings) {
   $scope.authentication = Authentication;
 
   $scope.hideJoinButton = false;
@@ -72,6 +72,7 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
   $scope.listComps = function() {
     $scope.competitions = Competitions.query();
     $scope.listTeams();
+    $scope.listRules();
   };
 
   $scope.getComp = function() {
@@ -81,11 +82,14 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
   $scope.saveComp = function() {
     if($scope.comp)
     {
-      //$scope.comp.maps.push({map: 'a', imageurl: 'b'});
-      //console.log("update");
-      //$scope.comp.maps.push({map: $scope.mapName, imageurl: $scope.mapImage});
+      if($scope.compRules)
+        $scope.comp.rules = $scope.compRules._id
+      if($scope.compSettings)
+        $scope.comp.settings = $scope.compSettings._id
       $scope.comp.$save({},function(){
         $scope.listComps();
+        if($scope.selectedComp)
+          $scope.getComp()
       });
     }
   };
@@ -158,6 +162,44 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
       });
 		}
 	};
+
+  $scope.listRules = function() {
+    $scope.ruleSets = Settings.query({category:'rules'});
+  }
+
+  $scope.selectRules = function(id) {
+    var ruleId;
+    if(id) ruleId = id;
+    else ruleId = $stateParams.ruleId;
+    $scope.selectedRules = Settings.get({settingId: ruleId});
+  }
+
+  $scope.saveRuleSet = function() {
+    $scope.selectedRules.$update();
+  }
+
+	$scope.deleteRuleset = function() {
+		$scope.selectedRules.$remove();
+    $scope.selectedRules = undefined;
+    $scope.confirmDelete = false;
+    $scope.selectRules();
+	}
+
+	$scope.saveNewRuleSet = function() {
+		$scope.resText = '';
+
+		var newsetting = new Settings({
+			category: 'rules',
+			name: this.ruleSetName,
+			value: []
+		});
+
+		newsetting.$save(function(res){
+			$scope.ruleSetName = '';
+			$scope.ruleSets.push(res);
+			$scope.resText = 'Saved';
+		});
+	}
 
 
 }

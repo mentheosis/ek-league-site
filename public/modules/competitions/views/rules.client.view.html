@@ -1,0 +1,19 @@
+<section class='container' ng-controller="CompController" ng-init="selectRules()">
+  <div class="row">
+
+    <div class="col-xs-6 col-xs-offset-3">
+
+        <div ng-repeat="item in selectedRules.value track by $index">
+          <div class="rule-title">
+            {{selectedRules.value[$index].substring(0,selectedRules.value[$index].indexOf('-'))}}
+          </div>
+
+          <div class="rules">
+            {{selectedRules.value[$index].substring(selectedRules.value[$index].indexOf('-')+1,selectedRules.value[$index].length)}}
+          <div>
+        </div>
+
+    </div>
+
+  </div>
+</section>
