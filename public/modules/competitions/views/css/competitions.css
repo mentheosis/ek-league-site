@@ -218,6 +218,11 @@
   padding: 5px 0 0 5px;
 }
 
+.ranking {
+	margin-bottom:0.7em;
+	font-size:0.9em;
+	line-height:1em;
+}
 
 .map-controls {
   margin: 45px 0 0 0;

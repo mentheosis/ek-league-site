@@ -22,8 +22,8 @@
         					</div>
         			</div>
 
-        <div class="comp-links"><a ng-href="#bfh/rules/{{comp.rules._id}}" >OFFICIAL RULES COMING SOON</a></div>
-        <div class="comp-links"><a ng-href="#bfh/rules/{{comp.settings._id}}" >SERVER SETTINGS COMING SOON</a></div>
+        <div class="comp-links"><a ng-href="#bfh/rules/{{comp.rules._id}}" >OFFICIAL RULES</a></div>
+        <div class="comp-links"><a ng-href="#bfh/rules/{{comp.settings._id}}" >SERVER SETTINGS</a></div>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@
   <div class="ranking-outer">
     <div class="ranking-container">
 
-      <div ng-repeat="team in rankings" style="margin-bottom:0.5em">
+      <div class="ranking" ng-repeat="team in rankings">
         {{$index+1}}.
         <span style="color:#FF9000">
           {{team.team.name}}
