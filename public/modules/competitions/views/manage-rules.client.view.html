@@ -58,12 +58,15 @@
       				</span>
         </div>
         <br>
+        test teste
         <br>
         <div ng-repeat="item in selectedRules.value track by $index" style="margin-bottom: 0.5em">
           {{$index+1}}: <a href ng-click="selectedRules.value.splice($index, 1)">remove</a>
-          <input ng-model="selectedRules.value[$index]" class="manage-rule-input">
+          <input ng-model="item.title" class="manage-rule-input">
+          <textarea ng-model="item.text" class="manage-rule-input"></textarea>
         </div>
-        <a href ng-click="selectedRules.value.push('')">add a rule</a>
+        test test
+        <a href ng-click="selectedRules.value.push({title:'', text:''})">add a rule</a>
         <br>
         <br>
       </div>

@@ -28,9 +28,7 @@ var SettingSchema = new Schema({
     required: 'Name cannot be blank'
   },
   value: {
-    type: [String],
-    default: '',
-    trim: true
+    type: Schema.Types.Mixed
   }
 });
 

@@ -26,6 +26,15 @@
   margin: 0 0 15px 0;
   background: #111111;
   height: 70px;
+  position:relative;
+}
+
+.scrim-delete {
+  position:absolute;
+  top: 0;
+  right: 0;
+  color: #FF7000;
+  z-index:9;
 }
 
 .scrim-container-new {
@@ -326,4 +335,11 @@ input:focus{
   color: white;
   width:100%;
   word-wrap: break-word;
+}
+
+.system-message {
+  font-style:italic;
+  font-size: 0.8em;
+  color:#66DDAA;
+  margin-left:3em;
 }

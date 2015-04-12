@@ -527,6 +527,24 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
     if(id) ruleId = id;
     else ruleId = $stateParams.ruleId;
     $scope.selectedRules = Settings.get({settingId: ruleId});
+
+    $scope.selectedRules.$promise.then(function(rules){
+
+      console.log('rules: ', rules)
+
+      if($scope.selectedRules.value[0] && !$scope.selectedRules.value[0].text) {
+        var newValue = [];
+        for(var i=0; i < $scope.selectedRules.value.length; i++) {
+            var item = $scope.selectedRules.value[i];
+            var newItem = {};
+            newItem.title = item.substring(0,item.indexOf('-')).trim();
+            newItem.text = item.substring(item.indexOf('-')+1,item.length).trim();
+            newValue.push(newItem);
+        }
+        $scope.selectedRules.value = newValue;
+        $scope.selectedRules.$update();
+      }
+    })
   }
 
   $scope.saveRuleSet = function() {
@@ -1105,6 +1123,11 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
     SocketIO.emit('away info', { 'scrim': scrim._id, 'away': scrim.awayInfo })
   };
 
+  $scope.deleteScrim = function(scrim) {
+    $scope.scrims.splice($scope.scrims.indexOf(scrim),1)
+    SocketIO.emit('delete scrim', { 'scrim': scrim._id })
+  }
+
 
   $scope.orderScrims = function(scrim) {
     if($scope.canSeePrivateChat(scrim))
@@ -1135,14 +1158,22 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
     if(clearUserListener) { clearUserListener(); }
     if(clearAddListener) { clearAddListener(); }
     if(clearUpdateListener) { clearUpdateListener(); }
+    if(clearDeleteListener) { clearDeleteListener(); }
     SocketIO.emit('exiting chat', {user: Authentication.user.username});
   });
 
+  var clearDeleteListener = SocketIO.on('scrim deleted', function(req){
+    for (var s = 0; s < $scope.scrims.length; s++ ){
+      if ($scope.scrims[s]._id === req.scrim) {
+        $scope.scrims.splice(s,1);
+        return;
+      }
+    }
+  });
 
   var clearHomeInfoListener = SocketIO.on('home info updated', function(req){
     for (var s = 0; s < $scope.scrims.length; s++ ){
       if ($scope.scrims[s]._id === req.scrim) {
-        //$scope.scrims.splice(s, 1, scrim);
         $scope.scrims[s].homeInfo = req.home;
         return;
       }
@@ -1152,7 +1183,6 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
   var clearAwayInfoListener = SocketIO.on('away info updated', function(req){
     for (var s = 0; s < $scope.scrims.length; s++ ){
       if ($scope.scrims[s]._id === req.scrim) {
-        //$scope.scrims.splice(s, 1, scrim);
         $scope.scrims[s].awayInfo = req.away;
         return;
       }
@@ -1177,7 +1207,8 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
   });
 
   var clearInitlistener = SocketIO.on('initialize chat', function(res){
-    $scope.chatMessages = res;
+    $scope.chatMessages = res.messages;
+    $scope.chatMessages.push({user:'', message:'last message sent ' + res.lastTimestamp});
   });
 
   $scope.userList = []

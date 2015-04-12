@@ -58,6 +58,12 @@
           <div data-ng-repeat="scrim in scrims" class="scrim-container">
             <img class="scrim-img" title="{{scrim.team}}" ng-src="{{scrim.imageurl}}">
 
+            <div class="scrim-delete" ng-show="authentication.user._id == scrim.user">
+              <a href="" ng-click="deleteScrim(scrim)">
+                <i class="glyphicon glyphicon-remove"></i>
+              </a>
+            </div>
+
             <div ng-show = "scrimFinalized(scrim)" class="scrim-finalized">
               <div style="font-size: 2em; margin: 0.5em 0 0 0; text-align: center" ng-hide="authentication.user && canSeePrivateChat(scrim)">Challenge Accepted</div>
               <div class="scrim-replies-final" ng-show="authentication.user && canSeePrivateChat(scrim)">
@@ -164,8 +170,8 @@
             </div>
             <div scroll-glue class="chat-message-container">
               <div ng-repeat="msg in chatMessages track by $index">
-                <span class="chat-user">{{msg.user}}:</span>
-                <span class="chat-msg">{{msg.message}}</span>
+                <span class="chat-user" ng-show="msg.user != '' ">{{msg.user}}:</span>
+                <span class="chat-msg" ng-class="{'system-message': msg.user == ''}">{{msg.message}}</span>
               </div>
             </div>
             <div class="chat-bar-container">

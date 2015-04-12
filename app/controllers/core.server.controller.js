@@ -18,6 +18,7 @@ exports.index = function(req, res) {
 
 exports.saveSetting = function(req, res) {
 		var setting = new Settings(req.body);
+		setting.markModified('value');
 		setting.save(function(err, reSetting){
 			if(err) {
 				return res.status(500).send({
@@ -120,6 +121,8 @@ exports.updateSetting = function(req, res) {
 	var setting = req.setting;
 
 	setting = _.extend(setting, req.body);
+
+	setting.markModified('value');
 
 	setting.save(function(err, updated) {
 		if (err) {
