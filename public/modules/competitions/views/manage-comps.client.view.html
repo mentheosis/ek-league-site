@@ -62,6 +62,8 @@
       				</span>
         </div>
         <br>
+        Active Round: <select class="manage-comp-input" ng-model="comp.currentWeek" ng-options="idx as idx for idx in roundChoices"></select>
+        <br>
         Rule Set: {{comp.rules.name}} <select class="manage-comp-input" ng-model="compRules" ng-options="set.name for set in ruleSets"></select>
         <br>
         Server Settings: {{comp.settings.name}} <select class="manage-comp-input" ng-model="compSettings" ng-options="set.name for set in ruleSets"></select>
@@ -70,8 +72,21 @@
         <a href ng-click="generateMatchups()"><i class="glyphicon glyphicon-tasks"></i>Generate matchups</a>
         <br>
         <div ng-repeat="matchup in matchups">
-          {{matchup.home.name}} vs {{matchup.away.name}}
+          <span ng-show="matchup.disputed" style="color:red">*disputed*</span>
+          <span ng-class="{'winner':(matchup.winner == matchup.home._id), 'loser':(matchup.loser == matchup.home._id), 'disputed':matchup.disputed}">{{matchup.home.name}}</span> vs
+          <span ng-class="{'winner':(matchup.winner == matchup.away._id), 'loser':(matchup.loser == matchup.away._id), 'disputed':matchup.disputed}">{{matchup.away.name}}</span>
+          <a href ng-click="deleteMatchup(matchup, $index)" title="remove">[X]</a>
+          <select class="manage-comp-input" ng-model="matchup.winner">
+            <option>-choose winner-</option>
+            <option value="{{matchup.home._id}}">{{matchup.home.name}}</option>
+            <option value="{{matchup.away._id}}">{{matchup.away.name}}</option>
+          </select>
+          <a href ng-click="setWinner(matchup)" title="set winner">[save]</a>
+
         </div>
+        <select class="manage-comp-input" ng-model="newHome" ng-options="team.name for team in teams"></select>
+        <select class="manage-comp-input" ng-model="newAway" ng-options="team.name for team in teams"></select>
+        <a href ng-click="addMatchup()">add a matchup</a>
       </div>
       <div class="comp-section-title">This Week's Matches</div>
     </div>

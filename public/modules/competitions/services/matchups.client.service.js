@@ -4,7 +4,7 @@ angular.module('competitions')
   .factory('Matchups', //the name of the resource Class
   ['$resource',
   function($resource) {
-    return $resource('matchups/:compId',
+    return $resource('matchups/:matchupId',
     {
       matchupId: '@_id',
     },
@@ -12,12 +12,11 @@ angular.module('competitions')
       generate: {
         method: 'POST',
         //isArray: true,
-        //params: { sortBy: '@sortBy', },
+        params: { compId: '@compId' },
       },
-      list: {
-        method: 'GET',
-        isArray: true,
-        params: { compId: '@compId' }
+      update: {
+        method: 'PUT',
+        params: {matchupId: '@matchupId'}
       }
     });
   }

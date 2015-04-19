@@ -58,6 +58,9 @@ var MatchupSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Team'
   },
+  disputed: {
+    type: Boolean
+  },
   MVP: {
     type: Schema.ObjectId,
     ref: 'User'

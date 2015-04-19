@@ -176,6 +176,22 @@
 	height: 75px;
 }
 
+.winner {
+	color: green;
+	border-color: green;
+	border-width:2px;
+}
+.loser {
+	color: red;
+	border-color: red;
+	border-width:2px;
+}
+.disputed{
+	color: red;
+	border-color: red;
+	border-width:2px;
+}
+
 .current-map {
   display: inline-block;
   position: relative;

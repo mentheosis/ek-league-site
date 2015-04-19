@@ -30,13 +30,22 @@ module.exports = function(app) {
   app.route('/rankings/:compId')
   .get(comps.listRankings);
 
-  app.route('/matchups/:compId')
+  app.route('/matchups/:matchupId')
+  .put(users.requiresLogin,
+      matchups.update)
+  .delete(users.requiresLogin,
+    auth.hasAuthorization(['admin']),
+    matchups.delete);
+
+  app.route('/matchups/')
   .get(matchups.list)
   .post(users.requiresLogin,
     auth.hasAuthorization(['admin']),
-    comps.generateMatchups);
+    matchups.create);
 
   // Finish by binding the middleware
   app.param('compId', comps.byId);
+  app.param('matchupId', matchups.byId);
+
 
 };

@@ -22,6 +22,22 @@
         					</div>
         			</div>
 
+        <div class="comp-links" ng-show="showReportButton"><a href ng-click="tryReportWin()">REPORT WIN</a></div>
+        			<div style="position: relative" ng-show="showReportModal">
+        					<div class="confirmDelete">
+        					    <div style="width:400px">
+        					      <a href ng-click="showReportModal = false" title="Close" class="confirmDelete-close">X</a>
+        					      <h3>
+                            {{reportText}}
+                        </h3>
+        					      <br>
+        					      <span ng-click="showReportModal = false" class="delete-button">
+        					        OK!
+        					      </span>
+        					    </div>
+        					</div>
+        			</div>
+
         <div class="comp-links"><a ng-href="#bfh/rules/{{comp.rules._id}}" >OFFICIAL RULES</a></div>
         <div class="comp-links"><a ng-href="#bfh/rules/{{comp.settings._id}}" >SERVER SETTINGS</a></div>
       </div>
@@ -31,11 +47,11 @@
   <div class="matchup-outer">
     <div class="matchup-container">
         <div class="matchup" ng-repeat="matchup in matchups">
-          <img class="home-img" title="{{matchup.home.name}}" ng-src="{{matchup.home.imageurl}}">
+          <img class="home-img" title="{{matchup.home.name}}" ng-src="{{matchup.home.imageurl}}" ng-class="{'winner':(matchup.winner == matchup.home._id), 'loser':(matchup.loser == matchup.home._id), 'disputed':matchup.disputed}">
           <span class="v">vs</span>
-          <img class="away-img" title="{{matchup.away.name}}" ng-src="{{matchup.away.imageurl}}">
+          <img class="away-img" title="{{matchup.away.name}}" ng-src="{{matchup.away.imageurl}}" ng-class="{'winner':(matchup.winner == matchup.away._id), 'loser':(matchup.loser == matchup.away._id), 'disputed':matchup.disputed}">
         </div>
-    <div class="comp-section-title">Matchups</div>
+    <div class="comp-section-title">Round {{comp.currentWeek}} Matchups</div>
     </div>
 
     <div class="row" style="margin: 30px 0 0 0">
