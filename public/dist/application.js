@@ -361,18 +361,18 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
 
   $scope.hideJoinButton = false;
   $scope.setHideJoinButton = function() {
-    for(var r in $scope.rankings) {
-      if($scope.rankings[r].team && $scope.rankings[r].team._id === Authentication.user.team){
-        $scope.hideJoinButton = true;
+    if(Authentication.user) {
+      for(var r in $scope.rankings) {
+        if($scope.rankings[r].team && $scope.rankings[r].team._id === Authentication.user.team){
+          $scope.hideJoinButton = true;
+        }
+        //TODO check user team from db
+        //if($scope.rankings[r].team === Authentication.user.team){
+        //  $scope.hideJoinButton = true;
+        //}
       }
-      //TODO check user team from db
-      //if($scope.rankings[r].team === Authentication.user.team){
-      //  $scope.hideJoinButton = true;
-      //}
     }
   }
-
-
 
   $scope.joinText = 'Joining competition...'
 	$scope.tryJoinCompetition = function(){
@@ -397,6 +397,90 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
       }
 		});
 	}
+
+
+  $scope.showReportButton = false;
+  $scope.setShowReportButton = function() {
+    if(Authentication.user) {
+      var userFromDb = Users.get({userId:Authentication.user._id}, function() {
+        if(userFromDb._id === userFromDb.team.founder || userFromDb.team.captains.indexOf(userFromDb.username) !== -1) {
+
+          for(var r in $scope.rankings) {
+            if($scope.rankings[r].team && $scope.rankings[r].team._id === userFromDb.team._id) {
+              $scope.showReportButton = true;
+            }
+          }
+
+        }
+      });
+    }
+  }
+
+  $scope.reportText = 'Reporting...'
+	$scope.tryReportWin = function(){
+    $scope.showReportModal = true;
+		var userFromDb = Users.get({userId:Authentication.user._id}, function() {
+			if(userFromDb.team) {
+        if(userFromDb._id === userFromDb.team.founder || userFromDb.team.captains.indexOf(userFromDb.username) !== -1) {
+
+          for(var m in $scope.matchups) {
+            var match = $scope.matchups[m];
+            if((match.home && match.away) && (match.home._id === userFromDb.team._id || match.away._id === userFromDb.team._id)) {
+
+              var delayText = '';
+
+              if(match.winner){
+                if(match.winner === userFromDb.team._id){
+                  delayText = 'Your team has already reported.'
+                }
+                else {
+                  delayText = 'The other team reported a win too. Please contact an admin.'
+                  match.disputed = true;
+                }
+              }
+              else {
+                delayText = 'Congratulations on your win!'
+                match.winner = userFromDb.team._id;
+                if(match.home._id === userFromDb.team._id){
+                  match.loser = match.away._id;
+                }
+                else {
+                  match.loser = match.home._id;
+                }
+              }
+
+              match.$update({matchupId:match._id}, function(){
+                $scope.reportText = delayText;
+                $scope.listMatchups();
+              });
+              return;
+            }
+          }
+
+        }
+  			else {
+          $scope.joinText = 'You must be a team captain to report a win.'
+        }
+      }
+			else {
+        $scope.joinText = 'You must be on a team to report a win.'
+      }
+		});
+	}
+
+  $scope.setWinner = function(match){
+    if(match.home._id === match.winner){
+      match.loser = match.away._id;
+    }
+    else if(match.away._id === match.winner){
+      match.loser = match.home._id;
+    }
+    match.disputed=false;
+    match.$update({matchupId:match._id},function(){
+      if($scope.selectedComp)
+        $scope.gatherCompData($scope.selectedComp)
+    });
+  }
 
   $scope.createComp = function() {
     var comp = new Competitions({
@@ -431,7 +515,12 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
   };
 
   $scope.getComp = function() {
-    $scope.comp = Competitions.get({ compId: $scope.selectedComp });
+    $scope.comp = Competitions.get({ compId: $scope.selectedComp }, function(success){
+      $scope.roundChoices = [];
+      for(var i = 1; i <= $scope.comp.maps.length; i++) {
+        $scope.roundChoices.push(i);
+      }
+    });
   };
 
   $scope.saveComp = function() {
@@ -444,7 +533,7 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
       $scope.comp.$save({},function(){
         $scope.listComps();
         if($scope.selectedComp)
-          $scope.getComp()
+          $scope.gatherCompData($scope.selectedComp)
       });
     }
   };
@@ -456,7 +545,8 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
 
   $scope.listRankings = function() {
     $scope.rankings = Rankings.list({compId: $scope.selectedComp, sortBy:'wins'}, function(){
-          $scope.setHideJoinButton();
+      $scope.setHideJoinButton();
+      $scope.setShowReportButton();
     })
   };
 
@@ -487,7 +577,24 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
   }
 
   $scope.listMatchups = function() {
-    $scope.matchups = Matchups.list({compId: $scope.selectedComp});
+    $scope.matchups = Matchups.query({compId: $scope.selectedComp});
+  }
+
+  $scope.addMatchup = function() {
+    var matchup = new Matchups({
+      competition: $scope.comp._id,
+      week: $scope.comp.currentWeek,
+      home: $scope.newHome._id,
+      away: $scope.newAway._id
+    });
+    matchup.$save({}, function(){
+      $scope.listMatchups();
+    })
+  }
+
+  $scope.deleteMatchup = function(matchup, index) {
+    matchup.$remove();
+    $scope.matchups.splice(index, 1);
   }
 
   $scope.generateMatchups = function() {
@@ -529,8 +636,6 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
     $scope.selectedRules = Settings.get({settingId: ruleId});
 
     $scope.selectedRules.$promise.then(function(rules){
-
-      console.log('rules: ', rules)
 
       if($scope.selectedRules.value[0] && !$scope.selectedRules.value[0].text) {
         var newValue = [];
@@ -597,7 +702,7 @@ angular.module('competitions')
   .factory('Matchups', //the name of the resource Class
   ['$resource',
   function($resource) {
-    return $resource('matchups/:compId',
+    return $resource('matchups/:matchupId',
     {
       matchupId: '@_id',
     },
@@ -605,12 +710,11 @@ angular.module('competitions')
       generate: {
         method: 'POST',
         //isArray: true,
-        //params: { sortBy: '@sortBy', },
+        params: { compId: '@compId' },
       },
-      list: {
-        method: 'GET',
-        isArray: true,
-        params: { compId: '@compId' }
+      update: {
+        method: 'PUT',
+        params: {matchupId: '@matchupId'}
       }
     });
   }
