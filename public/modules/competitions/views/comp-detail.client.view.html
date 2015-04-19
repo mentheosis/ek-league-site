@@ -51,7 +51,19 @@
           <span class="v">vs</span>
           <img class="away-img" title="{{matchup.away.name}}" ng-src="{{matchup.away.imageurl}}" ng-class="{'winner':(matchup.winner == matchup.away._id), 'loser':(matchup.loser == matchup.away._id), 'disputed':matchup.disputed}">
         </div>
-    <div class="comp-section-title">Round {{comp.currentWeek}} Matchups</div>
+    <div class="comp-section-title">Round {{comp.currentWeek}} Matchups
+      <span ng-show="comp.bracketurl && comp.bracketurl !== '' "> -
+        <a href ng-click="showBracket = true"> See Full Bracket</a>
+      </span>
+      <div style="position: relative" ng-show="showBracket">
+      		<div class="confirmDelete">
+      		    <div style="width:90vw">
+      		      <a href ng-click="showBracket = false" title="Close" class="confirmDelete-close">X</a>
+      		      <img class="img-responsive" ng-src="{{comp.bracketurl}}"></img>
+      		    </div>
+      		</div>
+      </div>
+    </div>
     </div>
 
     <div class="row" style="margin: 30px 0 0 0">

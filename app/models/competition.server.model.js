@@ -56,6 +56,10 @@ var CompetitionSchema = new Schema({
     default: '/modules/competitions/img/defaultCompBanner.png',
     trim: true
   },
+  bracketurl: {
+    type: String,
+    trim: true
+  },
   maps: {
     type: [{map: String, imageurl: String}],
     default: []

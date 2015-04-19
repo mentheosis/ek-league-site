@@ -64,8 +64,6 @@ exports.update = function(req, res) {
   var matchup = req.matchup;
   matchup = _.extend(matchup, req.body);
 
-  console.log('saving. ', matchup)
-
   matchup.save(function(err) {
     if (err) {
       console.log('err ', err)

@@ -47,7 +47,7 @@ function setUserTeam (userId, teamId) {
 }
 
 //initialize on server start
-initializeUsersTeam();
+//initializeUsersTeam();
 
 /**
  * Create a Team
