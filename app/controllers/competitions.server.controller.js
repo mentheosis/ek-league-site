@@ -62,6 +62,10 @@ exports.delete = function(req, res) {
 	});
 };
 
+exports.read = function(req, res) {
+  res.json(req.comp);
+};
+
 exports.byId = function(req, res, next, id) {
   Competition.findById(id)
   .populate('rules settings', 'name')
@@ -73,13 +77,35 @@ exports.byId = function(req, res, next, id) {
   })
 };
 
-exports.read = function(req, res) {
-  res.json(req.comp);
+exports.rankingById = function(req, res, next, id) {
+  Ranking.findById(id)
+  .exec(function(err, ranking) {
+    if (err) return next(err);
+    if (!ranking) return next(new Error('Failed to find ranking with id ' + id));
+    req.ranking = ranking;
+    next();
+  })
 };
 
+exports.updateRanking = function(req, res) {
+    var ranking = req.ranking;
+
+    ranking.wins = req.body.wins;
+    ranking.losses = req.body.losses;
+
+    ranking.save(function(err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(req.body);
+      }
+    });
+};
 
 exports.listRankings = function(req, res) {
-  Ranking.find({competition:req.param('compId')}).sort(req.query.sortBy).populate('team','name').exec(function(err, teams){
+  Ranking.find({competition:req.query.compId}).sort(req.query.sortBy).populate('team','name').exec(function(err, teams){
     if (err) {
       return res.status(500).send({
         message: errorHandler.getErrorMessage(err)
@@ -104,9 +130,11 @@ exports.addRanking = function(req, res) {
 };
 
 exports.deleteRanking = function(req, res) {
-	if(req.query.rankId)
+  console.log('wtf ', req.params)
+
+	if(req.params.rankingId)
   {
-    Ranking.findOne({_id: req.query.rankId}, function(err,ranking){
+    Ranking.findOne({_id: req.params.rankingId}, function(err,ranking){
       if(ranking)
       {
         ranking.remove(function(err){
@@ -125,7 +153,7 @@ exports.deleteRanking = function(req, res) {
   }
   else
     return res.status(400).send({
-      message: errorHandler.getErrorMessage(err)
+      message: 'Couldnt find ranking with id ' + req.params.rankingId
     });
 };
 

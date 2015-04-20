@@ -102,7 +102,7 @@
 
 .manage-matchup-container {
   width: 100%;
-  min-height: 300px;
+  min-height: 100px;
   color: #777777;
   border: 1px solid #555555;
 	border-radius: 5px;
@@ -111,6 +111,7 @@
   position: relative;
   padding: 15px;
 	word-wrap: break-word;
+	margin-bottom: 3em;
 }
 
 .matchup-container {
@@ -141,8 +142,7 @@
 .matchup {
 	width:180px;
 	height: 85px;
-	margin-left: 15px;
-	margin-right: 15px;
+	margin: 1em;
 	word-wrap: break-word;
 	display: inline-block;
 	position:relative;
@@ -190,6 +190,22 @@
 	color: red;
 	border-color: red;
 	border-width:2px;
+}
+
+.home-label{
+	position:absolute;
+	top:80px;
+	left:32px;
+	font-size: 0.5em;
+	font-weight: 100;
+}
+
+.away-label{
+	position:absolute;
+	top:80px;
+	right:32px;
+	font-size: 0.5em;
+	font-weight: 100;
 }
 
 .current-map {

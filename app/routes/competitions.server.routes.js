@@ -24,11 +24,14 @@ module.exports = function(app) {
   .post(users.requiresLogin,
     //auth.hasAuthorization(['admin']),
     comps.addRanking)
+  .get(comps.listRankings);
+
+  app.route('/rankings/:rankingId')
+  .put(users.requiresLogin,
+    auth.hasAuthorization(['admin']),
+    comps.updateRanking)
   .delete(users.requiresLogin,
     comps.deleteRanking);
-
-  app.route('/rankings/:compId')
-  .get(comps.listRankings);
 
   app.route('/matchups/:matchupId')
   .put(users.requiresLogin,
@@ -46,6 +49,7 @@ module.exports = function(app) {
   // Finish by binding the middleware
   app.param('compId', comps.byId);
   app.param('matchupId', matchups.byId);
+  app.param('rankingId', comps.rankingById);
 
 
 };

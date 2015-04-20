@@ -213,12 +213,13 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
   };
 
   $scope.removeTeam = function(team){
-    team.$remove({rankId: team._id},function(success){
+    team.$remove({rankingId: team._id},function(success){
         $scope.sucess = 'Team Removed';
         $scope.listRankings();
       },function(error) {
         $scope.error = error.data.message;
       })
+    $scope.confirmRemoveTeam = false;
   }
 
   $scope.listMatchups = function() {
@@ -242,6 +243,40 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
     $scope.matchups.splice(index, 1);
   }
 
+  $scope.calculateWinLoss = function() {
+
+    var matchupHistory = Matchups.query({compId:$scope.comp._id, allHistory:true}, function(history){
+
+        var winMap = {};
+        var lossMap = {};
+
+        for(var m in matchupHistory) {
+
+          if(!matchupHistory[m].winner){
+            continue;
+          }
+
+          var winner = matchupHistory[m].winner;
+          if(winMap[winner]) { winMap[winner] = winMap[winner] + 1; }
+          else{ winMap[winner] = 1 }
+
+          var loser = matchupHistory[m].loser;
+          if(lossMap[loser]) { lossMap[loser] = lossMap[loser] + 1; }
+          else{ lossMap[loser] = 1 }
+        }
+
+        for(var r in $scope.rankings) {
+          if(!$scope.rankings[r].team)
+            break;
+          $scope.rankings[r].wins = winMap[$scope.rankings[r].team._id] || 0
+          $scope.rankings[r].losses = lossMap[$scope.rankings[r].team._id] || 0
+
+          $scope.rankings[r].$update({rankingId:  $scope.rankings[r]._id });
+        }
+
+    })
+  }
+
   $scope.generateMatchups = function() {
       var matchup = new Matchups({ });
 
@@ -253,7 +288,9 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
         $scope.error = err;
       });
 
-    }
+      $scope.confirmGenerate = false
+
+  }
 
 	$scope.delete = function(comp) {
 		$scope.confirmDelete = false;
@@ -323,7 +360,6 @@ function($scope, $stateParams, Authentication, Users, Competitions, Rankings, Te
 			$scope.resText = 'Saved';
 		});
 	}
-
 
 }
 ]);

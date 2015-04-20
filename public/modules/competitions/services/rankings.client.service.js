@@ -4,9 +4,9 @@ angular.module('competitions')
   .factory('Rankings', //the name of the resource Class
   ['$resource',
   function($resource) {
-    return $resource('rankings/:compId',
+    return $resource('rankings/:rankingId',
     {
-      rankId: '@_id',
+      rankingId: '@_id',
     },
     {
       list: {
@@ -15,6 +15,10 @@ angular.module('competitions')
         params: {
           sortBy: '@sortBy'
         }
+      },
+      update: {
+        method: 'PUT',
+        params: {rankingId: '@rankingId'}
       }
     });
   }

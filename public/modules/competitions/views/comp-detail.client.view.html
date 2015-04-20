@@ -46,10 +46,12 @@
 
   <div class="matchup-outer">
     <div class="matchup-container">
-        <div class="matchup" ng-repeat="matchup in matchups">
-          <img class="home-img" title="{{matchup.home.name}}" ng-src="{{matchup.home.imageurl}}" ng-class="{'winner':(matchup.winner == matchup.home._id), 'loser':(matchup.loser == matchup.home._id), 'disputed':matchup.disputed}">
+        <div class="matchup" ng-repeat="matchup in matchups | orderBy: '_id' ">
+          <a ng-href="#bfh/teams/{{matchup.home._id}}"><img class="home-img" title="{{matchup.home.name}}" ng-src="{{matchup.home.imageurl}}" ng-class="{'winner':(matchup.winner == matchup.home._id), 'loser':(matchup.loser == matchup.home._id), 'disputed':matchup.disputed}"></a>
+          <span class="home-label" ng-class="{'winner':(matchup.winner == matchup.home._id), 'loser':(matchup.loser == matchup.home._id), 'disputed':matchup.disputed}">HOME</span>
           <span class="v">vs</span>
-          <img class="away-img" title="{{matchup.away.name}}" ng-src="{{matchup.away.imageurl}}" ng-class="{'winner':(matchup.winner == matchup.away._id), 'loser':(matchup.loser == matchup.away._id), 'disputed':matchup.disputed}">
+          <a ng-href="#bfh/teams/{{matchup.away._id}}"><img class="away-img" title="{{matchup.away.name}}" ng-src="{{matchup.away.imageurl}}" ng-class="{'winner':(matchup.winner == matchup.away._id), 'loser':(matchup.loser == matchup.away._id), 'disputed':matchup.disputed}"></a>
+          <span class="away-label" ng-class="{'winner':(matchup.winner == matchup.away._id), 'loser':(matchup.loser == matchup.away._id), 'disputed':matchup.disputed}">AWAY</span>
         </div>
     <div class="comp-section-title">Round {{comp.currentWeek}} Matchups
       <span ng-show="comp.bracketurl && comp.bracketurl !== '' "> -
@@ -87,10 +89,10 @@
   <div class="ranking-outer">
     <div class="ranking-container">
 
-      <div class="ranking" ng-repeat="team in rankings">
+      <div class="ranking" ng-repeat="team in rankings | orderBy:'wins':true ">
         {{$index+1}}.
         <span style="color:#FF9000">
-          {{team.team.name}}
+          <a ng-href="#bfh/teams/{{team.team._id}}">{{team.team.name}}</a>
         </span>
         &nbsp({{team.wins}},&nbsp{{team.losses}})
       </div>

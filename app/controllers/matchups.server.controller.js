@@ -44,7 +44,12 @@ exports.list = function(req, res) {
       });
     } else {
 
-      Matchup.find({competition: comp._id, week: comp.currentWeek})
+      var params = {competition: comp._id};
+      if(!req.query.allHistory){
+        params['week'] = comp.currentWeek;
+      }
+
+      Matchup.find(params)
         .populate('home away', 'name imageurl')
         //.populate({path:'away', select: 'name imageurl', model: 'Team'})
         .exec(function(err, matchups) {
