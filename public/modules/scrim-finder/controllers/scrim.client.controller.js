@@ -1,62 +1,9 @@
 'use strict';
 
-angular.module('scrim-finder').controller('ScrimController', ['$scope', '$rootScope', 'Authentication', 'Scrims', 'SocketIO', 'Teams',
-function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
+angular.module('scrim-finder').controller('ScrimController', ['$scope', '$rootScope', 'SocketIO',
+function($scope, $rootScope, SocketIO) {
 
-  // This provides Authentication context.
-  $scope.authentication = Authentication;
   $scope.chatMessages = [];
-
-  $scope.createVisible = false;
-  $scope.switchCreateVisible = function(){
-    $scope.createVisible = !$scope.createVisible;
-  };
-
-  /*
-  function findTeam() {
-    if(Authentication.user.team) {
-      $scope.team = Teams.get({
-				teamId: Authentication.user.team
-			});
-    }
-  }
-  //get user team at load
-  findTeam();
-  */
-
-  $scope.createScrim = function() {
-    var image;
-    if(!Authentication.user.avatar) {
-      image = '/modules/core/img/default-avatar.png'
-    }
-    else {
-      image = Authentication.user.avatar
-    }
-
-    var scrim = new Scrims({
-      map: this.map,
-      format: this.format,
-      notes: this.notes,
-      time: this.time,
-      imageurl: image,
-      team: Authentication.user.username
-    });
-
-    scrim.$save(function(response) {
-      //$location.path('articles/' + response._id);
-      $scope.switchCreateVisible();
-
-      $scope.map = '';
-      $scope.format = '';
-      $scope.notes = '';
-      $scope.time = '';
-      //the unshift is now handled by sockets!
-      //$scope.scrims.unshift(scrim); //push it to the display
-      //$scope.createVisible = !$scope.createVisible;
-    }, function(errorResponse) {
-      $scope.error = errorResponse.data.message;
-    });
-  };
 
   $scope.sendChat = function(msg) {
     if(msg !== '')
@@ -64,65 +11,6 @@ function($scope, $rootScope, Authentication, Scrims, SocketIO, Teams) {
       SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
       $scope.chatMsg='';
     }
-  };
-
-  $scope.isScrimCreator = function (scrim) {
-    return scrim.team === Authentication.user.username
-  }
-
-  $scope.canSeePrivateChat = function (scrim) {
-    return ((scrim.team === Authentication.user.username && scrim.acceptedUser !== "")
-      || scrim.acceptedUser === Authentication.user.username)
-  }
-
-  $scope.hasReplies = function (scrim) {
-
-    return $scope.isScrimCreator(scrim) && scrim.replies.length >= 1;
-  }
-
-  $scope.replied = function (scrim) {
-    return !$scope.isScrimCreator(scrim) && scrim.replies.indexOf(Authentication.user.username) !== -1
-  }
-
-  $scope.scrimFinalized = function(scrim) {
-    return scrim.acceptedUser && scrim.acceptedUser !== "";
-  };
-
-  $scope.replyToScrim = function(scrimId) {
-    SocketIO.emit('scrim reply', { scrim: scrimId, user: Authentication.user.username })
-  };
-
-  $scope.acceptReply = function(scrimId, acceptedUser) {
-    SocketIO.emit('scrim accept', { scrim: scrimId, user: acceptedUser })
-  };
-
-  $scope.saveHomeInfo = function (scrim) {
-    SocketIO.emit('home info', { 'scrim': scrim._id, 'home': scrim.homeInfo })
-  };
-  $scope.saveAwayInfo = function (scrim) {
-    SocketIO.emit('away info', { 'scrim': scrim._id, 'away': scrim.awayInfo })
-  };
-
-  $scope.deleteScrim = function(scrim) {
-    $scope.scrims.splice($scope.scrims.indexOf(scrim),1)
-    SocketIO.emit('delete scrim', { 'scrim': scrim._id })
-  }
-
-
-  $scope.orderScrims = function(scrim) {
-    if($scope.canSeePrivateChat(scrim))
-      return 0
-    else if($scope.replied(scrim) || $scope.hasReplies(scrim))
-      return 1
-    else if(scrim.acceptedUser && scrim.acceptedUser !== "")
-      return 99
-    else
-      return 55
-  };
-
-  $scope.initialize = function(){
-    SocketIO.emit('initialize chat', {user: Authentication.user.username});
-    $scope.scrims = Scrims.query();
   };
 
   /*

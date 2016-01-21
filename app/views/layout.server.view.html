@@ -3,33 +3,6 @@
 <head>
 	<title>{{title}}</title>
 
-	<!-- General META -->
-	<meta charset="utf-8">
-	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-	<!-- Semantic META -->
-	<meta name="keywords" content="{{keywords}}">
-	<meta name="description" content="{{description}}">
-
-	<!-- Facebook META -->
-	<meta property="fb:app_id" content="{{facebookAppId}}">
-	<meta property="og:site_name" content="{{title}}">
-	<meta property="og:title" content="{{title}}">
-	<meta property="og:description" content="{{description}}">
-	<meta property="og:url" content="{{url}}">
-	<meta property="og:image" content="/img/brand/logo.png">
-	<meta property="og:type" content="website">
-
-	<!-- Twitter META -->
-	<meta name="twitter:title" content="{{title}}">
-	<meta name="twitter:description" content="{{description}}">
-	<meta name="twitter:url" content="{{url}}">
-	<meta name="twitter:image" content="/img/brand/logo.png">
-
 	<!-- Fav Icon -->
 	<link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
@@ -41,48 +14,13 @@
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-60787824-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
 </head>
 
 <body ng-controller='HomeController' style="background:black; padding: none; margin: none" class="ng-cloak">
 
-<!--
-<div ng-show="!authentication.user">
-	<div ng-include="'/modules/core/views/countdown.client.view.html'"> TEST </div>
-</div>
--->
-
-	<header data-ng-include="'/modules/core/views/header.client.view.html'"></header>
-
-	<div class="outer-view-container" style="padding: none; margin: none">
-		<div class="view-container">
-			<section>
-					{% block content %}{% endblock %}
-			</section>
-		</div>
-		<div class="side-link-container">
-			<a href="#bfh/"><div class="side-link news-link"><div class="side-hover">&nbsp</div></div></a>
-			<a href="#bfh/competitions"><div class="side-link competitions-link"><div class="side-hover">&nbsp</div></div></a>
-			<a href="#bfh/teams"><div class="side-link teams-link"><div class="side-hover">&nbsp</div></div></a>
-			<a href="#bfh/scrim"><div class="side-link scrim-link"><div class="side-hover">&nbsp</div></div></a>
-			<a href="#bfh/msgboard"><div class="side-link msgboard-link"><div class="side-hover">&nbsp</div></div></a>
-		</div>
-	</div>
-
-	<!--Embedding The User Object-->
-	<script type="text/javascript">
-		var user = {{ user | json | safe }};
-	</script>
+<section>
+		{% block content %}{% endblock %}
+</section>
 
 	<!--Application JavaScript Files-->
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}

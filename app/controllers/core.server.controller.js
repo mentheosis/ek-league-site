@@ -3,9 +3,7 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-	errorHandler = require('./errors.server.controller'),
-	Settings = mongoose.model('Setting'),
+var	errorHandler = require('./errors.server.controller'),
 	_ = require('lodash');
 
 

@@ -1,10 +1,8 @@
 'use strict';
 
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Settings',
-	function($scope, Authentication, Settings) {
-		// This provides Authentication context.
-		$scope.authentication = Authentication;
+angular.module('core').controller('HomeController', ['$scope',
+	function($scope) {
 
 		$scope.saveNewSetting = function() {
 			$scope.resText = '';

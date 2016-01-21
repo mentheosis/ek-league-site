@@ -1,10 +1,7 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-moment = require('moment'),
-errorHandler = require('./errors.server.controller'),
-test = require('../models/scrim.server.model.js'),
-Scrim = mongoose.model('Scrim');
+var moment = require('moment'),
+errorHandler = require('./errors.server.controller');
 
 var socketIo;
 
@@ -48,57 +45,6 @@ exports.setSocket = function (socket) {
   });
 
 }
-
-
-exports.create = function(req,res){
-  var scrim = new Scrim(req.body);
-  scrim.user = req.user;
-
-  scrim.save(function(err){
-    if(err){
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      socketIo.emit('scrim added', scrim);
-      //res.json(scrim);
-      res.status(200).send({
-        message: "Scrim created"
-      });
-    }
-  });
-};
-
-exports.delete = function(req, res) {
-	var scrim = req.scrim;
-
-	scrim.remove(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.status(200).send({
-				message: 'scrim deleted'
-			});
-		}
-	});
-};
-
-
-exports.list = function(req, res){
-  var yesterday = new Date();
-  yesterday.setHours(yesterday.getHours() - 12);
-  Scrim.find({"created": {"$gte": yesterday}}).sort('-created').exec(function(err, scrims) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(scrims);
-    }
-  });
-};
 
 
 var MessageQueue = [];
@@ -152,64 +98,6 @@ var removeUserBySocketId = function(socketId) {
 }
 
 
-var deleteScrim = function (req, socketconn) {
-  Scrim.findById(req.scrim, function(err,scrim){
-    if(err || !scrim){
-      console.log("couldn't find scrim " + req.scrim)
-    }
-
-    scrim.remove(function(err){
-      if(err){
-        console.log("couldn't delete scrim " + req.scrim)
-      }
-      else {
-        socketIo.emit('scrim deleted', req);
-      }
-    });
-  });
-};
-
-
-var replyToScrim = function (req) {
-  Scrim.findById(req.scrim, function(err,scrim){
-    if(err || !scrim){
-    }
-    if(!scrim.replies)
-      scrim.replies = [];
-    if(scrim.replies.indexOf(req.user) === -1){
-      scrim.replies.push(req.user);
-
-      scrim.save(function(err){
-        if(err){
-          console.log("couldn't save scrim " + req.scrim)
-        }
-        else {
-          socketIo.emit('scrim updated', scrim);
-        }
-      });
-    }
-  });
-};
-
-var acceptReply = function (req) {
-  Scrim.findById(req.scrim, function(err,scrim){
-    if(err || !scrim){
-      console.log("couldn't find scrim " + req.scrim)
-    }
-    scrim.acceptedUser = req.user
-    scrim.acceptMessage = "host server info"
-
-    scrim.save(function(err){
-      if(err){
-        console.log("couldn't save scrim " + req.scrim)
-      }
-      else {
-        socketIo.emit('scrim updated', scrim);
-      }
-    });
-  });
-};
-
 var saveMessage = function (req) {
   Scrim.findById(req.scrim, function(err,scrim){
     if(err || !scrim){
@@ -241,14 +129,4 @@ var messageReceived = function(msg){
   lastMessageStamp = moment().format();
   PushMessage(msg);
   socketIo.emit('chat message', msg);
-};
-
-exports.scrimById = function(req, res, next, id) {
-  Scrim.findById(id)
-  .exec(function(err, scrim) {
-    if (err) return next(err);
-    if (!scrim) return next(new Error('Failed to find scrim with id ' + id));
-    req.scrim = scrim;
-    next();
-  })
 };
