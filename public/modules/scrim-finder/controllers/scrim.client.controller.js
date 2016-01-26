@@ -4,11 +4,12 @@ angular.module('scrim-finder').controller('ScrimController', ['$scope', '$rootSc
 function($scope, $rootScope, SocketIO) {
 
   $scope.chatMessages = [];
+  $scope.username="default"
 
   $scope.sendChat = function(msg) {
     if(msg !== '')
     {
-      SocketIO.emit('scrim-chat', { user: Authentication.user.username, message:msg});
+      SocketIO.emit('scrim-chat', { user: $scope.username, message:msg});
       $scope.chatMsg='';
     }
   };
@@ -24,51 +25,10 @@ function($scope, $rootScope, SocketIO) {
     if(clearChatListener) { clearChatListener(); }
     if(clearInitlistener) { clearInitlistener(); }
     if(clearUserListener) { clearUserListener(); }
-    if(clearAddListener) { clearAddListener(); }
-    if(clearUpdateListener) { clearUpdateListener(); }
-    if(clearDeleteListener) { clearDeleteListener(); }
     SocketIO.emit('exiting chat', {user: Authentication.user.username});
   });
 
-  var clearDeleteListener = SocketIO.on('scrim deleted', function(req){
-    for (var s = 0; s < $scope.scrims.length; s++ ){
-      if ($scope.scrims[s]._id === req.scrim) {
-        $scope.scrims.splice(s,1);
-        return;
-      }
-    }
-  });
 
-  var clearHomeInfoListener = SocketIO.on('home info updated', function(req){
-    for (var s = 0; s < $scope.scrims.length; s++ ){
-      if ($scope.scrims[s]._id === req.scrim) {
-        $scope.scrims[s].homeInfo = req.home;
-        return;
-      }
-    }
-  });
-
-  var clearAwayInfoListener = SocketIO.on('away info updated', function(req){
-    for (var s = 0; s < $scope.scrims.length; s++ ){
-      if ($scope.scrims[s]._id === req.scrim) {
-        $scope.scrims[s].awayInfo = req.away;
-        return;
-      }
-    }
-  });
-
-  var clearUpdateListener = SocketIO.on('scrim updated', function(scrim){
-    for (var s = 0; s < $scope.scrims.length; s++ ){
-      if ($scope.scrims[s]._id === scrim._id) {
-        $scope.scrims.splice(s, 1, scrim);
-        return;
-      }
-    }
-  });
-
-  var clearAddListener = SocketIO.on('scrim added', function(scrim){
-    $scope.scrims.unshift(scrim);
-  });
 
   var clearChatListener = SocketIO.on('chat message', function(msg){
     $scope.chatMessages.push(msg);
